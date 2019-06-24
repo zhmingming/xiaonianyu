@@ -1,0 +1,19 @@
+<!--pages/user/myaddress.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view class="container">
+    <view class='addr_ctr' wx:for="{{dateList}}" wx:key="key">
+        <view class='addr_left' bindtap='changeAddress' data-id='{{item.id}}' data-key='{{index}}'>
+            <view class='addr_name'>{{item.name}} {{item.tel}}</view>
+            <view class='default_ico' wx:if="{{item.is_default}}">默认</view>
+            <view class='addr_link'>{{item.province}}{{item.city}}{{item.county}}{{item.address}}</view>
+        </view>
+        <navigator url='/pages/user/editaddress?id={{item.id}}' class='addr_edit'><i class="iconfont icon-edit"></i></navigator>
+    </view>
+    <block wx:if="{{dateList.length<1}}">
+        <view class='none_ctr'><i class="iconfont icon-none"></i></view>
+        <view class='none_txt'>暂无收货地址~</view>
+    </block>
+    <view class='addr_foot'>
+        <navigator url='/pages/user/addaddress' class='addr_add_btn'>+ 添加地址</navigator>
+    </view>
+</view>

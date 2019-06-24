@@ -1,0 +1,96 @@
+<!--pages/user/myorderdetail.wxml-->
+<view class="container">
+    <view class='top_ctr'>
+        <view class='top_ctt'>
+            <view wx:if="{{detail.send_type=='快递'}}">
+                <view class='top_txt'>{{detail.name}} {{detail.tel}}</view>
+                <view class='top_txt'><span>{{detail.address}}</span></view>
+            </view>
+            <view wx:else>
+                <view class='top_txt'>自提点：</view>
+                <view class='top_txt'>{{detail.pickup_name}} {{detail.pickup_tel}}</view>
+                <view class='top_txt'><span>{{detail.pickup_addr}}</span></view>
+            </view>
+        </view>
+        <image class='addr_line' src="../../images/line.gif" mode='aspectFill'/>
+    </view>
+    <view class='cells_ctr'>
+        <view class='cells_ctt'>
+            <view class='fl'>包裹1</view>
+            <view class='fr c_red'>{{detail.order_state}}</view>
+        </view>
+        <view class="cells_ctt {{index+1==detail.goods.length ? 'border0' : ''}}" wx:for="{{detail.goods}}" wx:key="key">
+            <navigator url="/pages/goods/detail?id={{item.goods_id}}" class='goods_pic'><image mode='widthFix' src="{{item.pic}}"/></navigator>
+            <view class='goods_rctr'>
+                <view wx:if="{{detail.order_state=='已发货'}}">
+                    <view class='goods_rbtn' wx:if="{{item.th_type==0}}" bindtap='toReturns' data-id='{{item.id}}'>退换货</view>
+                    <view wx:else>
+                        <view class='goods_rbtn' wx:if="{{item.th_state==0}}">退换中</view>
+                        <view class='goods_rbtn' wx:if="{{item.th_state==1}}">退换成功</view>
+                    </view>
+                </view>
+                <navigator url="/pages/goods/detail?id={{item.goods_id}}" class='goods_txt'>
+                    <view class='goods_title'>{{item.title}}</view>
+                    <view class='goods_spec'>{{item.spec_item}}</view>
+                </navigator>
+                <view>
+                    <view class='fl'>¥{{item.price}}</view>
+                    <view class='fr'><span>×{{item.amount}}</span></view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class='cells_ctr'>
+        <view class='cells_ctt'>
+            订单编号：{{detail.order_sn}}
+        </view>
+        <view class='cells_ctt'>
+            下单时间：{{detail.add_date}}
+        </view>
+
+        <view class="cells_ctt">
+            配送方式：{{detail.send_type}}
+        </view>
+        <view class='cells_ctt' wx:if="{{detail.send_type=='自提'}}">
+            提货号码：{{detail.pickup_sn}}
+        </view>
+
+        <view class='cells_ctt border0'>
+            <view>支付方式：{{detail.pay_type}}</view>
+            <view>商品合计：{{detail.price}}</view>
+            <view wx:if="{{detail.rebate_price>0}}">会员折扣：{{detail.rebate_price}}</view>
+            <view wx:if="{{detail.discount_price>0}}">订单优惠：{{detail.discount_price}}</view>
+            <view wx:if="{{detail.coupon_price>0}}">优惠券减：{{detail.coupon_price}}</view>
+            <view>快递运费：{{detail.express_price}}</view>
+        </view>
+    </view>
+    <view class='cells_ctr'>
+        <view class='cells_ctt c_red border0'>
+            合计应付：{{detail.pay_price}}
+        </view>
+    </view>
+    <view class='cells_ctr'>
+        <view class='cells_ctt border0'>
+            <block wx:if="{{detail.order_state=='已取消'}}">
+                <view class='myorder_btn' bindtap="delOrder" data-id="{{currentID}}">删除订单</view>
+            </block>
+            <block wx:if="{{detail.order_state=='待付款'}}">
+                <view class='myorder_btn_on' bindtap="goPay" data-sn="{{detail.order_sn}}">去付款</view>
+                <view class='myorder_btn' bindtap="cancelOrder" data-id="{{currentID}}">取消订单</view>
+            </block>
+            <block wx:if="{{detail.order_state=='待发货'}}">
+                <button open-type="contact" class='myorder_btn'>提醒发货</button>
+            </block>
+            <block wx:if="{{detail.order_state=='已发货'}}">
+                <view class='myorder_btn_on' bindtap="shOrder" data-id="{{currentID}}">确认收货</view>
+                <view class='myorder_btn' wx:if="{{detail.send_type=='自提'}}">自提订单</view>
+                <view class='myorder_btn' bindtap="showSend" data-id="{{currentID}}" wx:else>查看物流</view>
+            </block>
+            <block wx:if="{{detail.order_state=='交易成功'}}">
+                <view class='myorder_btn_on' bindtap="goComment" data-id="{{detail.id}}">{{ detail.is_comment=='0' ? '去评论' : '已评论' }}</view>
+                <view class='myorder_btn' wx:if="{{detail.send_type=='自提'}}">自提订单</view>
+                <view class='myorder_btn' bindtap="showSend" data-id="{{currentID}}" wx:else>查看物流</view>
+            </block>
+        </view>
+    </view>
+</view>

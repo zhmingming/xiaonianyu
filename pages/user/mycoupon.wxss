@@ -1,0 +1,91 @@
+/* pages/user/mycoupon.wxss */
+.container {
+  padding-top:96rpx;
+}
+.tab_ctr {
+  position:fixed;
+  width: 100%;
+  height: 80rpx;
+  background: #fff;
+  border-bottom: 2rpx #f2f2f2 solid;
+  font-size: 32rpx;
+  z-index: 9;
+}
+.tab_ctt {
+  position: absolute;
+  width: 100%;
+  height: 82rpx;
+  left:0;
+  top:0;
+  z-index: 9;
+}
+.tab_cell,.tab_cell_on {
+  float: left;
+  width: 33.333333%;
+  height: 76rpx;
+  line-height: 76rpx;
+  text-align: center;
+  padding-bottom: 6rpx;
+}
+.tab_cell_on {
+  padding-bottom: 0rpx;
+}
+/*优惠券*/
+.coupon_ctr {
+  float: left;
+  width: 710rpx;
+  height: auto;
+  margin: 10rpx 20rpx;
+}
+.coupon_ctt,.coupon_ctt1 {
+  float: left;
+  width: 670rpx;
+  border-radius: 10rpx 10rpx 0 0;
+  padding: 20rpx;
+  color: #fff;
+}
+.coupon_ctt1 {
+  background: #999999;
+}
+.coupon_price {
+  float: left;
+  width: 250rpx;
+  height: 115rpx;
+  border-right: 2rpx #fff dotted;
+  text-align: center;
+  font-size: 44rpx;
+}
+.coupon_price span,.coupon_price .txt {
+  font-size: 28rpx;
+}
+
+.coupon_title {
+  float: right;
+  width: 398rpx;
+  padding-top: 8rpx;
+  font-size: 36rpx;
+  position: relative;
+}
+.coupon_title .txt {
+  font-size: 28rpx;
+  padding-top: 8rpx;
+}
+.coupon_btn {
+  position: absolute;
+  border-radius: 6px;
+  font-size: 32rpx;
+  right: 0;
+  top:0;
+  z-index: 9;
+  padding: 0 10rpx;
+}
+.coupon_info {
+  float: left;
+  width: 670rpx;
+  background: #fff;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #999;
+}
+
+@import "/style/style.wxss";

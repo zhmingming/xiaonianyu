@@ -1,0 +1,66 @@
+/* pages/user/myaddress.wxss */
+.container {
+  padding-bottom:100rpx;
+}
+.addr_ctr {
+  float: left;
+  width: 100%;
+  padding: 20rpx 0;
+  border-bottom: 2rpx #f2f2f2 solid;
+  background: #fff;
+}
+.addr_left {
+  float: left;
+  width: 600rpx;
+  font-size: 32rpx;
+  padding-left: 24rpx;
+}
+.addr_name {
+  float: left;
+  padding-right: 20rpx;
+  line-height: 52rpx;
+}
+.default_ico {
+  float:left;
+  margin-top: 4rpx;
+  border-radius: 4rpx;
+  font-size: 24rpx;
+  padding: 0 10rpx;
+}
+.addr_link {
+  float: left;
+  width:100%;
+  font-size: 24rpx;
+  color: #888;
+  padding-top: 4rpx;
+}
+.addr_edit {
+  float: right;
+  padding-right: 24rpx;
+  padding-top: 20rpx;
+}
+.addr_edit i {
+  font-size: 44rpx;
+}
+/*底部*/
+.addr_foot {
+  position: fixed;
+  width: 100%;
+  height: 100rpx;
+  background:#fff;
+  left: 0;
+  bottom: 0;
+  z-index: 9;
+}
+.addr_add_btn {
+  margin: 18rpx;
+  float: left;
+  width: 710rpx;
+  height:60rpx;
+  border-radius: 10rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 32rpx;
+}
+
+@import "/style/style.wxss";

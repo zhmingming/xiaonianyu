@@ -1,0 +1,72 @@
+<!--pages/category/index.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+
+<view class="container">
+    <view class='top_ctr'>
+        <view class='search_ctr' bindtap='toSearch'><i class="iconfont icon-search"></i> 请搜索商品名称</view>
+        <scroll-view class='nav_ctr' scroll-x="true" scroll-into-view="n{{currentID}}">
+            <view id="n0" class='nav_cell' bindtap='goCategory' data-id='0'>精选</view>
+            <block wx:for="{{catList}}" wx:key="key">
+                <view id='n{{item.id}}' class="{{ item.id==currentID ? 'nav_cell_on' : 'nav_cell' }}" bindtap='goCategory' data-id='{{item.id}}'>{{item.wap_title}}</view>
+            </block>
+        </scroll-view>
+    </view>
+    <view class="swiper">
+        <image src='{{currentList.pic}}'/>
+    </view>
+
+    <scroll-view scroll-y="true" class='fw_ctr bc_white'>
+        <view class='fw_ctt' wx:for="{{sonList}}" wx:key="key">
+            <navigator url='/pages/goods/list?id={{item.id}}'>
+                <view class='fw_pic'><image src='{{item.pic}}'/></view>
+                <view class='fw_t1'>{{item.wap_title}}</view>
+            </navigator>
+        </view>
+    </scroll-view>
+
+    <!--限时抢购-->
+    <view class='pub_ctr'>
+        <view class='pub_title_ctr' style='background:#b5c0f6'>
+            <view class='pub_main_title'>限时抢购</view>
+            <view class='pub_sub_title'></view>
+            <navigator url="/pages/promotion/flashsale?cat_id={{currentID}}" class='pub_title_btn'>更多</navigator>
+        </view>
+        <view class='pub_ctt'>
+            <view wx:for="{{hotGoodsList}}" wx:key="key">
+                <navigator url="/pages/goods/detail?id={{item.id}}" class='pub_goods_ctr'>
+                    <view class='pub_goods_pic'>
+                        <view class='pub_goods_rebate'>{{item.rebate}}折</view>
+                        <image src="{{item.pic}}"/>
+                    </view>
+                    <view class='pub_mark_ctr'>{{item.is_top==1 ? '精选' : '折后价'}}</view>
+                    <view class='pub_price_ctr'>¥{{item.promotion_price}}<span>¥{{item.markey_price}} </span></view>
+                    <view class='pub_goods_title'>{{item.title}}</view>
+                </navigator>
+            </view>
+        </view>
+    </view>
+    
+    <!--专区-->
+    <view class='topic_title'>
+        <view class='topic_title_cell_on'>品牌特卖<view class='line'></view></view>
+    </view>
+    <view wx:for="{{topicList}}" wx:key="key">
+        <navigator url="/pages/topic/detail?id={{item.id}}" class='topic_ctr'>
+            <view class='topic_pic'><image src="{{item.pic}}"/></view>
+            <view class='topic_ctt'>
+                <view class='topic_txt_ctr'>
+                    <view class='topic_txt1'>{{item.title}}</view>
+                    <view class='topic_txt2'>还剩 <span>{{item.countHH}}</span> ： <span>{{item.countMM}}</span> ： <span>{{item.countSS}}</span></view>
+                </view>
+                <view class='topic_txt3'>全场<span>{{item.starting_price}}</span>折</view>
+            </view>
+        </navigator>
+    </view>
+    <!--底线-->
+    <view class='last_line_ctr'>
+        <view class='last_txt'>这是我的底线</view>
+        <view class='last_line'></view>
+    </view>
+    <!--置顶-->
+    <view class='to_top' hidden="{{hiddenTop}}" bindtap='goTop'><image src='../../images/icon_fanhuitob.png' /></view>
+</view>

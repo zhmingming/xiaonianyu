@@ -1,0 +1,29 @@
+<!--pages/user/mycoupon.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view class='tab_ctr'>
+    <view class='tab_ctt'>
+        <view class="{{ dataType=='0' ? 'tab_cell_on' : 'tab_cell' }}" bindtap="changeType" data-type="0">可使用</view>
+        <view class="{{ dataType==1 ? 'tab_cell_on' : 'tab_cell' }}" bindtap="changeType" data-type="1">去领取</view>
+        <view class="{{ dataType==-1 ? 'tab_cell_on' : 'tab_cell' }}" bindtap="changeType" data-type="-1">已过期</view>
+    </view>
+</view>
+<view class="container">
+    <view class='coupon_ctr' wx:for="{{dataList}}" wx:key="key">
+        <view class="{{ dataType==-1 ? 'coupon_ctt1' : 'coupon_ctt' }}" bindtap="hitCoupon" data-id="{{item.id}}">
+            <view class='coupon_price'>
+                <view><span>¥</span>{{item.yh_price}}</view>
+                <view class='txt'>满{{item.min_price}}元可用</view>
+            </view>
+            <view class='coupon_title'>
+                <view>{{item.title}}</view>
+                <view class='txt'>{{item.u_bdate}} - {{item.u_edate}}</view>
+                <view class='coupon_btn' wx:if="{{dataType!=-1}}">{{ dataType==1 ? '领取' : '使用' }}</view>
+            </view>
+        </view>
+        <view class='coupon_info'>全部商品可用，不可抵扣运费</view>
+    </view>
+    <block wx:if="{{dataList.length<1}}">
+        <view class='none_ctr'><i class="iconfont icon-none"></i></view>
+        <view class='none_txt'>暂无优惠券~</view>
+    </block>
+</view>

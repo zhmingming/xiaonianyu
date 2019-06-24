@@ -1,0 +1,96 @@
+/* pages/user/myorderdetail.wxss */
+@import "/style/cells.wxss";
+.top_ctr {
+  margin-bottom: 12rpx;
+  background: #fff;
+  font-size: 32rpx;
+}
+.top_ctt {
+  float: left;
+  width: 100%;
+  padding: 24rpx;
+  padding-right:0;
+}
+.top_txt {
+  width: 100%;
+}
+.top_txt span { 
+  color: #888;
+  font-size: 28rpx;
+}
+.addr_line {
+  float:left;
+  width: 100%;
+  height:8rpx;
+}
+/*商品*/
+.c_red {
+  color: #b4282d;
+}
+.fr span {
+  color: #888;
+}
+.goods_pic {
+  margin-right: 20rpx;
+  float: left;
+  width: 160rpx;
+  height: 160rpx;
+}
+.goods_pic image {
+  width: 100%;
+}
+.goods_rctr {
+  float: left;
+  width: 522rpx;
+  height: 160rpx;
+  position: relative;
+}
+.goods_rbtn {
+  position: absolute;
+  line-height: 40rpx;
+  border: 1px #333 solid;
+  border-radius: 10rpx;
+  background: #fff;
+  padding: 0 10rpx;
+  font-size: 24rpx;
+  right: 0;
+  top: 10rpx;
+  z-index: 2;
+}
+.goods_txt {
+  float: left;
+  width: 100%;
+  height: 80rpx;
+  padding: 16rpx 0;
+}
+.goods_title,.goods_spec {
+  float: left;
+  width: 100%;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.goods_spec {
+  font-size: 28rpx;
+  color: #888;
+}
+
+.myorder_btn,.myorder_btn_on {
+  margin-left:20rpx;
+  float: right;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  background: #fff;
+  border: 2rpx #333 solid;
+  border-radius: 6rpx;
+  line-height: 52rpx;
+  padding-top: 4rpx;
+}
+.myorder_btn::after {border: 0;}
+.myorder_btn_on {
+  color: #fff;
+}
+
+@import "/style/style.wxss";

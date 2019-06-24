@@ -1,0 +1,504 @@
+// pages/goods/detail.js
+var WxParse = require('../../utils/wxParse/wxParse.js');
+var app = getApp();
+var rootDocment = app.globalData.postUrl;
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    rootUrl: rootDocment,
+    hiddenLoading: false,
+    imgUrls: [],
+    indicatorDots: true,
+    autoplay: true,
+    interval: 5000,
+    duration: 1000,
+    hasSpec: 0,
+    detail: [],
+    showDialog: false,
+    showShare: false,
+    showPic: false,
+    showCoupon: false,
+    showService: false,
+    spec_price: [],
+    spec_list: [],
+    amount: 1,
+    price: 0,
+    stock: 0,
+    spec_key: '',
+    spec_item: '',
+    current_spec: [],
+    cartNum:0,
+    currentID: '',
+    fid: 0,
+    sharePic:'',
+    couponList: [],
+    hiddenTop: true,
+    new_user : 0
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    var that = this;
+    //初始化
+    if (options.id) {
+      this.setDetailData(options.id);
+    }
+    else {
+      var scene = decodeURIComponent(options.scene).split("_");
+      this.setDetailData(scene[1]);
+      that.setData({
+        fid: scene[0]
+      });
+    }
+    this.getUserInfo();
+    this.setCartData();
+    this.getCouponList();
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    //用户授权登录
+    var that = this;
+    app.login(that.data.fid);
+    that.getUserInfo();
+  },
+
+  //下拉刷新
+  onPullDownRefresh: function () {
+    var that = this;
+    this.setDetailData(that.data.currentID);
+    this.setCartData();
+    this.getCouponList();
+    that.getUserInfo();
+    wx.stopPullDownRefresh();
+  },
+
+  //获取当前用户信息
+  getUserInfo: function () {
+    var that = this;
+    var m_uid = app.globalData.userID;
+    var paraArr = new Array();
+    paraArr['id'] = m_uid;
+    var sign = app.signature(paraArr);
+    wx.request({
+      url: rootDocment + '/api_user/' + m_uid,
+      data: { sign: sign },
+      method: 'GET',
+      header: {},
+      success: function (res) {
+        that.setData({
+          new_user: res.data.is_new
+        });
+      }
+    })
+  },
+
+  //获取优惠券
+  getCouponList: function () {
+    var that = this;
+    var paraArr = new Array();
+    paraArr['state'] = 2;
+    paraArr['user_id'] = app.globalData.userID;
+    var sign = app.signature(paraArr);
+    wx.request({
+      url: rootDocment + '/api_coupon',
+      data: { state: paraArr['state'], user_id: paraArr['user_id'], sign: sign },
+      method: 'GET',
+      header: {},
+      success: function (res) {
+        that.setData({
+          couponList: res.data
+        });
+      }
+    })
+  },
+
+  //领取优惠券
+  hitCoupon: function (e) {
+    var that = this;
+    var id = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
+    var cList = that.data.couponList;
+    var paraArr = new Array();
+    paraArr['m_id'] = id;
+    paraArr['user_id'] = app.globalData.userID;
+    var sign = app.signature(paraArr);
+    wx.request({
+      url: rootDocment + '/api_coupon',
+      data: { m_id: id, user_id: paraArr['user_id'], sign: sign },
+      method: 'POST',
+      header: {},
+      success: function (res) {
+        if (res.data.code == 1001) {
+          wx.showToast({
+            title: '领取成功'
+          })
+          cList[index]['has'] = '1';
+          that.setData({
+            couponList: cList
+          });
+        }
+        else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
+
+  //初始化详情
+  setDetailData: function (id) {
+    var that = this;
+    var paraArr = new Array();
+    paraArr['id'] = id;
+    var sign = app.signature(paraArr);
+    wx.request({
+      url: rootDocment + '/api_goods/' + id,
+      data: { sign: sign},
+      method: 'GET',
+      header: {},
+      success: function (res) {
+        console.log(res.data);
+        WxParse.wxParse('article', 'html', res.data.info, that, 5);
+        var m_price = res.data.price;
+        if (res.data.is_promotion==1) {
+          m_price = res.data.promotion_price
+        }
+        that.setData({
+          detail: res.data,
+          hiddenLoading: true,
+          imgUrls: res.data.slide.split(","),
+          hasSpec: res.data.spec_count,
+          spec_price: res.data.getspec,
+          spec_list: res.data.spec_list,
+          price: m_price,
+          stock: res.data.stock,
+          currentID:id
+        });
+        //初始化规格
+        that.selectSpec();
+      }
+    })
+  },
+  //选择规格
+  toggleDialog: function () {
+    var that = this;
+    that.setData({
+      showDialog: !that.data.showDialog
+    });
+  },
+  //切换规格
+  selectSpec: function(e){
+    var that = this;
+    //如果有规格
+    if (that.data.spec_price.length!=0) {
+      var spec_list = that.data.spec_list;
+      var spec_price = that.data.spec_price;
+      var item_arr = new Array();
+      var current_arr = {};
+      if (typeof (e) == "undefined") {  //初始化
+          for (var item in spec_list) {
+            item_arr.push(spec_list[item][0]['item_id']);
+            current_arr[item] = spec_list[item][0]['item_id'];
+          }
+          //获取默认选中规格key
+          var spec_key = item_arr.sort(function (a, b) { return a - b }).join('_');
+          for (var item in spec_price) {
+            if (spec_price[item]['key']==spec_key){
+              var m_price = spec_price[item]['price'];
+              if(that.data.detail.is_promotion==1) {
+                m_price = spec_price[item]['promotion_price'];
+              }
+              that.setData({
+                price: m_price,
+                stock: spec_price[item]['stock'],
+                spec_key: spec_key,
+                spec_item: spec_price[item]['key_name'],
+                current_spec: current_arr
+              });
+              break;
+            }
+          }
+      }
+      else {
+        var current_spec = that.data.current_spec;
+        for (var item in spec_list) {
+          if (item == e.currentTarget.dataset.spec){
+            item_arr.push(e.currentTarget.dataset.id);
+            current_arr[item] = e.currentTarget.dataset.id;
+          }
+          else {
+            item_arr.push(current_spec[item]);
+            current_arr[item] = current_spec[item];
+          }
+        }
+        //获取新选中规格key
+        var spec_key = item_arr.sort(function (a, b) { return a - b }).join('_');
+        for (var item in spec_price) {
+          if (spec_price[item]['key'] == spec_key) {
+            var m_price = spec_price[item]['price'];
+            if (that.data.detail.is_promotion == 1) {
+              m_price = spec_price[item]['promotion_price'];
+            }
+            that.setData({
+              price: m_price,
+              stock: spec_price[item]['stock'],
+              spec_key: spec_key,
+              spec_item: spec_price[item]['key_name'],
+              current_spec: current_arr
+            });
+            break;
+          }
+        }
+      }
+    }
+  },
+  //添加数量
+  addAmount: function () {
+    var that = this;
+    var new_amount = that.data.amount+1;
+    if (new_amount<that.data.stock){
+      that.setData({
+        amount: new_amount
+      });
+    }
+  },
+  //减少数量
+  delAmount: function () {
+    var that = this;
+    var new_amount = that.data.amount - 1;
+    if (new_amount > 0) {
+      that.setData({
+        amount: new_amount
+      });
+    }
+  },
+  //输入数量
+  bindKeyInput: function (e) {
+    var that = this;
+    var amount = Math.round(e.detail.value);
+    if (!isNaN(amount) && amount>0){
+      if(amount>that.data.stock){
+        that.setData({
+          amount: that.data.stock
+        });
+        return that.data.stock;
+      }
+      else {
+        that.setData({
+          amount: amount
+        });
+        return amount;
+      }
+    }
+    else {
+      that.setData({
+        amount: 1
+      });
+      return 1;
+    }
+  },
+
+  //现在购买
+  buyNow: function () {
+    var that = this;
+    app.redirect('order/index', 'goods_id=' + that.data.detail['id'] + '&spec_key=' + that.data.spec_key + '&amount=' + that.data.amount);
+  },
+
+  //加入购物车
+  addCart: function () {
+    var that = this;
+    var paraArr = new Array();
+    paraArr['goods_id'] = that.data.detail['id'];
+    paraArr['spec_key'] = that.data.spec_key;
+    paraArr['amount'] = that.data.amount;
+    paraArr['user_id'] = app.globalData.userID;
+    var sign = app.signature(paraArr);
+    wx.request({
+      url: rootDocment + '/api_cart',
+      data: { goods_id: paraArr['goods_id'], spec_key: paraArr['spec_key'], key_name: that.data.spec_item, amount: paraArr['amount'], user_id: paraArr['user_id'], sign: sign},
+      method: 'POST',
+      header: {},
+      success: function (res) {
+        console.log(res.data);
+        that.setData({
+          showDialog: false
+        });
+        if(res.data.code=='1001'){
+          that.setCartData();
+          wx.showToast({
+            title: '添加成功',
+          })
+        }
+        else {
+          wx.showToast({
+            title: res.data.msg,
+            icon:'none'
+          })
+        }
+      }
+    })
+  },
+
+  //获取购物车列表
+  setCartData: function () {
+    var that = this;
+    var paraArr = new Array();
+    paraArr['user_id'] = app.globalData.userID;
+    var sign = app.signature(paraArr);
+    wx.request({
+      url: rootDocment + '/api_cart',
+      data: { user_id: paraArr['user_id'], sign: sign },
+      method: 'GET',
+      header: {},
+      success: function (res) {
+        that.setData({
+          cartNum: res.data.length
+        });
+      }
+    })
+  },
+  //分享
+  toggleCoupon: function () {
+    var that = this;
+    that.setData({
+      showCoupon: !that.data.showCoupon
+    });
+  },
+  toggleService: function () {
+    var that = this;
+    that.setData({
+      showService: !that.data.showService
+    });
+  },
+  //分享
+  toggleShare: function () {
+    var that = this;
+    that.setData({
+      showShare: !that.data.showShare
+    });
+  },
+  //获取分享图
+  getPic: function () {
+    var that = this;
+    if (that.data.showPic){
+      that.setData({
+        showPic: !that.data.showPic
+      });
+    }
+    else {
+        that.setData({
+          showShare: 0,
+          hiddenLoading: false
+        });
+        var m_page = 'pages/goods/detail';
+        var m_scene = app.globalData.userID + '_' + that.data.currentID;
+        var paraArr = new Array();
+        paraArr['page'] = m_page;
+        paraArr['scene'] = m_scene;
+        var sign = app.signature(paraArr);
+        wx.request({
+          url: rootDocment + '/api/get_qrcode',
+          data: { page: m_page, scene: m_scene, sign: sign},
+          method: 'GET',
+          header: {},
+          success: function (res) {
+            console.log(res.data.msg);
+            if (res.data.success == true) {
+              that.setData({
+                showPic: !that.data.showPic,
+                sharePic: res.data.msg,
+                hiddenLoading: true
+              });
+            }
+          }
+        })
+    }
+  },
+  //保存分享图片
+  savePic: function () {
+    var that = this;
+    wx.downloadFile({
+      url: that.data.rootUrl + that.data.sharePic,
+      success: function (res) {
+        let path = res.tempFilePath
+        wx.saveImageToPhotosAlbum({
+          filePath: path,
+          success(res) {
+            wx.showToast({
+              title: '保存成功'
+            })
+          },
+          fail(res) {
+            wx.showToast({
+              title: '保存失败'
+            })
+          },
+          complete(res) {
+            that.setData({
+              showPic: 0
+            });
+          }
+        })
+      }, fail: function (res) {
+        console.log(res)
+      }
+    })
+
+  },
+
+  // 获取滚动条当前位置
+  onPageScroll: function (e) {
+    var that = this;
+    if (e.scrollTop > 100) {
+      that.setData({
+        hiddenTop: false
+      });
+    } else {
+      that.setData({
+        hiddenTop: true
+      });
+    }
+  },
+
+  //回到顶部
+  goTop: function (e) {  // 一键回到顶部
+    if (wx.pageScrollTo) {
+      wx.pageScrollTo({
+        scrollTop: 0
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+      })
+    }
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function (res) {
+    var that = this;
+    return {
+      title: that.data.detail['title'] ,
+      path: '/pages/goods/detail?scene=' + app.globalData.userID + '_' + that.data.currentID
+    }
+  }
+})

@@ -1,0 +1,29 @@
+<!--pages/user/editaddress.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view class="container">
+    <form bindsubmit="formSubmit">
+    <view class='cells_ctr'>
+        <view class='cells_ctt'>
+            <picker name="m_city" mode="region" bindchange="bindRegionChange" value="{{region}}">
+            <view>{{region[0]}} {{region[1]}} {{region[2]}}</view>
+            </picker>
+        </view>
+        <view class='cells_ctt'>
+            <input name="m_addr" value="{{address}}" placeholder="详细地址，如街道、楼盘号等"/>
+        </view>
+        <view class='cells_ctt'>
+            <input name="m_name" value="{{name}}" placeholder="姓名"/>
+        </view>
+        <view class='cells_ctt'>
+            <input name="m_tel" value="{{tel}}" type="number" placeholder="手机号码"/>
+        </view>
+        <view class='cells_ctt border0'>
+            <switch name="m_default" wx:if="{{isdefault}}" checked/>
+            <switch name="m_default" wx:else/> 默认地址
+        </view>
+        <input name="m_id" value='{{id}}' style='display:none;'/>
+    </view>
+    <view class='submit_btn' style='width:327rpx;background:#aaa;' bindtap="delAddress" data-id="{{id}}">删除</view>
+    <button class='submit_btn' formType="submit" style='width:327rpx;'>确认提交</button>
+    </form>
+</view>

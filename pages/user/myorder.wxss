@@ -1,0 +1,109 @@
+/* pages/user/myorder.wxss */
+@import "/style/cells.wxss";
+.container {
+  padding-top:96rpx;
+}
+.tab_ctr {
+  position:fixed;
+  width: 100%;
+  height: 80rpx;
+  background: #fff;
+  border-bottom: 2rpx #f2f2f2 solid;
+  font-size: 32rpx;
+  z-index: 9;
+}
+.tab_ctt {
+  position: absolute;
+  width: 100%;
+  height: 82rpx;
+  left:0;
+  top:0;
+  z-index: 9;
+}
+.tab_cell1 {
+  float: left;
+  width: 20%;
+  height: 76rpx;
+  line-height: 76rpx;
+  text-align: center;
+  padding-bottom: 6rpx;
+}
+.tab_cell2 {
+  float: left;
+  width: 20%;
+  height: 76rpx;
+  line-height: 76rpx;
+  text-align: center;
+}
+
+.myorder_lctr {
+  float: left;
+  width: 582rpx;
+  overflow: hidden;
+}
+.myorder_pic {
+  margin-right: 20rpx;
+  float: left;
+  width: 160rpx;
+  height: 160rpx;
+}
+.myorder_pic image {
+  width: 100%;
+}
+
+.myorder_lctt {
+  float: left;
+  width: 402rpx;
+  height: 160rpx;
+  display:table;
+}
+.myorder_ltxt {
+  vertical-align:middle;
+  display:table-cell;
+}
+.myorder_goods_title,.myorder_goods_spec {
+  float: left;
+  width: 100%;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.myorder_goods_spec {
+  font-size: 28rpx;
+  color: #888;
+}
+
+.myorder_rctr {
+  float: left;
+  width: 120rpx;
+  height: 160rpx;
+  text-align: right;
+  display:table;
+}
+.myorder_rctt {
+  vertical-align:middle;
+  display:table-cell;
+}
+.myorder_rctt .span1,.myorder_rctt .span2 {
+  font-size: 28rpx;
+}
+
+.myorder_btn,.myorder_btn_on {
+  margin-left:20rpx;
+  float: right;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  background: #fff;
+  border: 2rpx #333 solid;
+  border-radius: 6rpx;
+  line-height: 52rpx;
+  padding-top: 4rpx;
+}
+.myorder_btn::after {border: 0;}
+.myorder_btn_on {
+  color: #fff;
+}
+
+@import "/style/style.wxss";

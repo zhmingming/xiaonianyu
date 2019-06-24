@@ -1,0 +1,79 @@
+/**style.wxss**/
+/*整体风格*/
+/*index*/
+.service_ctr i,.goods_new_t3 {
+  color: #f95714;
+}
+/*category*/
+/* .category-item.current{
+  border-left:4rpx #f95714 solid;
+} */
+/*goods_detail*/
+.goods_price,.goods_cell_left i,.sku_t1 {
+  color: #f95714;
+}
+.sku_spec2 {
+  color: #ffffff;
+  border: 1px #f95714 solid;
+}
+.cart_yuan,.goods_foot_buy,.sku_spec2,.sku_buy,.share_btn {
+  background: #f95714;
+}
+.sku_cart {
+  background: #4ab14f;
+}
+/*goods_list*/
+.top_nav.current {
+  color:#f95714;
+  border-bottom: 4rpx #f95714 solid;
+}
+/*cart*/
+.cart_foot_total {
+  color: #f95714;
+}
+.cart_foot_right {
+  background: #f95714;
+}
+/*order*/
+.foot_left {
+  color: #f95714;
+}
+.foot_right {
+  background: #f95714;
+}
+/*topic_list*/
+.topic_list_price {
+  color: #f95714;
+}
+/*myaddr*/
+.default_ico,.addr_add_btn {
+  border: 2rpx #f95714 solid;
+  color: #f95714;
+}
+/*mycoupon*/
+.tab_cell_on {
+  color: #f95714;
+  border-bottom: 6rpx #f95714 solid;
+}
+.coupon_ctt {
+  background: #FF6868;
+}
+.coupon_btn {
+  background: #FFE6E6;
+  color: #FF6868;
+}
+/*myorder*/
+.tab_cell2 {
+  color: #f95714;
+  border-bottom: 6rpx #f95714 solid;
+}
+.myorder_rctt .span1 {
+  color: #f95714;
+}
+.myorder_rctt .span2 {
+  color: #48b76a;
+}
+.myorder_btn_on {
+  border:2rpx #f95714 solid;
+  background: #f95714;
+}

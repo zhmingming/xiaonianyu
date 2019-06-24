@@ -1,0 +1,75 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.7.1",
+	"appid": "wx9f9be71165fe140a",
+	"projectname": "%E5%B0%8F%E5%B9%B4%E9%B1%BC",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 3,
+			"list": [
+				{
+					"id": -1,
+					"name": "列表",
+					"pathName": "pages/goods/list",
+					"query": "id=71",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品详情",
+					"pathName": "pages/goods/detail",
+					"query": "id=187",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "品牌商品",
+					"pathName": "pages/goods/list",
+					"query": "brand_id=11&id=23",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "退换货",
+					"pathName": "pages/user/returns",
+					"query": "id=67",
+					"scene": null
+				}
+			]
+		}
+	}
+}

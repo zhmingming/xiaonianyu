@@ -1,0 +1,126 @@
+/* pages/order/cart.wxss */
+@import "/style/cells.wxss";
+.m_fr span { color: #888;}
+/*列表中单选*/
+.cart_radio_ctr {
+  float: left;
+  width:70rpx;
+  height: 160rpx;
+  display:table;
+}
+.cart_radio_ctt {
+  vertical-align:middle;
+  display:table-cell;
+}
+/*列表中图片*/
+.cart_pic {
+  margin-right: 20rpx;
+  float: left;
+  width: 160rpx;
+  height: 160rpx;
+}
+.cart_pic image {
+  width: 100%;
+}
+/*列表右侧*/
+.cart_right_ctr {
+  float: left;
+  width: 452rpx;
+  height: 160rpx;
+}
+.cart_title {
+  float: left;
+  width: 100%;
+  height: 80rpx;
+  padding-top: 8rpx;
+  padding-bottom: 20rpx;
+}
+.cart_goods_title {
+  float: left;
+  width: 100%;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.cart_goods_spec {
+  float: left;
+  width: 100%;
+  font-size: 28rpx;
+  color: #888;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.cart_del,.cart_add { 
+  float: left;
+  width: 60rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  text-align: center;
+  border: 1px #999 solid;
+  border-radius: 8rpx 0 0 8rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+.cart_input {
+  float: left;
+  width: 80rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  text-align: center;
+  border-top: 1px #999 solid;
+  border-bottom: 1px #999 solid;
+  font-size: 28rpx;
+}
+.cart_add {
+  border-radius:0 8rpx 8rpx 0;
+}
+.cart_del_btn {
+  float: left;
+  margin-left: 10rpx;
+  width: 52rpx;
+  height: 52rpx;
+  text-align: center;
+  line-height: 52rpx;
+  border: 1px #999 solid;
+  border-radius: 8rpx;
+}
+
+.cart_foot {
+  position: fixed;
+  width: 100%;
+  height: 98rpx;
+  background:#f8f8f8;
+  border-top: 2rpx #eee solid;
+  left: 0;
+  bottom: 0;
+  z-index: 9;
+  line-height:98rpx;
+  font-size: 32rpx;
+}
+.cart_foot_left {
+  float:left;
+  width: 71.5%;
+  height: 98rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+.cart_foot_total {
+  float: right;
+}
+.cart_foot_right {
+  float:left;
+  width: 28.5%;
+  font-weight: bold;
+  height: 98rpx;
+  color: #fff;
+  text-align: center;
+}
+
+@import "/style/style.wxss";

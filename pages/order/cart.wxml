@@ -1,0 +1,43 @@
+<!--pages/order/cart.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view class="container" style='padding-bottom:100rpx;'>
+    <view class='cells_ctr'>
+        <view class="cells_ctt {{index+1==cartList.length ? 'border0' : ''}}" wx:for="{{cartList}}" wx:key="key">
+            <view class='cart_radio_ctr'>
+                <view class='cart_radio_ctt'>
+                    <radio name='m_cart' checked="{{item.is_select}}" data-index="{{index}}" bindtap='selectItem'/>
+                </view>
+            </view>
+            <navigator url="/pages/goods/detail?id={{item.goods_id}}" class='cart_pic'><image mode='widthFix' src="{{item.pic}}"/></navigator>
+            <view class='cart_right_ctr'>
+                <view class='cart_title'>
+                    <view class='cart_goods_title'>{{item.title}}</view>
+                    <view class='cart_goods_spec'>{{item.spec_key_name}}</view>
+                </view>
+                <view>
+                    <view class='fl'>¥{{item.yprice}}</view>
+                    <view class='fr'>
+                        <view class='cart_del' data-index="{{index}}" bindtap="delAmount">-</view>
+                        <input class='cart_input' data-index="{{index}}" bindinput="bindKeyInput" type="number" value='{{item.amount}}' />
+                        <view class='cart_add' data-index="{{index}}" bindtap="addAmount">+</view>
+                        <view class='cart_del_btn' data-id="{{item.id}}" bindtap="delCart"><i class="iconfont icon-del"></i></view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class='cart_foot' wx:if="{{cartList.length>0}}">
+        <view class='cart_foot_left'>
+            <view class='fl'>
+                <radio checked="{{allSelect}}" bindtap='allSelect'/>全选
+            </view>
+            <view class='cart_foot_total'>¥{{total}}</view>
+        </view>
+        <view class="cart_foot_right" bindtap="buyNow">立即下单</view>
+    </view>
+    <block wx:if="{{cartList.length<1}}">
+        <view class='none_ctr'><i class="iconfont icon-none"></i></view>
+        <view class='none_txt'>购物车空空的~</view>
+    </block>
+</view>
