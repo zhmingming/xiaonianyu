@@ -3,15 +3,24 @@
 
 <view class="container">
     <view class='top_ctr'>
-        <view class='search_ctr' bindtap='toSearch'>
+        <!-- <view class='search_ctr' bindtap='toSearch'>
             <i class="iconfont icon-search search_icon"></i> 搜索商品
-        </view>
-        <scroll-view class='nav_ctr' scroll-x="true">
+        </view> -->
+        <view class="top-nav">
+           <scroll-view class='nav_ctr' scroll-x="true">
             <view id="n0" class='nav_cell_on'>精选</view>
             <block wx:for="{{catList}}" wx:key="key">
-                <view class='nav_cell' bindtap='goCategory' data-id='{{item.id}}'>{{item.wap_title}}</view>
+                <view class='nav_cell' bindtap='goCategory' data-id='{{item.id}}'  data-index="{{index}}">{{item.wap_title}}</view>
             </block>
         </scroll-view>
+           <view wx:if="{{false}}" class="xl-nav {{is_xl ? 'icon-you1-x' : ''}}" bindtap='dropDownNav'> <i class="iconfont icon-you1"></i></view>
+           <view class="xl-k" wx:if="{{false}}">
+            <view class="xl-k-top">
+              <view>精品推荐</view>
+               <view class="xl-nav-2 {{is_xl ? 'icon-you1-x2' : ''}}" bindtap='dropDownNav'> <i class="iconfont icon-you1 {{is_xl ? 'icon-you1-x2' : ''}}"></i></view>
+            </view>
+           </view>
+        </view>
     </view>
     <view class="section swiper">
         <swiper 
@@ -34,36 +43,36 @@
     <view class='fw_ctr bc_white'>
         <view class='fw_ctt'>
             <!-- <view class='fw_ico'><image src="../../images/icon_sheng.png"/></view> -->
-            <image class="fw_img" src="../../images/icon_sheng.png" />
+            <image class="fw_img-1" src="../../images/icon_sheng.png" />
             <view class='fw_t1'>全网底价</view>
             <!-- <view class='fw_t2'>全网底价超省</view> -->
         </view>
         <view class='fw_ctt'>
             <!-- <view class='fw_ico'><image src="../../images/icon_zheng.png"/></view> -->
-            <image class="fw_img" src="../../images/icon_zheng.png" />
+            <image class="fw_img-2" src="../../images/icon_zheng.png" />
             <view class='fw_t1'>品牌授权</view>
             <!-- <view class='fw_t2'>品牌商家授权</view> -->
         </view>
         <view class='fw_ctt'>
             <!-- <view class='fw_ico'><image src="../../images/icon_kuai.png"/></view> -->
-            <image class="fw_img" src="../../images/icon_kuai.png" />
-            <view class='fw_t1'>顺丰包邮</view>
+            <image class="fw_img-3" src="../../images/icon_kuai.png" />
+            <view class='fw_t1'>全场包邮</view>
             <!-- <view class='fw_t2'>24小时内发货</view> -->
         </view>
         <view class='fw_ctt'>
             <!-- <view class='fw_ico'><image src="../../images/icon_bao.png"/></view> -->
-            <image class="fw_img" src="../../images/icon_bao.png" />
+            <image class="fw_img-3" src="../../images/icon_bao.png" />
             <view class='fw_t1'>无忧退换</view>
             <!-- <view class='fw_t2'>品牌护航退换</view> -->
         </view>
     </view>
 
     <!-- 新版 - 新人专享 -->
-    <view class='pub_ctr2'>
+    <view class='pub_ctr2' wx:if="{{new_people}}">
         <view class='pub_title_ctr2'>
             <view class='pub_main_title2'>新人专享</view>
             <view class='pub_sub_title2'>全网底价，只为遇见你</view>
-            <navigator url="/pages/topic/detail?id=8" class='pub_title_btn2'>更多</navigator>
+            <navigator url="/pages/topic/detail?id=8" class='pub_title_btn2'>更多 ></navigator>
         </view>
         <scroll-view class='pub_scroll' scroll-x style="width: 100%">
             <view wx:for="{{newGoodsList}}" wx:key="key" class="pub_goods_box">
@@ -90,17 +99,18 @@
         <view class='pub_title_ctr2'>
             <view class='pub_main_title2'>限时抢购</view>
             <view class='pub_sub_title2'>行业底价，我们是认真的</view>
-            <navigator url="/pages/promotion/flashsale?cat_id=" class='pub_title_btn2'>更多</navigator>
+            <navigator url="/pages/promotion/flashsale?cat_id=" class='pub_title_btn2'>更多 ></navigator>
         </view>
         <view class='time_cut_down'>
-            <view class='cut_down_txt'>
+            <view class='cut_down_txt' wx:if="{{xianShi.countDD > 2 ? false : true}}">
                 距结束
-                <span>03</span>
+                <span>{{xianShi.countHH}}</span>
                 :
-                <span>22</span>
+                <span>{{xianShi.countMM}}</span>
                 :
-                <span>40</span>
+                <span>{{xianShi.countSS}}</span>
             </view>
+              <view class='cut_down_txt' wx:else>距结束   <span>{{xianShi.countDD}}</span>天</view>
         </view>
         <view class='pub_ctt'>
             <view wx:for="{{hotGoodsList}}" wx:key="key" class="pub_ctt_goods_box">
@@ -118,9 +128,9 @@
                     <view class='pub_goods_title'>{{item.title}}</view>
                     <view class="process_box">
                         <view class="process_bg">
-                            <view class="process_checked" style="width: 65%;"></view>
+                            <view class="process_checked" style="width: {{item.sale_rate}}%;"></view>
                         </view>
-                        <view class="process_txt">已售 <span>65%</span></view>
+                        <view class="process_txt">已售 <span>{{item.sale_rate}}%</span></view>
                     </view>
                     <view class="bottom_btns">
                         <view class='pub_mark_btn'>立即抢</view>
@@ -133,7 +143,7 @@
     <view class='pub_ctr2'>
         <view class='pub_title_ctr2'>
             <view class='pub_main_title2'>品牌特惠</view>
-            <navigator url="#" class='pub_title_btn2'>更多</navigator>
+            <!-- <navigator url="#" class='pub_title_btn2'>更多 ></navigator> -->
         </view>
         <view class="tabs_box">
             <view class="{{tabSelect ? 'tab active' : 'tab'}}" bindtap="tabSwitch">火爆开抢</view>
@@ -147,14 +157,17 @@
                 </view>
                 <view class='topic_ctt'>
                     <view class='topic_txt_ctr'>
-                        <view class='topic_txt1'>{{item.title}}</view>
+                        <view class='topic_txt1 ellipsis'>{{item.title}}</view>
                         <view class='topic_txt2'>
-                            距结束
-                            <span>{{item.countHH}}</span>
-                            ：
-                            <span>{{item.countMM}}</span>
-                            ：
-                            <span>{{item.countSS}}</span>
+                            <view wx:if="{{item.countDD > 2 ? false : true}}">
+                                距结束
+                              <span>{{item.countHH}}</span>
+                              ：
+                              <span>{{item.countMM}}</span>
+                              ：
+                              <span>{{item.countSS}}</span>
+                            </view>
+                            <view wx:else>不足 <text>{{item.countDD}}</text>天</view>
                         </view>
                     </view>
                     <!-- <view class='topic_txt3'>
@@ -172,7 +185,7 @@
                 </view>
                 <view class='topic_ctt'>
                     <view class='topic_txt_ctr'>
-                        <view class='topic_txt1'>{{item.title}}</view>
+                        <view class='topic_txt1 ellipsis'>{{item.title}}</view>
                     </view>
                 </view>
             </navigator>

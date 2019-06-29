@@ -36,7 +36,11 @@ Page({
     sharePic:'',
     couponList: [],
     hiddenTop: true,
-    new_user : 0
+    new_user : 0,
+    determine: "",
+    is_des: false,
+    is_limited_time: true,
+    e_date:""
   },
 
   /**
@@ -194,6 +198,20 @@ Page({
     var that = this;
     that.setData({
       showDialog: !that.data.showDialog
+    });
+  },
+  footCart: function(){
+    var that = this;
+    that.toggleDialog(); 
+    that.setData({
+      determine: "addCart"
+    });
+  },
+  footBuy: function () {
+    var that = this;
+    that.toggleDialog();
+    that.setData({
+      determine: "buyNow"
     });
   },
   //切换规格
@@ -456,6 +474,13 @@ Page({
 
   },
 
+  // 偏远地区不支持发货说明
+  regionDes: function(){
+    var that = this;
+     that.setData({
+       is_des: !that.data.is_des
+     })
+  },
   // 获取滚动条当前位置
   onPageScroll: function (e) {
     var that = this;
@@ -500,5 +525,59 @@ Page({
       title: that.data.detail['title'] ,
       path: '/pages/goods/detail?scene=' + app.globalData.userID + '_' + that.data.currentID
     }
+  },
+
+
+
+
+  getXianShi: function () {
+    var that = this;
+    var time = 1000;
+    var n_tamp = parseInt(new Date().getTime());    // 当前时间戳
+    var t_tamp = that.data.e_date;
+
+    var mss = 0;
+    var xianShi = that.data.xianShi;
+    t_tamp = parseInt(new Date(t_tamp).getTime());   //结束时间戳
+    mss = t_tamp - n_tamp;
+
+    let formatTime = that.getFormat(mss);
+    xianShi['countDD'] = `${formatTime.dd}`;
+    xianShi['countHH'] = `${formatTime.hh}`;
+    xianShi['countMM'] = `${formatTime.mm}`;
+    xianShi['countSS'] = `${formatTime.ss}`;
+    that.setData({
+      xianShi: xianShi
+    });
+
+    setTimeout(that.getXianShi, time);
+  },
+
+  //格式化时间
+  getFormat: function (msec) {
+    let ss = parseInt(msec / 1000);
+    let ms = parseInt(msec % 1000);
+    let mm = 0;
+    let hh = 0;
+    let dd = 0;
+    if (ss > 60) {
+      mm = parseInt(ss / 60);
+      ss = parseInt(ss % 60);
+      if (mm > 60) {
+        // dd = parseInt(hh / 24);
+        // hh = parseInt(mm / 60);
+        // mm = parseInt(mm % 60);
+        hh = parseInt(mm / 60);
+        mm = parseInt(mm % 60);
+        if (hh > 24) {
+          dd = parseInt(hh / 24);
+          hh = parseInt(hh % 24);
+        }
+      }
+    }
+    ss = ss > 9 ? ss : `0${ss}`;
+    mm = mm > 9 ? mm : `0${mm}`;
+    hh = hh > 9 ? hh : `0${hh}`;
+    return { ms, ss, mm, hh, dd };
   }
 })

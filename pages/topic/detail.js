@@ -14,6 +14,7 @@ Page({
     goodsList: [],
     currentID: '',
     hiddenTop: true,
+    is_lod: false
   },
 
   /**
@@ -83,6 +84,17 @@ Page({
           goodsList: res.data,
           hiddenLoading: true
         });
+        if (that.data.hiddenLoading == false) {
+          that.setData({
+            is_lod: false
+          })
+        }
+        if (res.data.length < 1){
+          that.setData({
+            is_lod: true
+          })
+        }
+       
       }
     })
   },

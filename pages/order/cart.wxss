@@ -123,4 +123,5 @@
   text-align: center;
 }
 
+
 @import "/style/style.wxss";

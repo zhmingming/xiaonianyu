@@ -15,6 +15,7 @@
 }
 .goods_list_cell image {
   width: 100%;
+  height: 350rpx;
   display:block;
 }
 .goods_top_mark {
@@ -104,3 +105,5 @@
 .by_ctr1 image,.by_ctr2 image {
   width: 100%;
 }
+
+/* 2019-6.26 大牌限时折扣列表样式 */

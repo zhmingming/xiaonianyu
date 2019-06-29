@@ -2,15 +2,16 @@
 /*头部*/
 .top_ctr {
   width: 100%;
-  padding: 0 30rpx;
-  height: 168rpx;
+  /* height: 168rpx; */
   position: fixed;
+  top: 0;
+  left: 0;
   background: #fff;
   z-index: 9999;
   box-sizing: border-box;
 }
 .search_ctr {
-  /* float: left; */
+  float: left;
   /* width: 100%; */
   margin: 10rpx 0;
   padding: 0 16rpx;
@@ -26,18 +27,17 @@
   margin-right: 8rpx;
 }
 .nav_ctr {
-  float: left;
   margin-top: 10rpx;
   width: 100%;
   height: 68rpx;
   line-height: 64rpx;
-  font-size: 26rpx;
+  font-size: 32rpx;
   display: flex;
   white-space: nowrap;
 }
 .nav_cell,.nav_cell_on {
   position: relative;
-  margin-right: 70rpx;
+  margin-right: 30rpx;
   width: auto;
   border-bottom: 2rpx #fff solid;
   padding: 0 4rpx;
@@ -62,7 +62,7 @@
 
 /*幻灯*/
 swiper {
-  margin-top: 168rpx;
+  margin-top: 80rpx;
   height: 380rpx;
 }
 .swiper_scroll .wx-swiper-dot{
@@ -99,15 +99,15 @@ swiper {
 
 /*服务*/
 .fw_ctr {
-  float: left;
   width: 100%;
-  height: 90rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12rpx 0 16rpx 0;
 }
 .fw_ctt {
-  float: left;
-  width: 25%;
-  height: auto;
-  padding: 12rpx 0;
+  /* display: flex;
+  align-items: center; */
 }
 .fw_ico {
   float: left;
@@ -120,21 +120,25 @@ swiper {
   width: 46rpx;
   height: 46rpx;
 }
-.fw_img {
-  width: 46rpx;
-  height: 46rpx;
-  margin-left: 10rpx;
+.fw_img-1{
+  width: 50rpx;
+  height: 50rpx;
+  vertical-align: middle;
+}
+.fw_img-2{
+  width: 42rpx;
+  height: 42rpx;
+  vertical-align: middle;
+}
+.fw_img-3{
+  width: 48rpx;
+  height: 48rpx;
   vertical-align: middle;
 }
 .fw_t1 {
   display: inline-block;
-  /* float: left; */
-  /* width: 100%; */
-  line-height: 40rpx;
-  text-align: center;
   color: rgba(220, 3, 11, .8);
   font-size: 22rpx;
-  /* font-weight: bold; */
   margin-left: 14rpx;
 }
 .fw_t2 {
@@ -157,7 +161,8 @@ swiper {
 .pub_title_ctr2 {
   float: left;
   width: 100%;
-  height: 44rpx;
+  /* height: 44rpx; */
+   line-height: 44rpx;
   padding: 0 30rpx;
   box-sizing: border-box;
   color: #333333;
@@ -176,9 +181,9 @@ swiper {
 }
 .pub_title_btn2 {
   float: right;
-  height: 36rpx;
-  line-height: 36rpx;
-  padding: 0 10rpx;
+  height: 44rpx;
+  line-height: 44rpx;
+  padding: 0 20rpx;
   font-size: 22rpx;
   color: #777777;
 }
@@ -269,8 +274,9 @@ swiper {
 .time_cut_down {
   float: left;
   width: 100%;
-  height: 60rpx;
-  line-height: 60rpx;
+  /* height: 60rpx;
+  line-height: 60rpx; */
+  padding: 5rpx 0;
 }
 .cut_down_txt {
   padding-left: 30rpx;
@@ -281,9 +287,11 @@ swiper {
 .cut_down_txt span {
   /* background: #333; */
   display: inline-block;
-  width: 34rpx;
+  /* width: 34rpx;
   height: 34rpx;
-  line-height: 34rpx;
+  line-height: 34rpx; */
+  line-height: 28rpx;
+  padding: 2rpx;
   color: #333;
   text-align: center;
   border: 2rpx solid #ccc;
@@ -569,9 +577,11 @@ swiper {
 
 .topic_ctr {
   float: left;
-  margin: 2rpx 30rpx 0;
+  margin: 2rpx 30rpx 20rpx;
   width: 690rpx;
   height: auto;
+  box-shadow:-6rpx -8rpx 10rpx 0rpx rgba(238,238,238,1),6rpx 8rpx 10rpx 0rpx rgba(238,238,238,1);
+border-radius:6rpx;
 }
 .topic_pic {
   float: left;
@@ -627,3 +637,32 @@ swiper {
 }
 
 @import "/style/style.wxss";
+.icon-you1{color: #999;}
+.icon-you1-x{
+  -webkit-transform:rotate(-90deg);
+   transform:rotate(-90deg);
+  -webkit-transition:-webkit-transform 0.5s linear;
+   transition:transform 0.5s linear;
+}
+.icon-you1-x2{
+  -webkit-transform:rotate(90deg);
+   transform:rotate(90deg);
+  -webkit-transition:-webkit-transform 0.5s linear;
+   transition:transform 0.5s linear;
+}
+.xl-k{
+  width: 100%;
+  font-size: 32rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+ 
+  background: #fff;
+
+}
+.xl-k-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+   padding:0 4rpx 0 30rpx;
+}

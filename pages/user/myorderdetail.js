@@ -47,6 +47,7 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
+        console.log(res.data)
         that.setData({
           detail: res.data,
           currentID: id
@@ -177,7 +178,10 @@ Page({
   toReturns: function (e) {
     var that = this;
     var m_id = e.currentTarget.dataset.id;
-    app.redirect('user/returns', 'id=' + m_id);
+    var u_id = e.currentTarget.dataset.u_id;
+    var order_sn = e.currentTarget.dataset.order_sn;
+    console.log(e)
+    app.redirect('user/returns', 'id=' + m_id + '&order_sn=' + order_sn + '&u_id=' + u_id);
   },
 
   /**

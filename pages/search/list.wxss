@@ -20,6 +20,6 @@
 }
 
 .top_nav1 {
-  color: #f95714;
+  color: #DC030B;
 }
 @import "/style/style.wxss";

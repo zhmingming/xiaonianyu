@@ -23,6 +23,7 @@
     "pages/user/mybalance",
     "pages/user/myintegral",
     "pages/user/returns",
+    "pages/user/returnsApply",
     "pages/search/index",
     "pages/search/list",
     "pages/fenxiao/index",
@@ -41,7 +42,7 @@
   },
   "tabBar": {
     "color": "#999999",
-    "selectedColor": "#F95714",
+    "selectedColor": "#333",
     "list": [
       {
         "pagePath": "pages/index/index",

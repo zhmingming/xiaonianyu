@@ -12,9 +12,9 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.1",
+	"libVersion": "2.7.2",
 	"appid": "wx9f9be71165fe140a",
-	"projectname": "%E5%B0%8F%E5%B9%B4%E9%B1%BC",
+	"projectname": "xiaonianyu",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
@@ -39,7 +39,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 5,
 			"list": [
 				{
 					"id": -1,
@@ -67,6 +67,41 @@
 					"name": "退换货",
 					"pathName": "pages/user/returns",
 					"query": "id=67",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "大牌限时折扣",
+					"pathName": "pages/topic/detail",
+					"query": "id=6",
+					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "列表页",
+					"pathName": "pages/category/index",
+					"query": "id=23",
+					"scene": null
+				},
+				{
+					"id": 6,
+					"name": "列表页",
+					"pathName": "pages/goods/detail",
+					"query": "id=750",
+					"scene": null
+				},
+				{
+					"id": 7,
+					"name": "限时抢购-全部",
+					"pathName": "pages/promotion/flashsale",
+					"query": "cat_id=",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "购物车",
+					"pathName": "pages/order/cart",
+					"query": "",
 					"scene": null
 				}
 			]

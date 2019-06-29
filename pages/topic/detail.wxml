@@ -4,11 +4,21 @@
     <!--头部图片-->
     <view class="swiper">
         <image src="{{detail.pic}}"/>
+        <view class='topic_title'>
+          <view class='topic_t1'>距离结束</view>
+          <view class='topic_t2'>
+            <view class='time' wx:if="{{detail.countDD > 2 ? false : true}}">
+              <view class='bg-k'>{{detail.countHH}}</view>
+              :
+              <view class='bg-k'>{{detail.countMM}}</view>
+               :
+              <view class='bg-k'>{{detail.countSS}}</view>
+            </view>
+           <view class='bg-k' wx:else>{{detail.countDD}}天</view>
+          </view>
     </view>
 
-    <view class='topic_title'>
-        <view class='topic_t1'>距离结束还剩</view>
-        <view class='topic_t2'>{{detail.countDD}}天{{detail.countHH}}小时{{detail.countMM}}分{{detail.countSS}}秒</view>
+   
     </view>
 
     <view class='goods_list_ctr'>
@@ -27,7 +37,7 @@
                 </view>
             </navigator>
         </view>
-        <block wx:if="{{goodsList.length<1}}">
+        <block wx:if="{{is_lod}}">
             <view class='none_ctr'><i class="iconfont icon-none"></i></view>
             <view class='none_txt'>暂无商品!</view>
         </block>

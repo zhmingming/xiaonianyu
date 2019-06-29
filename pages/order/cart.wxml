@@ -37,7 +37,13 @@
         <view class="cart_foot_right" bindtap="buyNow">立即下单</view>
     </view>
     <block wx:if="{{cartList.length<1}}">
-        <view class='none_ctr'><i class="iconfont icon-none"></i></view>
-        <view class='none_txt'>购物车空空的~</view>
+        <view class='none_ctr'>
+          <image class="cart-null" src="../../images/cart-null.png"/>
+        </view>
+        <view class='none_txt'>空空如也~</view>
+         <view class='none_txt-2'>每天给自己一个惊喜吧~</view>
+        <view class='go-shopping'>
+          <navigator url="/pages/index/index" open-type="switchTab">去购物</navigator> 
+        </view>
     </block>
 </view>

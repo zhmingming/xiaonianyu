@@ -35,7 +35,10 @@ Page({
     link_addr: '',
     pickup_name: '',
     pickup_tel: '',
-    pickup_addr: ''
+    pickup_addr: '',
+    pay_type: 1,      // 微信支付
+    pay_total: 99999, //预防出错
+    order_type: 1     //
   },
 
   /**
@@ -93,6 +96,7 @@ Page({
   //直接购买获取单个商品信息(商品ID,规格key,数量)
   setGoodsData: function (p0,p1,p2) {
     var that = this;
+    console.log(p0,p1,p2);
     wx.request({
       url: rootDocment + '/api/com_get/getOrderGoods',
       data: { goods_id: p0, spec_key: p1, amount: p2},
@@ -289,7 +293,8 @@ Page({
           success: function (res) {
             console.log(res.data);
             if (res.data.code == 1001) {
-              app.gourl('order/pay', 'sn=' + res.data.data.sn);
+              // app.gourl('order/pay', 'sn=' + res.data.data.sn);
+              that.payNow(res.data.data.sn);
             }
             else {
               wx.showModal({
@@ -301,6 +306,78 @@ Page({
         })
       }
 
+    }
+  },
+  //立即支付
+  payNow: function (Order_sn) {
+    var that = this;
+    console.log(that.data.order_sn)
+    if (that.data.pay_type == 1) {//微信支付
+      wx.request({
+        url: rootDocment + '/api/miniapp_pay/wx_pay',
+        data: { order_no:Order_sn, open_id: app.globalData.openID, total: that.data.pay_price||that.data.pay_total, uid: app.globalData.userID, order_type: that.data.order_type },
+        method: 'GET',
+        header: {},
+        success: function (res) {
+          console.log(res.data);
+          console.log(res.data.timeStamp);
+          console.log(res.data.nonceStr);
+          console.log(res.data.package);
+          console.log(res.data.paySign);
+          //更新订单formID
+          if (that.data.order_type == 1) {
+            var form_id = res.data.package.replace('prepay_id=', '');
+            wx.request({
+              url: rootDocment + '/api/com_get/updateFormID',
+              data: { sn: that.data.order_sn, prepay_id: form_id },
+              method: 'GET',
+              header: {},
+              success: function (res) {
+              }
+            })
+          }
+
+          wx.requestPayment({
+            'timeStamp': res.data.timeStamp,
+            'nonceStr': res.data.nonceStr,
+            'package': res.data.package,
+            'signType': 'MD5',
+            'paySign': res.data.paySign,
+            'success': function (res) {
+              if (that.data.order_type == 1) {
+                app.redirect('user/myorder', 'type=');
+              }
+              else {
+                app.gotaburl('user/index');
+              }
+            },
+            'fail': function (res) {
+              console.log(res);
+            }
+          })
+
+        }
+      })
+    }
+    else {//余额支付
+      wx.request({
+        url: rootDocment + '/api/miniapp_pay/balance_pay',
+        data: { sn: that.data.order_sn, user_id: app.globalData.userID },
+        method: 'POST',
+        header: {},
+        success: function (res) {
+          if (res.data.code == '1001') {
+            app.redirect('user/myorder', 'type=');
+          }
+          else {
+            wx.showModal({
+              title: '提示',
+              content: res.data.msg,
+              showCancel: false
+            })
+          }
+        }
+      })
     }
   },
 

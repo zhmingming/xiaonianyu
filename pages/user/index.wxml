@@ -2,59 +2,75 @@
 <loading hidden="{{hiddenLoading}}">正在加载</loading>
 <view class="container">
     <view class='user_top'>
-        <view class='user_top_bg'><image mode='widthFix' src="../../images/headbg.jpg"/></view>
+        <!-- <view class='user_top_bg'><image mode='widthFix' src="../../images/headbg.jpg"/></view> -->
         <view class='user_top_img' style="background-image:url('{{userInfo.avatarUrl}}');background-size: 100% 100%;"></view>
         <view class='user_top_t1'>{{userInfo.nickName}}</view>
-        <view class='user_top_t2 '>余额：<span>¥{{balance}}</span>积分：<span>{{integral}}</span></view>
     </view>
     <view class='m_ctr'>
-        <navigator url='/pages/user/myorder' class='user_order_ctr'>
-            <view class='user_order_ctt'><i class="iconfont icon-allorder"></i></view>
-            <view class='user_order_ctt'>全部</view>
-        </navigator>
-        <navigator url='/pages/user/myorder?type=0' class='user_order_ctr'>
-            <view class='user_order_ctt'><i class="iconfont icon-daifukuan1"></i></view>
-            <view class='user_order_ctt'><span>待付款</span></view>
-            <view class='yuan' wx:if="{{orderNum[0]>0}}">{{orderNum[0]}}</view>
-        </navigator>
-        <navigator url='/pages/user/myorder?type=1' class='user_order_ctr'>
-            <view class='user_order_ctt'><i class="iconfont icon-daifahuo"></i></view>
-            <view class='user_order_ctt'><span>待发货</span></view>
-            <view class='yuan' wx:if="{{orderNum[1]>0}}">{{orderNum[1]}}</view>
-        </navigator>
-        <navigator url='/pages/user/myorder?type=2' class='user_order_ctr'>
-            <view class='user_order_ctt'><i class="iconfont icon-daishouhuo"></i></view>
-            <view class='user_order_ctt'><span>待收货</span></view>
-            <view class='yuan' wx:if="{{orderNum[2]>0}}">{{orderNum[2]}}</view>
-        </navigator>
+        <view class='m_ctt'>
+            <view class='m_txt'>
+                <view class='m_txt_left'>我的订单</view>
+                <!-- <navigator url='/pages/user/myorder' class='m_txt_right'>全部订单<i class="iconfont icon-you1"></i></navigator> -->
+            </view>
+        </view>
+        <view>
+            <navigator url='/pages/user/myorder' class='user_order_ctr'>
+                <view class='user_order_ctt'>
+                <image class='user_order_icon' mode='widthFix' src="../../images/icon_wode_quanbu.png"/>
+                </view>
+                <view class='user_order_ctt'><span>全部</span></view>
+            </navigator>
+            <navigator url='/pages/user/myorder?type=0' class='user_order_ctr'>
+                <view class='user_order_ctt'>
+                <image class='user_order_icon' mode='widthFix' src="../../images/icon_wode_daifukuan.png"/>
+                </view>
+                <view class='user_order_ctt'><span>待付款</span></view>
+                <view class='yuan' wx:if="{{orderNum[0]>0}}">{{orderNum[0]}}</view>
+            </navigator>
+            <navigator url='/pages/user/myorder?type=1' class='user_order_ctr'>
+                <view class='user_order_ctt'>
+                <image class='user_order_icon' mode='widthFix' src="../../images/icon_wode_daifahuo.png"/>
+                </view>
+                <view class='user_order_ctt'><span>待发货</span></view>
+                <view class='yuan' wx:if="{{orderNum[1]>0}}">{{orderNum[1]}}</view>
+            </navigator>
+            <navigator url='/pages/user/myorder?type=2' class='user_order_ctr'>
+                <view class='user_order_ctt'>
+                <image class='user_order_icon' mode='widthFix' src="../../images/icon_wode_daishouhuo.png"/>
+                </view>
+                <view class='user_order_ctt'><span>待收货</span></view>
+                <view class='yuan' wx:if="{{orderNum[2]>0}}">{{orderNum[2]}}</view>
+            </navigator>
+            <!-- <navigator url='/pages/user/myorder?type=3' class='user_order_ctr'>
+                <view class='user_order_ctt'>
+                <image class='user_order_icon' mode='widthFix' src="../../images/icon_wode_tuihuozhong.png"/>
+                </view>
+                <view class='user_order_ctt'>退货中</view>
+            </navigator> -->
+        </view>
     </view>
     <view class='cells_ctr'>
-        <view class='cells_ctt'>
-            <navigator url='/pages/user/mybalance' class='cells_txt'>
-                <view class='cells_txt_left'><i class="iconfont icon-balance"></i> 我的钱包</view>
-                <view class='cells_txt_right'><i class="iconfont icon-you1"></i></view>
-            </navigator>
-        </view>
-        <view class='cells_ctt'>
-            <navigator url='/pages/user/myintegral' class='cells_txt'>
-                <view class='cells_txt_left'><i class="iconfont icon-integral"></i> 我的积分</view>
-                <view class='cells_txt_right'><i class="iconfont icon-you1"></i></view>
-            </navigator>
-        </view>
         <view class='cells_ctt'>
             <navigator url='/pages/user/mycoupon' class='cells_txt'>
                 <view class='cells_txt_left'><i class="iconfont icon-coupon"></i> 我的优惠券</view>
                 <view class='cells_txt_right'><i class="iconfont icon-you1"></i></view>
             </navigator>
         </view>
-        <view class='cells_ctt border0'>
-            <navigator url='/pages/user/myaddress' class='cells_txt'>
-                <view class='cells_txt_left'><i class="iconfont icon-addr"></i> 收货地址</view>
+        <view class='cells_ctt'>
+            <navigator url='/pages/article/list' class='cells_txt'>
+                <view class='cells_txt_left'><i class="iconfont icon-ask"></i> 帮助中心</view>
                 <view class='cells_txt_right'><i class="iconfont icon-you1"></i></view>
             </navigator>
         </view>
+        <view class='cells_ctt border0'>
+            <view style='position: relative;' class='cells_txt'>
+                <button open-type="contact" show-message-card="ture" class='xny_kefu'></button>
+                <view class='cells_txt_left'><i class="iconfont icon-addr"></i> 小年鱼客服</view>
+                <view class='cells_txt_right'><i class="iconfont icon-you1"></i></view>
+            </view>
+        </view>
     </view>
-    <view class='cells_ctr'>
+    <!-- <view class='cells_ctr'>
         <view class='cells_ctt' wx:if="{{isFX==1}}">
             <navigator url='/pages/fenxiao/index' class='cells_txt'>
                 <view class='cells_txt_left'><i class="iconfont icon-fenxiao"></i> 分销中心</view>
@@ -75,6 +91,6 @@
                 <view class='cells_txt_right'><i class="iconfont icon-you1"></i></view>
             </view>
         </view>
-    </view>
+    </view> -->
 
 </view>

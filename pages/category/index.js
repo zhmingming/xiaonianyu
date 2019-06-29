@@ -16,18 +16,35 @@ Page({
     catList: [],
     sonList: [],  //子类
     currentList: [],  //当前类别信息
-    hiddenTop: true
+    hiddenTop: true,
+    aheight: 0,
+    swiper_length: 0,
+    swiper_index: 0,
+    current: 0,
+    heigth: 0
   },
-
+ 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var that = this;
     var id = options.id;
+    var index = options.index;
+
     that.setCategoryData(id);
     that.setHotGoodsData(id);
     that.setTopicData(id);
+
+    that.setData({
+      current: index
+    })
+
+  },
+
+  onReady: function(){
+    var that = this;
+    that.setsWiperHight(); 
   },
 
   /**
@@ -46,6 +63,7 @@ Page({
     that.setHotGoodsData(that.data.currentID);
     that.setTopicData(that.data.currentID);
     wx.stopPullDownRefresh();
+    that.setsWiperHight();
   },
 
   //初始化分类
@@ -64,7 +82,8 @@ Page({
       success: function (res) {
         that.setData({
           catList: res.data,
-          currentID: id
+          currentID: id,
+          swiper_length: res.data.length
         });
       }
     })
@@ -91,20 +110,20 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
-        console.log(res.data);
+
         that.setData({
           currentList: res.data[0]
         });
       }
     })
-
+    
   },
 
   //初始化限时抢购
   setHotGoodsData: function (id) {
     var that = this;
     var paraArr = new Array();
-    paraArr['size'] = "6";
+    paraArr['size'] = "3";
     paraArr['cat_id'] = id;
     var sign = app.signature(paraArr);
     wx.request({
@@ -133,7 +152,6 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
-        console.log(res.data.data);
         that.setData({
           topicList: res.data.data,
           hiddenLoading: true
@@ -146,13 +164,20 @@ Page({
   //点击导航
   goCategory: function (e) {
     var id = e.currentTarget.dataset.id
-    console.log(id);
+    var index = e.currentTarget.dataset.index;
+    var that = this;
     if(id==0){
       app.gotaburl('index/index');
     }
     else {
-      app.gourl('category/index?id=' + id);
+      // app.gourl('category/index?id=' + id);
+      that.setCategoryData(id);
+      that.setHotGoodsData(id);
+      that.setTopicData(id);
     }
+    that.setData({
+      current: index
+    })
   },
 
   // 获取滚动条当前位置
@@ -201,6 +226,7 @@ Page({
       }
       else {
         let formatTime = that.getFormat(t_tamp - n_tamp);
+        topicList[i]['countDD'] = `${formatTime.dd}`;
         topicList[i]['countHH'] = `${formatTime.hh}`;
         topicList[i]['countMM'] = `${formatTime.mm}`;
         topicList[i]['countSS'] = `${formatTime.ss}`;
@@ -218,23 +244,97 @@ Page({
     let ms = parseInt(msec % 1000);
     let mm = 0;
     let hh = 0;
+    let dd = 0;
     if (ss > 60) {
       mm = parseInt(ss / 60);
       ss = parseInt(ss % 60);
       if (mm > 60) {
+        // dd = parseInt(hh / 24);
+        // hh = parseInt(mm / 60);
+        // mm = parseInt(mm % 60);
         hh = parseInt(mm / 60);
         mm = parseInt(mm % 60);
+        if (hh > 24) {
+          dd = parseInt(hh / 24);
+          hh = parseInt(hh % 24);
+        }
       }
     }
     ss = ss > 9 ? ss : `0${ss}`;
     mm = mm > 9 ? mm : `0${mm}`;
     hh = hh > 9 ? hh : `0${hh}`;
-    return { ms, ss, mm, hh };
+    return { ms, ss, mm, hh ,dd};
   },
 
   //去搜索
   toSearch: function () {
     app.redirect('search/index');
-  }
+  },
+  bindchange: function(e){
+    var that = this;
+    var id = e.detail.currentItemId;
+    that.setData({
+      swiper_index: e.detail.current
+    })
 
+    that.setCategoryData(id);
+    that.setHotGoodsData(id);
+    that.setTopicData(id);
+
+    that.setsWiperHight();
+
+  },
+  setsWiperHight: function(){
+    var query = wx.createSelectorQuery();
+    var that = this;
+    var sum_heigth = 0;
+    var swiper_item = ".swiper-item" + that.data.swiper_index + " ";
+    var select = swiper_item +  ".box-hight";
+    that.setHight(swiper_item);
+    
+    var time = setTimeout(function () {
+      query.selectAll(select).boundingClientRect(function (qry) {
+        // var h = qry.height;//此处可以成功获取到数据
+        sum_heigth = that.data.heigth + 340;
+        for(let i = 0; i < qry.length; i++){
+          sum_heigth += qry[i].height * 2;
+        }
+
+        that.setData({
+          aheight: sum_heigth
+        })
+        // if (!that.data.aheight) {
+        //   clearTimeout(time);
+        // }
+      }).exec();
+    }, 1000)
+  },
+
+  setHight: function (swiper_item) {
+    var query = wx.createSelectorQuery();
+    var that = this;
+    var heigth = 0;
+    var select = swiper_item + ".topic_ctr";
+
+    var time = setTimeout(function () {
+      query.selectAll(select).boundingClientRect(function (qry) {
+        for (let i = 0; i < qry.length; i++) {
+          heigth += qry[i].height * 2 + 50;
+        }
+        that.setData({
+          heigth: heigth
+        })
+        // if(!that.data.height){
+        //   clearTimeout(time);
+        // }
+        
+      }).exec();
+    }, 1000)
+  },
+
+  bindtransition: function(e){
+    // console.log(e);
+    
+  }
+  
 })

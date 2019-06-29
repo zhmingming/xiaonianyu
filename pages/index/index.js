@@ -19,7 +19,11 @@ Page({
     fid: 0,
     catList: [],
     hiddenTop: true,
-    tabSelect: true
+    tabSelect: true,
+    xianShi: { "countHH": "00", "countMM": "00", "countSS": "00"},
+    e_date : "",
+    new_people: true,
+    is_xl: false
   },
   onLoad: function (opt) {
     var that = this;
@@ -31,13 +35,15 @@ Page({
       });
     }
     //初始化
+    that.setHotGoodsData();
     this.setCategoryData();
     that.setSlideData();
     that.setNewGoodsData();
     that.setTopicData();
-    that.setHotGoodsData();
-  },
+    
 
+    
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -69,7 +75,6 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
-        console.log('11111'+ res.data)
         that.setData({
           catList: res.data
         });
@@ -133,8 +138,26 @@ Page({
         that.setData({
           topicList: res.data.data
         });
+        // var n_tamp = parseInt(new Date().getTime());    // 当前时间戳
+        // var t_tamp = 0;
+        // var mss = 0;
+        // var remaining_time = [];
+        // for (let i = 0; i < res.data.data.length; i++){
+        //   t_tamp = parseInt(new Date(res.data.data[i].e_date).getTime());   //结束时间戳
+        //   mss = t_tamp - n_tamp;
+        //   if (that.getFormat(mss).hh > 48) {
+        //     remaining_time.push(parseInt(that.getFormat(mss).hh / 24));
+        //     that.setData({
+        //       is_days: !that.data.is_days,
+        //       is_time: !that.data.is_time,
+        //       remaining_time: remaining_time
+        //     });
+        //   }
+        // }
+        
       }
     })
+    // console.log(that.data.topicList);
     that.setCountDown();
   },
 
@@ -142,22 +165,70 @@ Page({
   setHotGoodsData: function () {
     var that = this;
     var paraArr = new Array();
-    paraArr['size'] = 6;
+    paraArr['size'] = 3;
     var sign = app.signature(paraArr);
     wx.request({
       url: rootDocment + '/api/com_get/getFlashGoods',
-      data: { size: paraArr['size'],sign: sign},
+      data: { size: paraArr['size'],sign: sign, xianshi: "1"},
       method: 'GET',
       header: {},
       success: function (res) {
+        let hotGoodsList = new Array();
+        console.log(res.data.data);
+        var i = 0;
+        for (var arr in res.data.data){
+          if(i < 3){
+            hotGoodsList.push(res.data.data[arr]);
+          }
+          i++;
+        }
         that.setData({
-          hotGoodsList: res.data.data,
-          hiddenLoading: true
+          hotGoodsList: hotGoodsList,
+          hiddenLoading: true,
+          e_date: res.data.data.e_date
         });
+
+ 
       }
     })
+    var GetSessionid = setInterval(function () {
+
+      var sessionid = that.data.e_date;
+      if (sessionid != "") {
+        that.getXianShi()
+        if (!(typeof (GetSessionid) == "undefined")) {
+
+          clearInterval(GetSessionid);
+        }
+
+      }
+
+    }, 100)
+   
   },
-  
+  getXianShi: function(){
+    var that = this;
+    var time = 1000;
+    var n_tamp = parseInt(new Date().getTime());    // 当前时间戳
+    var t_tamp = that.data.e_date;
+    var mss = 0;
+    var xianShi = that.data.xianShi;
+    t_tamp = t_tamp.substring(0, 19);
+    t_tamp = t_tamp.replace(/-/g, '/');
+    t_tamp = parseInt(new Date(t_tamp).getTime());   //结束时间戳
+    mss = t_tamp - n_tamp;
+    
+    let formatTime = that.getFormat(mss);
+    xianShi['countDD'] = `${formatTime.dd}`;
+    xianShi['countHH'] = `${formatTime.hh}`;
+    xianShi['countMM'] = `${formatTime.mm}`;
+    xianShi['countSS'] = `${formatTime.ss}`;
+    that.setData({
+      xianShi: xianShi
+    });
+
+    setTimeout(that.getXianShi, time);
+  },
   //点击幻灯片
   showSlide: function (e) {
     var url = e.currentTarget.dataset.url
@@ -167,10 +238,18 @@ Page({
 
   //点击导航
   goCategory: function (e) {
-    var id = e.currentTarget.dataset.id
-    app.redirect('category/index?id='+id);
+    var id = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
+    console.log(e);
+    app.redirect('category/index?id=' + id +"&index="+ index);
   },
+  dropDownNav: function(){
+    var that = this;
+    that.setData({
+      is_xl: !that.data.is_xl
+    })
 
+  },
   // 获取滚动条当前位置
   onPageScroll: function (e) {
     var that = this;
@@ -219,7 +298,7 @@ Page({
       t_edate = topicList[i]['e_date'];
       t_edate = t_edate.substring(0, 19);
       t_edate = t_edate.replace(/-/g, '/');
-      t_tamp = parseInt(new Date(t_edate).getTime());
+      t_tamp = parseInt(new Date(t_edate).getTime());   //结束时间戳
       if (n_tamp > t_tamp) {
         topicList.splice(i, 1); //移除了
       }
@@ -248,8 +327,15 @@ Page({
       mm = parseInt(ss / 60);
       ss = parseInt(ss % 60);
       if (mm > 60) {
+        // dd = parseInt(hh / 24);
+        // hh = parseInt(mm / 60);
+        // mm = parseInt(mm % 60);
         hh = parseInt(mm / 60);
         mm = parseInt(mm % 60);
+        if (hh > 24) {
+          dd = parseInt(hh / 24);
+          hh = parseInt(hh % 24);
+        }
       }
     }
     ss = ss > 9 ? ss : `0${ss}`;

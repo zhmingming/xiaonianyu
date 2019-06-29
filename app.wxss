@@ -45,6 +45,34 @@ page{
   font-size: 28rpx;
   color: #999;
 }
+.none_ctr {
+  height: auto;
+}
+.cart-null{
+  width: 420rpx;
+   height: 420rpx;
+}
+.none_txt {
+  height: auto;
+  color: #333;
+  font-size: 40rpx;
+}
+.none_txt-2{
+  color: #777;
+  margin: 22rpx auto 34rpx;
+  font-size: 28rpx;
+}
+.go-shopping{
+  width:160rpx;
+  height:60rpx;
+  background:rgba(220,3,11,1);
+  margin: 0 auto;
+  font-size: 26rpx;
+  text-align: center;
+  line-height: 60rpx;
+  color: #fff;
+  border-radius: 2rpx;
+}
 /*提交按钮*/
 .submit_btn {
   margin: 24rpx;
@@ -127,16 +155,23 @@ page{
 .fr {
   float: right;
 }
+.ellipsis{
+  display:-webkit-box;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  -webkit-line-clamp:1;
+  -webkit-box-orient:vertical;
 
+}
 /*ico*/
 @font-face {
-  font-family: 'iconfont';  /* project id 338962 */
-  src: url('//at.alicdn.com/t/font_338962_8hj7ltmq043.eot');
-  src: url('//at.alicdn.com/t/font_338962_8hj7ltmq043.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_338962_8hj7ltmq043.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_338962_8hj7ltmq043.woff') format('woff'),
-  url('//at.alicdn.com/t/font_338962_8hj7ltmq043.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_338962_8hj7ltmq043.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* project id 1262984 */
+  src: url('//at.alicdn.com/t/font_1262984_1k8gjeb4w5b.eot');
+  src: url('//at.alicdn.com/t/font_1262984_1k8gjeb4w5b.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1262984_1k8gjeb4w5b.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1262984_1k8gjeb4w5b.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1262984_1k8gjeb4w5b.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1262984_1k8gjeb4w5b.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family:"iconfont" !important;
@@ -145,37 +180,45 @@ page{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.icon-fenlei:before { content: "\e62b"; }
-.icon-kafei:before { content: "\e89c"; }
-.icon-gouwuche:before { content: "\e61f"; }
-.icon-geren-copy:before { content: "\e602"; }
-.icon-kefu:before { content: "\e7d6"; }
-.icon-fenxiang:before { content: "\e62c"; }
-.icon-you1:before { content: "\e633"; }
-.icon-ask:before { content: "\e7ca"; }
-.icon-addr:before { content: "\e60e"; }
-.icon-allorder:before { content: "\e642"; }
+/* .icon-fenlei:before { content: "\e62b"; }
+.icon-kafei:before { content: "\e89c"; } */
+.icon-gouwuche:before { content: "\e600"; }
+/* .icon-geren-copy:before { content: "\e602"; } */
+.icon-kefu:before { content: "\e646"; }
+.icon-fenxiang:before { content: "\e64a"; }
+.icon-you1:before { content: "\e605"; }
+.icon-ask:before { content: "\e616"; }
+.icon-addr:before { content: "\e646"; }
+/* .icon-allorder:before { content: "\e642"; }
 .icon-daifukuan1:before { content: "\e601"; }
 .icon-daifahuo:before { content: "\e683"; }
-.icon-daishouhuo:before { content: "\e701"; }
-.icon-edit:before { content: "\e622"; }
-.icon-del:before { content: "\e63d"; }
-.icon-coupon:before { content: "\e669"; }
-.icon-about:before { content: "\e66a"; }
+.icon-daishouhuo:before { content: "\e701"; } */
+.icon-edit:before { content: "\e643"; }
+.icon-del:before { content: "\e696"; }
+.icon-coupon:before { content: "\e609"; }
+/* .icon-about:before { content: "\e66a"; }
 .icon-cha:before { content: "\e612"; }
-.icon-home:before { content: "\e600"; }
-.icon-weixin:before { content: "\e63b"; }
+.icon-home:before { content: "\e600"; } */
+.icon-weixin:before { content: "\e601"; }
+/* 个人中心已经注释
 .icon-fenxiao:before { content: "\e662"; }
 .icon-huancun:before { content: "\e630"; }
+ */
+/* 找不到合适图标
 .icon-gou:before { content: "\e6ac"; }
-.icon-zan:before { content: "\e681"; }
-.icon-weixin1:before { content: "\e60f"; }
-.icon-down:before { content: "\e62f"; }
-.icon-none:before { content: "\e647"; }
-.icon-balance:before { content: "\e620"; }
-.icon-integral:before { content: "\e755"; }
+ */
+
+/* .icon-zan:before { content: "\e681"; } */
+.icon-weixin1:before { content: "\e601"; }
+.icon-down:before { content: "\e60c"; }
+/* 新版已经放弃
+.icon-none:before { content: "\e647"; } */
+/* .icon-balance:before { content: "\e620"; }
+.icon-integral:before { content: "\e755"; } */
+/* 分销页面
 .icon-yongjin:before { content: "\e607"; }
 .icon-xcx:before { content: "\e611"; }
 .icon-nk:before { content: "\e610"; }
-.icon-pintuan:before { content: "\e60d"; }
-.icon-search:before { content: "\e6d1"; }
+.icon-pintuan:before { content: "\e60d"; } */
+.icon-search:before { content: "\e602"; }
+.icon-xiajiantou:before { content: "\e6b4"; }

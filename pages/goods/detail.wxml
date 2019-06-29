@@ -22,13 +22,16 @@
           <view class="already_sales">{{detail.sales}}件已售</view>
           </view>
           <view class="right_wrapper">
-          <view class="saled_time">距结束<span>03</span>:<span>22</span>:<span>40</span></view>
+          <view class="saled_time" wx:if="{{is_limited_time}}">距结束<span>03</span>:<span>22</span>:<span>40</span></view>
           </view>
         </view>
         <view class='goods_title_bootom'>
           <view class="goods_name">{{detail.title}}</view>
           <view class="goods_share">
-                 <image bindtap="toggleShare" class="share_new_img" src="../../images/share_new.png"></image>
+         <button open-type="share" class='shareBtn'>
+         <image bindtap="" class="share_new_img" src="../../images/share_new.png"></image>
+        </button>
+                 
           </view>
         </view>
     </view>
@@ -43,7 +46,7 @@
                 <view>已售{{detail.sales}}</view>
             </view>
             
-            <view class="goods_subtitle">甘肃、宁夏、内蒙古、青海省、新疆、西藏、香港特别行政区、澳门特别行政区、台湾省等暂不支持发货</view>
+            
             
         </view>
     </view> -->
@@ -51,29 +54,30 @@
         <view class='fw_ctr bc_white' bindtap="toggleService">
         <view class='fw_ctt'>
             <!-- <view class='fw_ico'><image src="../../images/icon_sheng.png"/></view> -->
-            <image class="fw_img" src="../../images/icon_sheng.png" />
+            <image class="fw_img-1" src="../../images/icon_sheng.png" />
             <view class='fw_t1'>全网底价</view>
             <!-- <view class='fw_t2'>全网底价超省</view> -->
         </view>
         <view class='fw_ctt'>
             <!-- <view class='fw_ico'><image src="../../images/icon_zheng.png"/></view> -->
-            <image class="fw_img" src="../../images/icon_zheng.png" />
+            <image class="fw_img-2" src="../../images/icon_zheng.png" />
             <view class='fw_t1'>品牌授权</view>
             <!-- <view class='fw_t2'>品牌商家授权</view> -->
         </view>
         <view class='fw_ctt'>
             <!-- <view class='fw_ico'><image src="../../images/icon_kuai.png"/></view> -->
-            <image class="fw_img" src="../../images/icon_kuai.png" />
-            <view class='fw_t1'>顺丰包邮</view>
+            <image class="fw_img-3" src="../../images/icon_kuai.png" />
+            <view class='fw_t1'>全场包邮</view>
             <!-- <view class='fw_t2'>24小时内发货</view> -->
         </view>
         <view class='fw_ctt'>
             <!-- <view class='fw_ico'><image src="../../images/icon_bao.png"/></view> -->
-            <image class="fw_img" src="../../images/icon_bao.png" />
+            <image class="fw_img-3" src="../../images/icon_bao.png" />
             <view class='fw_t1'>无忧退换</view>
             <!-- <view class='fw_t2'>品牌护航退换</view> -->
         </view>
-        <view class='goods_cell_right_new'><i class="iconfont icon-you1"></i></view>
+        <view class='fw_ctt'> <i class="iconfont icon-you1 icon-you1-x"></i></view>
+        <!-- <view class='goods_cell_right_new'><i class="iconfont icon-you1"></i></view> -->
     </view>
 
     <!--优惠券-->
@@ -89,7 +93,8 @@
                 <view class='goods_cell_right'><i class="iconfont icon-you1"></i></view>
             </view>
         </view>
-    </view>  
+    </view>
+   
     <!--规格 服务条-->
     <view class="m_ctr">
         <view class='m_ctt' style='padding:8rpx 20rpx;'>
@@ -117,6 +122,18 @@
             </view>
         </view>
     </view>
+
+    <!-- 偏远地区不支持发货 -->
+    <view class="pydq">
+       <view class='des' bindtap='regionDes'>
+        <view>偏远地区不支持发货</view>
+        <i class="iconfont icon-you1 {{is_des ? 'icon-you1-x' : ''}}"></i>
+       </view>
+       <view class="pydq-des {{is_des ? 'pydq-des-show' : ''}}">
+        甘肃、宁夏、内蒙古、青海省、新疆、西藏、香港特别行政区、澳门特别行政区、台湾省等暂不支持发货
+      </view>
+    </view>
+    
     <!--商品详情-->
     <view class="m_ctr">
         <view class='m_ctt'>
@@ -124,6 +141,8 @@
             <view class="info_ctr"><template is="wxParse" data="{{wxParseData:article.nodes}}"/></view>
         </view>
     </view>
+
+    
     <!--底部按钮-->
     <view class='goods_foot'>
         <button open-type="contact" show-message-card="ture" class='goods_foot_btn' style='line-height:98rpx;'><i class="iconfont icon-kefu"></i></button>
@@ -132,8 +151,8 @@
             <view class='cart_yuan' wx:if="{{cartNum>0}}">{{cartNum}}</view>
         </navigator>
 
-        <view class="goods_foot_buy" bindtap="toggleDialog">立即购买</view>
-        <view class="goods_foot_cart" bindtap="toggleDialog">加入购物车</view>
+        <view class="goods_foot_buy" bindtap="footBuy">立即购买</view>
+        <view class="goods_foot_cart" bindtap="footCart">加入购物车</view>
     </view>
     <!--置顶-->
     <view class='to_top' hidden="{{hiddenTop}}" bindtap='goTop'><image src='../../images/icon_fanhuitob.png' /></view>
@@ -171,8 +190,9 @@
         </view>
         <view>
             <view wx:if="{{(detail.is_new_zone==1 && new_user==1) || detail.is_new_zone==0}}">
-              <view class='sku_cart' bindtap="addCart">加入购物车</view>
-              <view class='sku_buy' bindtap="buyNow">立即购买</view>
+              <!-- <view class='sku_cart' bindtap="addCart">加入购物车</view>
+              <view class='sku_buy' bindtap="buyNow">立即购买</view> -->
+               <view class='determine' bindtap="{{determine}}">确定</view>
             </view>
             <view wx:else class='sku_none'>新人专享</view>
         </view>
@@ -234,19 +254,35 @@
         <view class='share_ctr1'>
             <view class='share_title'>商品服务保障</view>
             <view class='share_cell1'>
-                <view class='share_txt11'><i class="iconfont icon-gou"></i> 全网底价</view>
+                <!-- <view class='share_txt11'><i class="iconfont icon-gou"></i> 全网底价</view> -->
+                 <view class='share_txt11'>
+                  <image class="fw_img" src="../../images/icon_sheng.png" />
+                  <view class=''>全网底价</view>
+                 </view>
                 <view class='share_txt12'>全网底价，优惠购买，超级省钱</view>
             </view>
             <view class='share_cell1'>
-                <view class='share_txt11'><i class="iconfont icon-gou"></i> 品牌授权</view>
+                <!-- <view class='share_txt11'><i class="iconfont icon-gou"></i> 品牌授权</view> -->
+                <view class='share_txt11'>
+                  <image class="fw_img" src="../../images/icon_zheng.png" />
+                  <view class=''>品牌授权</view>
+                 </view>
                 <view class='share_txt12'>品牌授权，商家认证，绝对正品</view>
             </view>
             <view class='share_cell1'>
-                <view class='share_txt11'><i class="iconfont icon-gou"></i> 顺丰包邮</view>
-                <view class='share_txt12'>顺丰包邮，无需承担运费，除了偏远地区不支持发货外</view>
+                <!-- <view class='share_txt11'><i class="iconfont icon-gou"></i> 顺丰包邮</view> -->
+                <view class='share_txt11'>
+                  <image class="fw_img" src="../../images/icon_kuai.png" />
+                  <view class=''>全场包邮</view>
+                 </view>
+                <view class='share_txt12'>全场包邮，无需承担运费，除了偏远地区不支持发货外</view>
             </view>
             <view class='share_cell1'>
-                <view class='share_txt11'><i class="iconfont icon-gou"></i> 无忧退换</view>
+                <!-- <view class='share_txt11'><i class="iconfont icon-gou"></i> 无忧退换</view> -->
+                 <view class='share_txt11'>
+                  <image class="fw_img" src="../../images/icon_bao.png" />
+                  <view class=''>无忧退换</view>
+                 </view>
                 <view class='share_txt12'>品质护航，无忧退换，放心购买</view>
             </view>
         </view>
