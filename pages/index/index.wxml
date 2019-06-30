@@ -187,6 +187,7 @@
             <view bindtap="kaishouTips" class='topic_ctr'>
             <view class='topic_pic'>
             <image src="{{item.pic}}" />
+            <view class="discount_box"><text style='color:#DC030B;font-size:24rpx;font-weight:900;'>{{item.starting_price}} </text>折起</view>
             <view class='e_dataTips'>
             {{item.b_date}}开售
             </view>

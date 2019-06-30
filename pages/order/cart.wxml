@@ -81,7 +81,7 @@
     <view class='none_txt'>空空如也~</view>
     <view class='none_txt-2'>每天给自己一个惊喜吧~</view>
     <view class='go-shopping'>
-      <navigator url="../index/index" open-type='switchTab' redirect="true">去购物</navigator>
+      <navigator url="../index/index" open-type='switchTab'>去购物</navigator>
     </view>
 
   </block>
