@@ -135,7 +135,6 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
-        console.log(res)
         that.setData({
           hotGoodsList: res.data.data
         });
@@ -157,6 +156,7 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
+        console.log(res)
         that.setData({
           topicList: res.data.data,
           hiddenLoading: true
@@ -318,31 +318,51 @@ Page({
       scrollTop: 0
     })
   },
-  setsWiperHight: function(){
+  
+  setsWiperHight: function () {
     var query = wx.createSelectorQuery();
     var that = this;
     var sum_heigth = 0;
-    var swiper_item = ".swiper-item" + that.data.swiper_index + " ";
-    var select = swiper_item +  ".box-hight";
-    that.setHight(swiper_item);
-    
-    var time = setTimeout(function () {
-      query.selectAll(select).boundingClientRect(function (qry) {
-        // var h = qry.height;//此处可以成功获取到数据
-        sum_heigth = that.data.heigth + 340;
-        for(let i = 0; i < qry.length; i++){
-          sum_heigth += qry[i].height * 2;
-        }
+    // var swiper_item = ".swiper-item" + that.data.swiper_index + " ";
+    // var select = swiper_item +  ".box-hight";
+    // that.setHight(swiper_item);
 
+    var time = setTimeout(function () {
+      query.select("#scroll-view-h").boundingClientRect(function (qry) {
+        // var h = qry.height;//此处可以成功获取到数据
+        console.log(qry.height)
         that.setData({
-          aheight: sum_heigth
+          aheight: qry.height
         })
-        // if (!that.data.aheight) {
-        //   clearTimeout(time);
-        // }
+       
       }).exec();
     }, 1000)
   },
+  // setsWiperHight: function(){
+  //   var query = wx.createSelectorQuery();
+  //   var that = this;
+  //   var sum_heigth = 0;
+  //   var swiper_item = ".swiper-item" + that.data.swiper_index + " ";
+  //   var select = swiper_item +  ".box-hight";
+  //   that.setHight(swiper_item);
+    
+  //   var time = setTimeout(function () {
+  //     query.selectAll(select).boundingClientRect(function (qry) {
+  //       // var h = qry.height;//此处可以成功获取到数据
+  //       sum_heigth = that.data.heigth + 340;
+  //       for(let i = 0; i < qry.length; i++){
+  //         sum_heigth += qry[i].height * 2;
+  //       }
+
+  //       that.setData({
+  //         aheight: sum_heigth
+  //       })
+  //       // if (!that.data.aheight) {
+  //       //   clearTimeout(time);
+  //       // }
+  //     }).exec();
+  //   }, 1000)
+  // },
 
   setHight: function (swiper_item) {
     var query = wx.createSelectorQuery();
@@ -366,9 +386,7 @@ Page({
     }, 1000)
   },
 
-  bindtransition: function(e){
-    // console.log(e);
-    
+  bindtransition: function(e){  
   }
   
 })

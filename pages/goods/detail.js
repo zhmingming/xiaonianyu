@@ -40,7 +40,8 @@ Page({
     determine: "",
     is_des: false,
     is_limited_time: true,
-    e_date:""
+    e_date:"",
+    xianShi: { "countHH": "00", "countMM": "00", "countSS": "00" }
   },
 
   /**
@@ -186,12 +187,51 @@ Page({
           spec_list: res.data.spec_list,
           price: m_price,
           stock: res.data.stock,
-          currentID:id
+          currentID:id,
+          e_date: res.data.e_date
         });
+        console.log(that.data.e_date)
         //初始化规格
         that.selectSpec();
+        // 添加倒计时监听
+        
       }
     })
+    var GetSessionid = setInterval(function () {
+      var sessionid = that.data.e_date;
+      if (sessionid != "") {
+        that.getXianShi();
+        if (!(typeof (GetSessionid) == "undefined")) {
+          clearInterval(GetSessionid);
+        }
+
+      }
+
+    }, 100);
+  },
+  getXianShi: function () {
+    var that = this;
+    var time = 1000;
+    var n_tamp = parseInt(new Date().getTime());    // 当前时间戳
+    var t_tamp = that.data.e_date;
+    var mss = 0;
+    var xianShi = that.data.xianShi;
+    console.log()
+    t_tamp = t_tamp.substring(0, 19);
+    t_tamp = t_tamp.replace(/-/g, '/');
+    t_tamp = parseInt(new Date(t_tamp).getTime());   //结束时间戳
+    mss = t_tamp - n_tamp;
+
+    let formatTime = that.getFormat(mss);
+    xianShi['countDD'] = `${formatTime.dd}`;
+    xianShi['countHH'] = `${formatTime.hh}`;
+    xianShi['countMM'] = `${formatTime.mm}`;
+    xianShi['countSS'] = `${formatTime.ss}`;
+    that.setData({
+      xianShi: xianShi
+    });
+
+    setTimeout(that.getXianShi, time);
   },
   //选择规格
   toggleDialog: function () {
@@ -202,7 +242,7 @@ Page({
   },
   footCart: function(){
     var that = this;
-    that.toggleDialog(); 
+    that.toggleDialog();
     that.setData({
       determine: "addCart"
     });
@@ -513,7 +553,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
@@ -525,32 +565,6 @@ Page({
       title: that.data.detail['title'] ,
       path: '/pages/goods/detail?scene=' + app.globalData.userID + '_' + that.data.currentID
     }
-  },
-
-
-
-
-  getXianShi: function () {
-    var that = this;
-    var time = 1000;
-    var n_tamp = parseInt(new Date().getTime());    // 当前时间戳
-    var t_tamp = that.data.e_date;
-
-    var mss = 0;
-    var xianShi = that.data.xianShi;
-    t_tamp = parseInt(new Date(t_tamp).getTime());   //结束时间戳
-    mss = t_tamp - n_tamp;
-
-    let formatTime = that.getFormat(mss);
-    xianShi['countDD'] = `${formatTime.dd}`;
-    xianShi['countHH'] = `${formatTime.hh}`;
-    xianShi['countMM'] = `${formatTime.mm}`;
-    xianShi['countSS'] = `${formatTime.ss}`;
-    that.setData({
-      xianShi: xianShi
-    });
-
-    setTimeout(that.getXianShi, time);
   },
 
   //格式化时间

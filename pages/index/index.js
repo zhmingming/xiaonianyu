@@ -24,7 +24,11 @@ Page({
     e_date : "",
     new_people: 1,
     is_xl: false,
-    th_type: "index"
+    th_type: "index",
+    size: "10",
+    page: 1,
+    last_page : 0,
+    new_list:[]
   },
   onLoad: function (opt) {
     var that = this;
@@ -40,7 +44,7 @@ Page({
     this.setCategoryData();
     that.setSlideData();
     that.setNewGoodsData();
-    that.setTopicData(that.data.th_type);
+    that.setTopicData(that.data.th_type, that.data.size, that.data.page);
     
 
     
@@ -59,11 +63,24 @@ Page({
     this.setCategoryData();
     this.setSlideData();
     this.setNewGoodsData();
-    this.setTopicData(that.data.th_type);
+    this.setTopicData(this.data.th_type, this.data.size, this.data.page);
     this.setHotGoodsData();
     wx.stopPullDownRefresh();
   },
-
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    var that = this;
+    if (that.data.page <= that.data.last_page){
+      that.setData({
+        page: that.data.page + 1
+      })
+      this.setTopicData(this.data.th_type, that.data.size, that.data.page);  
+    }
+    console.log(that.data.page);
+    console.log(that.data.last_page);
+  },
   //初始化分类
   setCategoryData: function () {
     var that = this;
@@ -122,6 +139,7 @@ Page({
           method: 'GET',
           header: {},
           success: function (res) {
+            console.log(res)
             that.setData({
               newGoodsList: res.data.new_goods_list,
               new_people: res.data.is_new
@@ -133,22 +151,36 @@ Page({
   },
 
   //初始化专题
-  setTopicData: function (type) {
+  setTopicData: function (type, size, page) {
     var that = this;
     var paraArr = new Array();
-    paraArr['size'] = "40";
+    paraArr['size'] = size;
     paraArr['stype'] = type;
+    paraArr['page'] = page;
     var sign = app.signature(paraArr);
     wx.request({
       url: rootDocment + '/api_topic',
-      data: { stype: paraArr['stype'], size: paraArr['size'], sign: sign},
+      data: { stype: paraArr['stype'], size: paraArr['size'], sign: sign, page: paraArr['page']},
       method: 'GET',
       header: {},
       success: function (res) {
         console.log(res);
-        that.setData({
-          topicList: res.data.data
+        console.log(that.data.page);
+        if (that.data.page <= res.data.last_page){
+          for (let i = 0; i < res.data.data.length; i++) {
+            that.data.new_list.push(res.data.data[i]);
+          }
+        }
+        let arr = that.data.new_list;
+        console.log(that.data.new_list);
+        arr.forEach((item, index) => {
+          item.b_date = item.b_date.slice(5, 16).replace(/-/, ".");
         });
+        that.setData({
+          topicList: arr,
+          last_page: res.data.last_page
+        });
+        
       }
     })
     // console.log(that.data.topicList);
@@ -163,32 +195,32 @@ Page({
     var sign = app.signature(paraArr);
     wx.request({
       url: rootDocment + '/api/com_get/getFlashGoods',
-      data: { size: paraArr['size'],sign: sign, xianshi: "1"},
+      data: { size: paraArr['size'], sign: sign, xianshi: "1" },
       method: 'GET',
       header: {},
       success: function (res) {
         let hotGoodsList = new Array();
         var i = 0;
-        for (var arr in res.data.data){
-          if(i < 3){
+        for (var arr in res.data.data) {
+          if (i < 3) {
             hotGoodsList.push(res.data.data[arr]);
           }
           i++;
         }
+        console.log(res.data.data);
         that.setData({
           hotGoodsList: hotGoodsList,
           hiddenLoading: true,
           e_date: res.data.data.e_date
         });
-
- 
       }
     })
-    var GetSessionid = setInterval(function () {
 
+    var GetSessionid = setInterval(function () {
+      // let that = this;
       var sessionid = that.data.e_date;
       if (sessionid != "") {
-        that.getXianShi()
+        that.getXianShi();
         if (!(typeof (GetSessionid) == "undefined")) {
 
           clearInterval(GetSessionid);
@@ -197,7 +229,7 @@ Page({
       }
 
     }, 100)
-   
+
   },
   getXianShi: function(){
     var that = this;
@@ -206,6 +238,7 @@ Page({
     var t_tamp = that.data.e_date;
     var mss = 0;
     var xianShi = that.data.xianShi;
+    console.log()
     t_tamp = t_tamp.substring(0, 19);
     t_tamp = t_tamp.replace(/-/g, '/');
     t_tamp = parseInt(new Date(t_tamp).getTime());   //结束时间戳
@@ -264,9 +297,11 @@ Page({
     
     that.setData({
       tabSelect: !that.data.tabSelect,
-      th_type: e.currentTarget.dataset.type
+      th_type: e.currentTarget.dataset.type,
+      page: 1,
+      new_list: []
     });
-    that.setTopicData(that.data.th_type);
+    that.setTopicData(that.data.th_type, that.data.size, that.data.page);
     console.log(e.currentTarget.dataset.type);
   },
 
@@ -352,6 +387,13 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  kaishouTips() {
+    wx.showToast({
+      title: '即将开售，敬请期待',
+      icon: 'none',
+      duration: 1000
+    })
+  },
 
 })

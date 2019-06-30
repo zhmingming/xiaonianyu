@@ -33,7 +33,7 @@
   <view class='goods_wrap'>
     <view class='goods_widget flex' wx:for="{{cartList}}" wx:key="key">
       <view class='radio_widget'>
-        <radio color='transparent' name='m_cart' checked="{{item.is_select}}" data-index="{{index}}" bindtap='selectItem' />
+        <radio color='#DC030B' name='m_cart' checked="{{item.is_select}}" data-index="{{index}}" bindtap='selectItem' />
       </view>
       <view class='goods_details_wrap flex'>
         <navigator url="/pages/goods/detail?id={{item.goods_id}}" class='goods_image_widget'>
@@ -63,8 +63,8 @@
 
   <view class='cart_foot' wx:if="{{cartList.length>0}}">
     <view class='cart_foot_left'>
-      <view class='fl'>
-        <radio color='#fff' checked="{{allSelect}}" bindtap='allSelect' />全选
+      <view class='fl' bindtap='allSelect'>
+        <radio color='#DC030B' checked="{{allSelect}}"  />全选
       </view>
       <view class='cart_foot_total'>
         <view>共计：¥<text style='color:#DC030B;'> {{total}}</text></view>

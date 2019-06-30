@@ -45,7 +45,7 @@
       <!-- 统计 -->
       <view class='flex g_statistic'>
         <text>合计：￥{{item.price}}</text>
-        <text>共{{item.goods[0]['amount']}}件商品</text>
+        <text>共{{item.goods_allNum}}件商品</text>
       </view>
       <!-- <view class='myorder_lctr'>
         仅一个商品订单情况
@@ -88,7 +88,7 @@
         <view class='myorder_btn' bindtap="delOrder" data-id="{{item.id}}">删除订单</view>
       </block>
       <block wx:if="{{item.order_state=='待付款'}}">
-        <view class='myorder_btn_on' bindtap="goPay" data-sn="{{item.order_sn}}">去付款</view>
+        <view class='myorder_btn_on' bindtap="goPay" data-sn="{{item.order_sn}}" data-pay_price='{{item.pay_price}}'>去付款</view>
         <view class='myorder_btn' bindtap="cancelOrder" data-id="{{item.id}}">取消订单</view>
       </block>
       <block wx:if="{{item.order_state=='待发货'}}">

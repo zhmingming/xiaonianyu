@@ -19,7 +19,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    console.log(options)
     that.setDetailData(options.id);
   },
 
@@ -44,7 +43,6 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
-        console.log(res.data)
         that.setData({
           detail: res.data
         });

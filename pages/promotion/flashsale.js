@@ -25,7 +25,8 @@ Page({
     e_date: "",
     is_cf: 0,
     is_curType : true,
-    is_lod: false
+    is_lod: false,
+    stype: ""
   },
 
   /**
@@ -34,9 +35,10 @@ Page({
   onLoad: function (options) {
     //初始化
     var that = this;
-  
+    console.log(options)
     that.setData({
-      e_date: options.e_date
+      e_date: options.e_date,
+      // stype: options.stype
     });
     wx.getSystemInfo({
       success: function (res) {
@@ -107,6 +109,7 @@ Page({
         method: 'GET',
         header: {},
         success: function (res) {
+          console.log(res)
           that.setData({
             curCat: res.data
           });
@@ -132,7 +135,7 @@ Page({
       var sign = app.signature(paraArr);
       wx.request({
         url: rootDocment + '/api/com_get/getFlashGoods',
-        data: { cat_id: id, size: paraArr['size'], page: paraArr['page'], order: paraArr['order'], order_type: paraArr['order_type'], sign: sign ,xianshi: "1"},
+        data: { cat_id: id, size: paraArr['size'], page: paraArr['page'], order: paraArr['order'], order_type: paraArr['order_type'], sign: sign, xianshi:1},
         method: 'GET',
         header: {},
         success: function (res) {
@@ -252,7 +255,7 @@ Page({
     that.setData({
       xianShi: xianShi
     });
-
+    console.log(that.data.xianShi)
     setTimeout(that.getXianShi, time);
   },
   
@@ -282,5 +285,5 @@ Page({
     hh = hh > 9 ? hh : `0${hh}`;
     return { ms, ss, mm, hh, dd };
   }
-
+ 
 })

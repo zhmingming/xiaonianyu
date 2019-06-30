@@ -8,7 +8,10 @@ Page({
    */
   data: {
     detail: [],
-    currentID: ''
+    currentID: '',
+    pay_type: 1,      // 微信支付
+    pay_total: 99999, //预防出错
+    order_type: 1     //
   },
 
   /**
@@ -56,9 +59,79 @@ Page({
     })
   },
 
-  //去付款
+  // //去付款 舍弃跳页面
+  // goPay: function (e) { 
+  //   app.redirect('order/pay', 'sn=' + e.currentTarget.dataset.sn);
+  // },
+  //立即支付
   goPay: function (e) {
-    app.redirect('order/pay', 'sn=' + e.currentTarget.dataset.sn);
+    var that = this;
+    console.log(e);
+    let order_sn = e.currentTarget.dataset.sn;
+    let total = e.currentTarget.dataset.pay_price;
+    console.log(e)
+    if (that.data.pay_type == 1) {//微信支付
+      wx.request({
+        url: rootDocment + '/api/miniapp_pay/wx_pay',
+        data: { order_no: order_sn, open_id: app.globalData.openID, total: total || that.data.pay_total, uid: app.globalData.userID, order_type: that.data.order_type },
+        method: 'GET',
+        header: {},
+        success: function (res) {
+          //更新订单formID
+          if (that.data.order_type == 1) {
+            var form_id = res.data.package.replace('prepay_id=', '');
+            wx.request({
+              url: rootDocment + '/api/com_get/updateFormID',
+              data: { sn: that.data.order_sn, prepay_id: form_id },
+              method: 'GET',
+              header: {},
+              success: function (res) {
+              }
+            })
+          }
+
+          wx.requestPayment({
+            'timeStamp': res.data.timeStamp,
+            'nonceStr': res.data.nonceStr,
+            'package': res.data.package,
+            'signType': 'MD5',
+            'paySign': res.data.paySign,
+            'success': function (res) {
+              if (that.data.order_type == 1) {
+                app.redirect('user/myorder', 'type=');
+              }
+              else {
+                app.gotaburl('user/index');
+              }
+            },
+            'fail': function (res) {
+              console.log(res);
+            }
+          })
+
+        }
+      })
+    }
+    else {//余额支付
+      wx.request({
+        url: rootDocment + '/api/miniapp_pay/balance_pay',
+        data: { sn: that.data.order_sn, user_id: app.globalData.userID },
+        method: 'POST',
+        header: {},
+        success: function (res) {
+          if (res.data.code == '1001') {
+            app.redirect('user/myorder', 'type=');
+          }
+          else {
+            wx.showModal({
+              title: '提示',
+              content: res.data.msg,
+              showCancel: false
+            })
+          }
+        }
+      })
+    }
   },
 
   //去评价
@@ -180,7 +253,6 @@ Page({
     var m_id = e.currentTarget.dataset.id;
     var u_id = e.currentTarget.dataset.u_id;
     var order_sn = e.currentTarget.dataset.order_sn;
-    console.log(e)
     app.redirect('user/returns', 'id=' + m_id + '&order_sn=' + order_sn + '&u_id=' + u_id);
   },
 

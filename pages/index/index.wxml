@@ -59,12 +59,16 @@
             <view class='fw_t1'>全场包邮</view>
             <!-- <view class='fw_t2'>24小时内发货</view> -->
         </view>
-        <view class='fw_ctt'>
-            <!-- <view class='fw_ico'><image src="../../images/icon_bao.png"/></view> -->
-            <image class="fw_img-3" src="../../images/icon_bao.png" />
-            <view class='fw_t1'>无忧退换</view>
-            <!-- <view class='fw_t2'>品牌护航退换</view> -->
+        <view class='fw_ctt vip_widget'>
+        <!-- <view class='fw_ico'><image src="../../images/icon_bao.png"/></view> -->
+        <image class="fw_img-3" src="../../images/icon_bao.png" />
+        <view class='fw_t1'>
+        买贵包赔
         </view>
+        <!-- <view class='fw_t2'>品牌护航退换</view> -->
+        <image class='vip_shadow' mode='widthFix' src='../../images/vip.png'></image>
+        </view>
+        
     </view>
 
     <!-- 新版 - 新人专享 -->
@@ -179,16 +183,21 @@
             </navigator>
         </view>
         <view wx:if="{{!tabSelect}}" wx:for="{{topicList}}" wx:key="key">
-            <navigator url="/pages/topic/detail?id={{item.id}}" class='topic_ctr'>
-                <view class='topic_pic'>
-                    <image src="{{item.pic}}" />
-                </view>
-                <view class='topic_ctt'>
-                    <view class='topic_txt_ctr'>
-                        <view class='topic_txt1 ellipsis'>{{item.title}}</view>
-                    </view>
-                </view>
-            </navigator>
+            <!-- <navigator url="/pages/topic/detail?id={{item.id}}" class='topic_ctr'> -->
+            <view bindtap="kaishouTips" class='topic_ctr'>
+            <view class='topic_pic'>
+            <image src="{{item.pic}}" />
+            <view class='e_dataTips'>
+            {{item.b_date}}开售
+            </view>
+            </view>
+            <view class='topic_ctt'>
+            <view class='topic_txt_ctr'>
+            <view class='topic_txt1 ellipsis'>{{item.title}}</view>
+            </view>
+            </view>
+            </view>
+            <!-- </navigator> -->
         </view>
     </view>
     <!--专区-->

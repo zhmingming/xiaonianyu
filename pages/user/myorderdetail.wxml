@@ -91,7 +91,7 @@
       <view class='info_content_widget'>
         <view class='info_item'>订单编号：{{detail.order_sn}}</view>
         <view class='info_item'>下单时间：{{detail.add_date}}</view>
-        <view class='info_item'>支付金额：{{detail.price}}</view>
+        <view class='info_item'>支付金额：{{detail.pay_price}}</view>
         <view class='info_item'>备注信息：{{}}无</view>
       </view>
     </view>
@@ -132,7 +132,7 @@
         <view class='myorder_btn' bindtap="delOrder" data-id="{{currentID}}">删除订单</view>
       </block>
       <block wx:if="{{detail.order_state=='待付款'}}">
-        <view class='myorder_btn_on' bindtap="goPay" data-sn="{{detail.order_sn}}">去付款</view>
+        <view class='myorder_btn_on' bindtap="goPay" data-sn="{{detail.order_sn}}" data-pay_price='{{detail.pay_price}}'>去付款</view>
         <view class='myorder_btn' bindtap="cancelOrder" data-id="{{currentID}}">取消订单</view>
       </block>
       <block wx:if="{{detail.order_state=='待发货'}}">

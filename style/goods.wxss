@@ -124,6 +124,48 @@
 .ys-text{
   margin-right: 10rpx;
 }
+
+/* /////// */
+.xl_style_nav {
+  position: fixed;
+  left:0;
+  top:0;
+  background: #fff;
+  z-index: 12;
+  width: 100%;
+} 
+.xl_style {
+  width:100%;
+  padding:0;
+  box-sizing:border-box;
+  font-size:28rpx;
+}
+.xl_style .xny-goods-list{ 
+  margin-left:0;
+  padding: 20rpx;
+  background: #fff;
+  margin-top: 20rpx;
+}
+.xl_style .goods_list_cell{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  float:none;
+  margin:0;
+  position:relative;
+
+}
+.xl_style .image-h{
+  width: 220rpx;
+  height: 220rpx;
+  background:rgba(255,255,255,1);
+  box-shadow:6rpx 8rpx 10rpx 0rpx rgba(238,238,238,1),-6rpx -8rpx 10rpx 0rpx rgba(238,238,238,1);
+  border-radius:6rpx;
+  margin: 0 38rpx 0 10rpx;
+}
+
+
 /*包邮打标*/
 .by_ctr1,.by_ctr2 {
   position: absolute;
@@ -158,6 +200,8 @@
   opacity:.8;
 }
 /* ******** */
+
+
 
 
 /* 2019-6.26 大牌限时折扣列表样式 */

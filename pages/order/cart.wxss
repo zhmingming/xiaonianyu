@@ -219,7 +219,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: #777777;
+  color: #777;
   font-size: 22rpx;
   line-height: 32rpx;
   margin-bottom: 10rpx;
@@ -231,7 +231,7 @@
 }
 
 .goods_price {
-  color: #DC030B;
+  color: #dc030b;
   font-size: 26rpx;
   line-height: 36rpx;
 }
@@ -250,9 +250,9 @@
   align-items: center;
 }
 
-.num_del,.num_input,.num_add {
+.num_del, .num_input, .num_add {
   width: 50rpx;
-  text-align: center
+  text-align: center;
 }
 
 .num_input {
@@ -263,12 +263,6 @@
   line-height: 36rpx;
 }
 
-
-
-
-
-
-
 /*  重写 radio 样式  */
 
 /* 未选中的 背景样式 */
@@ -277,18 +271,29 @@ radio .wx-radio-input {
   border-radius: 50%; /* 圆角 */
   width: 20rpx;
   height: 20rpx;
-  border: 6rpx solid #DC030B;
+  border: 6rpx solid #dc030b;
   opacity: 0.2;
 }
 
 /* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
 
 radio .wx-radio-input.wx-radio-input-checked {
-  border: 6rpx solid #DC030B !important;
+  border: 6rpx solid #dc030b !important;
   opacity: 1;
 }
+
 /* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
-radio .wx-radio-input.wx-radio-input-checked::before{
-  content: '';
+
+radio .wx-radio-input.wx-radio-input-checked::before {
+  border-radius: 50%; /* 圆角 */
+  width: 26rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
+  height: 26rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
+  line-height: 26rpx;
+  text-align: center;
+  font-size: 24rpx; /* 对勾大小 30rpx */
+  color: #fff; /* 对勾颜色 白色 */
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
 }
 @import "/style/style.wxss";

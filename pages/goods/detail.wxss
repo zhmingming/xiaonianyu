@@ -889,4 +889,22 @@ button::after{
 button{
   background: #fff;
 }
+.vip_widget {
+position: relative;
+overflow: hidden;
+}
+
+.vip_shadow {
+position: absolute;
+top: 0;
+/* right: -4rpx; */
+left: 68rpx;
+width: 30rpx;
+/* transform: rotate(45deg); */
+}
+
+.vip_shadow.is {
+top: 12rpx;
+left: 174rpx;
+}
 @import "/style/style.wxss";

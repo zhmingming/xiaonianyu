@@ -3,11 +3,14 @@
   <view class='head_sect flex'>
     <view class='top_navctr flex'>
       <view class="{{curType==0 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='0' data-cf="0">综合</view>
-      <view class="{{curType==1 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='1' data-cf="1">价格</view>
       <view class="{{curType==2 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='2' data-cf="2">
         销量
-        <i class="iconfont icon-xiajiantou {{is_curType ? 'icon-xiajiantou-x' : ''}}"></i>
+         </view>
+      <view class="{{curType==1 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='1' data-cf="1">
+      价格
+       <i class="iconfont icon-xiajiantou {{is_curType ? 'icon-xiajiantou-x' : ''}}"></i>
       </view>
+      
     </view>
     <view class='time_cut_down'>
       <view class='cut_down_txt'  wx:if="{{xianShi.countDD > 2 ? false : true}}">

@@ -11,9 +11,10 @@
             </block>
         </scroll-view>
     </view>
-    <swiper class="swiper-catList" indicator-dots="{{false}}" autoplay="{{false}}" style="height:{{aheight}}rpx" bindchange="bindchange" current="{{current}}" duration="300" bindtransition="bindtransition">
+    <swiper class="swiper-catList" indicator-dots="{{false}}" autoplay="{{false}}" style="height:{{aheight}}px" bindchange="bindchange" current="{{current}}" duration="300" bindtransition="bindtransition">
         <block wx:for="{{catList}}" wx:key="key">
           <swiper-item item-id='{{item.id}}' class="swiper-item{{index}}"> 
+          <scroll-view id="scroll-view-h" scroll-y="true">
     <view  class="swiper box-hight">
         <image src='{{currentList.pic}}'/>
     </view>
@@ -96,11 +97,12 @@
                             <view wx:else>不足 <text>{{item.countDD}}</text>天</view>
                         </view>
                   </view>
-                  <view class='topic_txt3'>全场<span>{{item.starting_price}}</span>折</view>
+                  <view class='topic_txt3'>全场<span>{{item.starting_price}}</span>折起</view>
               </view>
           </navigator>
       </view>
-     </view>       
+     </view>
+     </scroll-view>      
           </swiper-item>
         </block>
     </swiper>

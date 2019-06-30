@@ -2,9 +2,9 @@
 <loading hidden="{{hiddenLoading}}">正在加载</loading>
 <view class="container">
     <!--头部图片-->
-    <view class="swiper">
-        <image src="{{detail.pic}}"/>
-        <view class='topic_title'>
+    <view class="swiper" style='height:{{imgUrls == "" ? "60rpx" :"328rpx"}}'>
+        <image src="{{detail.pic}}" wx:if="{{imgUrls}}"/>
+        <view class='topic_title' wx:if="{{imgUrls}}">
           <view class='topic_t1'>距离结束</view>
           <view class='topic_t2'>
             <view class='time' wx:if="{{detail.countDD > 2 ? false : true}}">
@@ -17,43 +17,84 @@
            <view class='bg-k' wx:else>{{detail.countDD}}天</view>
           </view>
     </view>
-      <view class="dp-top-nav">
+    <!--   -->
+      <view class="{{is_new_r ? 'xl_style_nav' : 'dp-top-nav'}}">
         <view class="nav-list">
             <view class="{{currentTabsIndex == 0 ? 'selected' : ''}}" bindtap='tabsWitch' data-type="zh" data-index="{{0}}">综合</view>
             <view class="{{currentTabsIndex == 1 ? 'selected' : ''}}" bindtap='tabsWitch' data-type="xl" data-index="{{1}}">销量</view>
             <view class="price {{currentTabsIndex == 2 ? 'selected' : ''}}" bindtap='tabsWitch' data-type="jg" data-index="{{2}}">
-              <view>价格</view><i class="iconfont icon-xiajiantou {{currentTabsIndex == 2 ? 'icon-xiajiantou-x' : ''}}"></i>
+              <view>价格</view><i class="iconfont icon-xiajiantou {{is_sj ? 'icon-xiajiantou-x' : ''}}"></i>
             </view>
         </view>
           </view>
    
     </view>
+  <!-- xny-goods-list  -->
+    <view class="{{is_new_r ? 'xl_style' : 'goods_list_ctr'}}">
+        <view wx:if="{{is_new_r}}">
+      <view wx:for="{{goodsList}}" wx:key="key">
+        <navigator class='goods_widget' url="/pages/goods/detail?id={{item.id}}">
+          <view class='goods_imgWidget'>
+            <image mode='widthFix' src="{{item.pic}}" />
+          </view>
+          <view class='goods_detail_widget'>
+            <view class='goods_title'>{{item.title}}</view>
+            <view class="limit_widget">
+              新人价
+              <text class='goods_price'>¥{{item.promotion_price}}</text>
+              <text class="span">¥{{item.markey_price}}</text>
+            </view>
+            <view class='progress_widget'>
+              <view class='progressBar'>
+                <view class='progressBar_shadow' style="width:{{item.sale_rate}}%;"></view>
+              </view>
+              <view class='progressTxt'>
+                已售
+                <text>{{item.sale_rate}}%</text>
+              </view>
+            </view>
+            <view class='goods_discount'>
+              {{item.rebate % 1 == 0 ? item.rebate + ".0" : item.rebate}}折抢购
+            </view>
+          </view>
+        </navigator>
+      </view>
+    </view>
+    <view wx:else>
+      <!-- 明哥代码↓ -->
+      <view wx:for="{{goodsList}}" wx:key="key" class='xny-goods-list'>
+        <navigator url="/pages/goods/detail?id={{item.id}}" class='goods_list_cell'>
+          <!-- <view class='goods_top_mark'>限时</view> -->
+          <view class="image-h">
+            <image mode='widthFix' src="{{item.pic}}" />
+          </view>
+          <view class='goods_list_ctt'>
+            <view class="goods_list_t1">{{item.title}}</view>
+            <!-- <view class='goods_list_mark'>{{item.is_top==1 ? '精选' : '折后价'}}</view> -->
+            <view class="ys-jdt">
+              <view class="progress-bar-bg">
+                <view class="progress-bar" style="width: {{item.sale_rate}}%;"></view>
+              </view>
+              <view class=''>
+                <text class='ys-text'>已售</text>
+                <text class="goods_new_t3">{{item.sale_rate}}%</text> </view>
+            </view>
+            <view class="goods_list_t2">
+              <view class="">
+                <view>
+                  <text>￥</text>
+                  <text class='promotion_price'>{{item.promotion_price}}</text>
+                </view>
 
-    <view class='goods_list_ctr'>
-        <view wx:for="{{goodsList}}" wx:key="key" class='xny-goods-list'>
-            <navigator url="/pages/goods/detail?id={{item.id}}" class='goods_list_cell'>
-                <!-- <view class='goods_top_mark'>限时</view> -->
-                <view class="image-h">
-                  <image mode='widthFix' src="{{item.pic}}" />
-                </view>
-                <view class='goods_list_ctt'>
-                 <view class="goods_list_t1">{{item.title}}</view>
-                  <!-- <view class='goods_list_mark'>{{item.is_top==1 ? '精选' : '折后价'}}</view> -->
-                  <view class="ys-jdt">
-                    <view class="progress-bar-bg"><view class="progress-bar" style="width: {{item.sale_rate}}%;"></view></view>
-                    <view class=''><text class='ys-text'>已售</text> <text class="goods_new_t3">{{item.sale_rate}}%</text> </view>
-                  </view>
-                  <view class="goods_list_t2">
-                      <view class="">
-                        <view><text>￥</text><text class='promotion_price'>{{item.promotion_price}}</text></view>
-                      
-                      <view class="span">¥{{item.markey_price}}</view>
-                      </view>
-                      <view class="ljqg">立即抢购</view>
-                      <!-- <view class="fr"><span>{{item.rebate}}折</span></view> -->
-                  </view>
-                </view>
-            </navigator>
+                <view class="span">¥{{item.markey_price}}</view>
+              </view>
+              <view class="ljqg">立即抢购</view>
+              <!-- <view class="fr"><span>{{item.rebate}}折</span></view> -->
+            </view>
+          </view>
+        </navigator>
+      </view>
+      <!-- 明哥代码↑ -->
         </view>
         <block wx:if="{{is_lod}}">
             <view class='none_ctr'><i class="iconfont icon-none"></i></view>

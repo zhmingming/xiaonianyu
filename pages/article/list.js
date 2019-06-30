@@ -37,7 +37,6 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
-        console.log(res.data.data);
         that.setData({
           articleList: res.data.data,
           hiddenLoading: true

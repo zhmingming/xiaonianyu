@@ -8,7 +8,6 @@ Page({
   //微信授权登录
   onGotUserInfo: function (e) {
     wx.navigateBack();
-    //console.log(e);
   },
   //拒绝
   goBack: function (e) {

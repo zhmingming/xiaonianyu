@@ -666,3 +666,31 @@ border-radius:6rpx;
   justify-content: space-between;
    padding:0 4rpx 0 30rpx;
 }
+.e_dataTips {
+position: absolute;
+top: 0;
+right: 0;
+padding: 0 20rpx;
+height: 44rpx;
+line-height: 44rpx;
+text-align: center;
+background: #000;
+color: #fff;
+font-size: 22rpx;
+border-radius:0 6rpx 0 6rpx;
+}
+
+/* y 新增VIP样式 */
+.vip_widget {
+position: relative;
+overflow: hidden;
+}
+
+.vip_shadow {
+position: absolute;
+top: 0;
+/* right: -4rpx; */
+left: 68rpx;
+width: 30rpx;
+/* transform: rotate(45deg); */
+}

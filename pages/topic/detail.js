@@ -20,7 +20,8 @@ Page({
     sales:"desc",
     goods_ids: "",
     type: "zh",
-    is_sj: 0
+    is_sj: false,
+    is_new_r: false
   },
 
   /**
@@ -29,6 +30,12 @@ Page({
   onLoad: function (options) {
     //初始化
     this.setDetailData(options.id);
+    console.log(options.id)
+    if (options.id == 8){
+      this.setData({
+        is_new_r: true
+      })
+    }
   },
 
   /**
@@ -59,17 +66,26 @@ Page({
       header: {},
       success: function (res) {
         WxParse.wxParse('article', 'html', res.data.info, that, 5);
-        that.setData({
-          detail: res.data,
-          imgUrls: res.data.slide.split(","),
-          currentID: id,
-          goods_ids: res.data.goods_ids
-        });
+        console.log(res)
+        if (res.data.hasOwnProperty("slide")){
+          that.setData({
+            detail: res.data,        
+            imgUrls: res.data.slide.split(","),
+            currentID: id,
+            goods_ids: res.data.goods_ids
+          });
+        }else{
+          that.setData({
+            imgUrls: "",
+            goods_ids: res.data.goods_ids
+          });
+        }
+        
         wx.setNavigationBarTitle({
           title: res.data.title,
         });
         that.setCountDown();
-        console.log(res.data.goods_ids);
+        console.log(that.data.id);
         that.setGoodsData(res.data.goods_ids, that.data.id, that.data.sales);
       }
     })
@@ -149,8 +165,11 @@ Page({
     var t_tamp = 0;
     var n_tamp = parseInt(new Date().getTime());    // 当前时间戳
     var m_detail = that.data.detail;
-
+    if (!m_detail.pic){
+      return;
+    }
     t_edate = m_detail['e_date'];
+    // console.log(t_edate)
     t_edate = t_edate.substring(0, 19);
     t_edate = t_edate.replace(/-/g, '/');
     t_tamp = parseInt(new Date(t_edate).getTime());
@@ -240,6 +259,7 @@ Page({
       currentTabsIndex: index,
       type: type
     });
+    console.log(that.data.goods_ids);
     that.setGoodsData(that.data.goods_ids, that.data.id, that.data.sales);
   },
   /**
