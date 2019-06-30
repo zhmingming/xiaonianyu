@@ -171,7 +171,11 @@ Page({
             that.data.new_list.push(res.data.data[i]);
           }
         }
-        let arr = that.data.new_list;
+        that.setData({
+          topicList: that.data.new_list,
+          last_page: res.data.last_page
+        });
+        let arr = that.data.topicList;
         console.log(that.data.new_list);
         arr.forEach((item, index) => {
           item.b_date = item.b_date.slice(5, 16).replace(/-/, ".");
