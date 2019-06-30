@@ -1,2 +1,6 @@
 /* pages/user/addaddress.wxss */
 @import "/style/cells.wxss";
+
+.submit_btn {
+  background: #DC030B;
+}

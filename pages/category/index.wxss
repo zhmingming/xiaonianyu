@@ -3,7 +3,7 @@
 .top_ctr {
   width: 100%;
   padding: 0 30rpx;
-  height: 168rpx;
+  /* height: 168rpx; */
   position: fixed;
   background: #fff;
   z-index: 9999;
@@ -46,8 +46,8 @@
 
 /*幻灯*/
 .swiper {
-  float: left;
-  margin-top: 168rpx;
+  /* float: left; */
+  margin-top: 82rpx;
   width: 100%;
   height: 380rpx;
 }

@@ -17,23 +17,41 @@
            <view class='bg-k' wx:else>{{detail.countDD}}天</view>
           </view>
     </view>
-
+      <view class="dp-top-nav">
+        <view class="nav-list">
+            <view class="{{currentTabsIndex == 0 ? 'selected' : ''}}" bindtap='tabsWitch' data-type="zh" data-index="{{0}}">综合</view>
+            <view class="{{currentTabsIndex == 1 ? 'selected' : ''}}" bindtap='tabsWitch' data-type="xl" data-index="{{1}}">销量</view>
+            <view class="price {{currentTabsIndex == 2 ? 'selected' : ''}}" bindtap='tabsWitch' data-type="jg" data-index="{{2}}">
+              <view>价格</view><i class="iconfont icon-xiajiantou {{currentTabsIndex == 2 ? 'icon-xiajiantou-x' : ''}}"></i>
+            </view>
+        </view>
+          </view>
    
     </view>
 
     <view class='goods_list_ctr'>
-        <view wx:for="{{goodsList}}" wx:key="key">
+        <view wx:for="{{goodsList}}" wx:key="key" class='xny-goods-list'>
             <navigator url="/pages/goods/detail?id={{item.id}}" class='goods_list_cell'>
-                <view class='goods_top_mark'>限时</view>
-                <image mode='widthFix' src="{{item.pic}}"/>
+                <!-- <view class='goods_top_mark'>限时</view> -->
+                <view class="image-h">
+                  <image mode='widthFix' src="{{item.pic}}" />
+                </view>
                 <view class='goods_list_ctt'>
-                  <view class='goods_list_mark'>{{item.is_top==1 ? '精选' : '折后价'}}</view>
-                  <view class="goods_list_t2">
-                      <view class="fl">¥{{item.promotion_price}}<span class="span">¥{{item.markey_price}}</span></view>
-                      <view class="fr"><span>{{item.rebate}}折</span></view>
+                 <view class="goods_list_t1">{{item.title}}</view>
+                  <!-- <view class='goods_list_mark'>{{item.is_top==1 ? '精选' : '折后价'}}</view> -->
+                  <view class="ys-jdt">
+                    <view class="progress-bar-bg"><view class="progress-bar" style="width: {{item.sale_rate}}%;"></view></view>
+                    <view class=''><text class='ys-text'>已售</text> <text class="goods_new_t3">{{item.sale_rate}}%</text> </view>
                   </view>
-                  <view class="goods_list_t1">{{item.title}}</view>
-                  
+                  <view class="goods_list_t2">
+                      <view class="">
+                        <view><text>￥</text><text class='promotion_price'>{{item.promotion_price}}</text></view>
+                      
+                      <view class="span">¥{{item.markey_price}}</view>
+                      </view>
+                      <view class="ljqg">立即抢购</view>
+                      <!-- <view class="fr"><span>{{item.rebate}}折</span></view> -->
+                  </view>
                 </view>
             </navigator>
         </view>

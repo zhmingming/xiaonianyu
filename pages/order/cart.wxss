@@ -1,33 +1,45 @@
 /* pages/order/cart.wxss */
 @import "/style/cells.wxss";
-.m_fr span { color: #888;}
+
+.m_fr span {
+  color: #888;
+}
+
 /*列表中单选*/
+
 .cart_radio_ctr {
   float: left;
-  width:70rpx;
+  width: 70rpx;
   height: 160rpx;
-  display:table;
+  display: table;
 }
+
 .cart_radio_ctt {
-  vertical-align:middle;
-  display:table-cell;
+  vertical-align: middle;
+  display: table-cell;
 }
+
 /*列表中图片*/
+
 .cart_pic {
   margin-right: 20rpx;
   float: left;
   width: 160rpx;
   height: 160rpx;
 }
+
 .cart_pic image {
   width: 100%;
 }
+
 /*列表右侧*/
+
 .cart_right_ctr {
   float: left;
   width: 452rpx;
   height: 160rpx;
 }
+
 .cart_title {
   float: left;
   width: 100%;
@@ -35,6 +47,7 @@
   padding-top: 8rpx;
   padding-bottom: 20rpx;
 }
+
 .cart_goods_title {
   float: left;
   width: 100%;
@@ -44,6 +57,7 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
+
 .cart_goods_spec {
   float: left;
   width: 100%;
@@ -56,7 +70,7 @@
   -webkit-box-orient: vertical;
 }
 
-.cart_del,.cart_add { 
+.cart_del, .cart_add {
   float: left;
   width: 60rpx;
   height: 52rpx;
@@ -67,6 +81,7 @@
   font-size: 28rpx;
   color: #666;
 }
+
 .cart_input {
   float: left;
   width: 80rpx;
@@ -77,9 +92,11 @@
   border-bottom: 1px #999 solid;
   font-size: 28rpx;
 }
+
 .cart_add {
-  border-radius:0 8rpx 8rpx 0;
+  border-radius: 0 8rpx 8rpx 0;
 }
+
 .cart_del_btn {
   float: left;
   margin-left: 10rpx;
@@ -95,27 +112,38 @@
   position: fixed;
   width: 100%;
   height: 98rpx;
-  background:#f8f8f8;
+  background: #f8f8f8;
   border-top: 2rpx #eee solid;
   left: 0;
   bottom: 0;
   z-index: 9;
-  line-height:98rpx;
+  line-height: 98rpx;
   font-size: 32rpx;
 }
+
 .cart_foot_left {
-  float:left;
+  float: left;
   width: 71.5%;
   height: 98rpx;
-  padding: 0 24rpx;
+  padding: 0 58rpx;
   box-sizing: border-box;
   font-size: 28rpx;
+  display: flex;
+  align-items: center;
 }
+
 .cart_foot_total {
-  float: right;
+  margin-left: 38rpx;
 }
+
+.cart_foot_total view {
+  line-height: 44rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
 .cart_foot_right {
-  float:left;
+  float: left;
   width: 28.5%;
   font-weight: bold;
   height: 98rpx;
@@ -123,5 +151,144 @@
   text-align: center;
 }
 
+/* 更改后样式 */
 
+.flex {
+  display: flex;
+}
+
+.goods_wrap {
+  padding: 20rpx 30rpx;
+}
+
+.goods_widget {
+  padding: 40rpx 20rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  position: relative;
+}
+
+.radio_widget {
+  position: absolute;
+  top: 50%;
+  left: 32rpx;
+  transform: translate(-50%, -50%);
+}
+
+.radio_widget radio {
+  width: 20rpx;
+  height: 20rpx;
+}
+
+.goods_details_wrap {
+  margin-left: 48rpx;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.goods_image_widget {
+  width: 180rpx;
+  height: 180rpx;
+}
+
+.goods_image_widget image {
+  width: 100%;
+}
+
+.goods_details {
+  width: 400rpx;
+  font-size: 26rpx;
+  line-height: 36rpx;
+  color: #333;
+}
+
+.goods_title {
+  width: 100%;
+  height: 72rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-bottom: 30rpx;
+}
+
+.goods_spec {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #777777;
+  font-size: 22rpx;
+  line-height: 32rpx;
+  margin-bottom: 10rpx;
+}
+
+.price_num_widget {
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.goods_price {
+  color: #DC030B;
+  font-size: 26rpx;
+  line-height: 36rpx;
+}
+
+.goods_price text {
+  font-size: 22rpx;
+}
+
+.goods_num_widget {
+  border: 2rpx solid #ccc;
+  border-radius: 6rpx;
+  width: 150rpx;
+  height: 36rpx;
+  font-size: 26rpx;
+  color: #777;
+  align-items: center;
+}
+
+.num_del,.num_input,.num_add {
+  width: 50rpx;
+  text-align: center
+}
+
+.num_input {
+  border-left: 2rpx solid #ccc;
+  border-right: 2rpx solid #ccc;
+  min-height: 36rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+}
+
+
+
+
+
+
+
+/*  重写 radio 样式  */
+
+/* 未选中的 背景样式 */
+
+radio .wx-radio-input {
+  border-radius: 50%; /* 圆角 */
+  width: 20rpx;
+  height: 20rpx;
+  border: 6rpx solid #DC030B;
+  opacity: 0.2;
+}
+
+/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+
+radio .wx-radio-input.wx-radio-input-checked {
+  border: 6rpx solid #DC030B !important;
+  opacity: 1;
+}
+/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
+radio .wx-radio-input.wx-radio-input-checked::before{
+  content: '';
+}
 @import "/style/style.wxss";

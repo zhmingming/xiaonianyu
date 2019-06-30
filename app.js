@@ -33,7 +33,7 @@ App({
                   header: {},
                   success: function (res) {
                     if (res.data.success) {
-                      //wx.setStorageSync('sessionID', res.data.session_id)
+                      wx.setStorageSync('sessionID', res.data.session_id);
                       that.globalData.openID = res.data.session_id
                       that.globalData.userID = res.data.user_id
                       that.globalData.isFX = res.data.is_fx

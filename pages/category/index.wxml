@@ -3,7 +3,7 @@
 
 <view class="container">
     <view class='top_ctr'>
-        <view class='search_ctr' bindtap='toSearch'><i class="iconfont icon-search"></i> 请搜索商品名称</view>
+        <!-- <view class='search_ctr' bindtap='toSearch'><i class="iconfont icon-search"></i> 请搜索商品名称</view> -->
         <scroll-view class='nav_ctr' scroll-x="true" scroll-into-view="n{{currentID}}">
             <view id="n0" class='nav_cell' bindtap='goCategory' data-id='0'>精选</view>
             <block wx:for="{{catList}}" wx:key="key">
@@ -32,17 +32,18 @@
         <view class='pub_title_ctr' style=''>
             <view class='pub_main_title'>限时抢购</view>
             <view class='pub_sub_title'>超低行业底价，我们是认真的</view>
-            <navigator url="/pages/promotion/flashsale?cat_id={{currentID}}" class='pub_title_btn'>更多 ></navigator>
+            <navigator url="/pages/promotion/flashsale?cat_id={{currentID}}&e_date={{e_date}}" class='pub_title_btn'>更多 ></navigator>
         </view>
          <view class='time_cut_down'>
-            <view class='cut_down_txt'>
+            <view class='cut_down_txt' wx:if="{{xianShi.countDD > 2 ? false : true}}">
                 距结束
-                <span>{{topicList[0].countHH}}</span>
+                <span>{{xianShi.countHH}}</span>
                 :
-                <span>{{topicList[0].countMM}}</span>
+                <span>{{xianShi.countMM}}</span>
                 :
-                <span>{{topicList[0].countSS}}</span>
+                <span>{{xianShi.countSS}}</span>
             </view>
+              <view class='cut_down_txt' wx:else>距结束   <span>{{xianShi.countDD}}</span>天</view>
         </view>
         <view class='pub_ctt'>
             <view wx:for="{{hotGoodsList}}" wx:key="key" class="pub_ctt_goods_box">
@@ -60,9 +61,9 @@
                     <view class='pub_goods_title'>{{item.title}}</view>
                     <view class="process_box">
                         <view class="process_bg">
-                            <view class="process_checked" style="width: 65%;"></view>
+                            <view class="process_checked" style="width:{{item.sale_rate}}%;"></view>
                         </view>
-                        <view class="process_txt">已售 <span>65%</span></view>
+                        <view class="process_txt">已售 <span>{{item.sale_rate}}%</span></view>
                     </view>
                     <view class="bottom_btns">
                         <view class='pub_mark_btn'>立即抢</view>

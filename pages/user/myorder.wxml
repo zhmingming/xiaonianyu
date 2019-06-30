@@ -92,7 +92,8 @@
         <view class='myorder_btn' bindtap="cancelOrder" data-id="{{item.id}}">取消订单</view>
       </block>
       <block wx:if="{{item.order_state=='待发货'}}">
-        <button open-type="contact" class='myorder_btn'>提醒发货</button>
+        <!-- <button open-type="contact" class='myorder_btn'>提醒发货</button> -->
+        <view class='myorder_btn {{gray=="已提醒"?"gray":""}}' bindtap='tixingHandle' data-id="{{item.id}}">{{gray}}</view>
       </block>
       <block wx:if="{{item.order_state=='已发货'}}">
         <view class='myorder_btn_on' bindtap="shOrder" data-id="{{item.id}}">确认收货</view>
@@ -114,7 +115,7 @@
     <view class='none_txt'>暂无订单~</view>
     <view class='none_txt-2'>请您先去选购心仪的商品吧~</view>
     <view class='go-shopping'>
-      <navigator url="../index/index" open-type='switchTab' redirect="true">去购物</navigator>
+      <navigator url="/pages/index/index" open-type="switchTab">去购物</navigator> 
     </view>
   </block>
 </view>

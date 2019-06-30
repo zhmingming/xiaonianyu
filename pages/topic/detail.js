@@ -14,7 +14,13 @@ Page({
     goodsList: [],
     currentID: '',
     hiddenTop: true,
-    is_lod: false
+    is_lod: false,
+    currentTabsIndex : 0,
+    id:"id",
+    sales:"desc",
+    goods_ids: "",
+    type: "zh",
+    is_sj: 0
   },
 
   /**
@@ -56,33 +62,35 @@ Page({
         that.setData({
           detail: res.data,
           imgUrls: res.data.slide.split(","),
-          currentID: id
+          currentID: id,
+          goods_ids: res.data.goods_ids
         });
         wx.setNavigationBarTitle({
           title: res.data.title,
         });
         that.setCountDown();
-        that.setGoodsData(res.data.goods_ids);
+        console.log(res.data.goods_ids);
+        that.setGoodsData(res.data.goods_ids, that.data.id, that.data.sales);
       }
     })
   },
 
   //初始化专题商品
-  setGoodsData: function (ids) {
+  setGoodsData: function (ids, id, sales) {
     var that = this;
     var paraArr = new Array();
     paraArr['ids'] = ids;
     var sign = app.signature(paraArr);
     wx.request({
       url: rootDocment + '/api/com_get/getTopicGoods',
-      data: { ids: ids, sign: sign },
+      data: { ids: ids, sign: sign, order: id, order_type: sales},
       method: 'GET',
       header: {},
       success: function (res) {
         console.log(res.data);
         that.setData({
           goodsList: res.data,
-          hiddenLoading: true
+          hiddenLoading: true,
         });
         if (that.data.hiddenLoading == false) {
           that.setData({
@@ -187,6 +195,53 @@ Page({
     return { ms, ss, mm, hh, dd };
   },
 
+  // 标签切换
+  tabsWitch: function(e){
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var type = e.currentTarget.dataset.type;
+    if (type == that.data.type && index != 2){
+      return;
+    }
+    switch(type){
+      case "zh":
+        that.setData({
+          id: "id",
+          sales: "desc"
+        });
+        break;
+      case "xl":
+        that.setData({
+          id: "sales",
+          sales: "desc"
+        });
+        break;
+      case "jg":
+        if (that.data.is_sj){
+          that.setData({
+            id: "promotion_price",
+            sales: "asc"
+          });
+        }
+        else{
+          that.setData({
+            id: "promotion_price",
+            sales: "desc"
+          });
+        }
+        that.setData({
+          is_sj : !that.data.is_sj
+        })
+        break;
+      default:
+
+    }
+    that.setData({
+      currentTabsIndex: index,
+      type: type
+    });
+    that.setGoodsData(that.data.goods_ids, that.data.id, that.data.sales);
+  },
   /**
    * 页面上拉触底事件的处理函数
    */

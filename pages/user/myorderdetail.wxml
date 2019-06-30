@@ -13,7 +13,7 @@
             <view class='u_addr'>{{detail.address}}</view>
           </view>
         </view>
-        <view class='copyBtn'>复制</view>
+        
       </view>
       <view class='u_addr_sect' wx:else>
         <view class='top_txt'>自提点：</view>
@@ -91,11 +91,9 @@
       <view class='info_content_widget'>
         <view class='info_item'>订单编号：{{detail.order_sn}}</view>
         <view class='info_item'>下单时间：{{detail.add_date}}</view>
-        <view class='info_item'>退货发起时间：{{}}</view>
-        <view class='info_item'>退款金额：{{detail.price}}</view>
+        <view class='info_item'>支付金额：{{detail.price}}</view>
         <view class='info_item'>备注信息：{{}}无</view>
       </view>
-      <view class='copyBtn'>复制</view>
     </view>
   </view>
 

@@ -19,7 +19,7 @@
           </view>
           <view class="middle_wrapper">
           <view class="goods_markey">¥{{detail.markey_price}}</view>
-          <view class="already_sales">{{detail.sales}}件已售</view>
+          <view class="already_sales">{{detail.sales + detail.initial_sales}}件已售</view>
           </view>
           <view class="right_wrapper">
           <view class="saled_time" wx:if="{{is_limited_time}}">距结束<span>03</span>:<span>22</span>:<span>40</span></view>
@@ -73,7 +73,7 @@
         <view class='fw_ctt'>
             <!-- <view class='fw_ico'><image src="../../images/icon_bao.png"/></view> -->
             <image class="fw_img-3" src="../../images/icon_bao.png" />
-            <view class='fw_t1'>无忧退换</view>
+            <view class='fw_t1'>买贵包赔</view>
             <!-- <view class='fw_t2'>品牌护航退换</view> -->
         </view>
         <view class='fw_ctt'> <i class="iconfont icon-you1 icon-you1-x"></i></view>
@@ -96,14 +96,14 @@
     </view>
    
     <!--规格 服务条-->
-    <view class="m_ctr">
+    <!-- <view class="m_ctr">
         <view class='m_ctt' style='padding:8rpx 20rpx;'>
             <view class='goods_cell' bindtap="toggleDialog">
                 <view class='goods_cell_left'>已选择：{{spec_item}} ×{{amount}}</view>
                 <view class='goods_cell_right'><i class="iconfont icon-you1"></i></view>
             </view>
         </view>
-    </view>
+    </view> -->
     <!--用户评论-->
     <view class="m_ctr" wx:if="{{detail.comment.length>0}}">
         <view class='m_ctt'>
@@ -281,9 +281,9 @@
                 <!-- <view class='share_txt11'><i class="iconfont icon-gou"></i> 无忧退换</view> -->
                  <view class='share_txt11'>
                   <image class="fw_img" src="../../images/icon_bao.png" />
-                  <view class=''>无忧退换</view>
+                  <view class=''>买贵包赔</view>
                  </view>
-                <view class='share_txt12'>品质护航，无忧退换，放心购买</view>
+                <view class='share_txt12'>你买贵我包赔,即将开放</view>
             </view>
         </view>
     </view>

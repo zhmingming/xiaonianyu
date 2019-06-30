@@ -17,7 +17,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
   },
 
   //下拉刷新
@@ -187,7 +186,7 @@ Page({
     if (that.data.total>0){//去下单
       for (var i = 0; i < that.data.cartList.length; i++) {
         if(that.data.cartList[i].is_select){
-          myCart[i] = that.data.cartList[i];
+          myCart[j] = that.data.cartList[i];
           j=j+1;
         }
       }

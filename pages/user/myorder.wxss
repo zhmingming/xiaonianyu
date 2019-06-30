@@ -190,6 +190,13 @@
   opacity: 0;
 }
 
+/* y添加 */
+
+.gray {
+  color: #ccc;
+  border-color: #ccc;
+}
+
 
 /* y已经弃用 */
 

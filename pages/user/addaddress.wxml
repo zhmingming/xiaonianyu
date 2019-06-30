@@ -20,7 +20,7 @@
             <switch name="m_default" checked/> 默认地址
         </view>
     </view>
-    <view class='submit_btn' style='width:327rpx;background:#aaa;' bindtap="getAddress">获取微信地址</view>
-    <button class='submit_btn' formType="submit" style='width:327rpx;'>确认提交</button>
+    <view class='submit_btn' style='width:327rpx;background:#04be02;' bindtap="getAddress">获取微信地址</view>
+    <button class='submit_btn' formType="submit" style='width:327rpx;'>确认提交</button> 
     </form>
 </view>

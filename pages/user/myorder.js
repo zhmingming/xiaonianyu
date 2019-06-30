@@ -9,7 +9,8 @@ Page({
   data: {
     hiddenLoading: false,
     order_type: -1,
-    orderList: []
+    orderList: [],
+    gray:'提醒发货',
   },
 
   /**
@@ -102,7 +103,7 @@ Page({
             method: 'PUT',
             header: {},
             success: function (res) {
-              app.redirect('user/myorder', 'type=' + that.data.order_type);
+              app.gourl('user/myorder', 'type=' + that.data.order_type);
             }
           })
         }
@@ -131,7 +132,7 @@ Page({
             method: 'PUT',
             header: {},
             success: function (res) {
-              app.redirect('user/myorder', 'type=3');
+              app.gourl('user/myorder', 'type=3');
             }
           })
         }
@@ -181,11 +182,18 @@ Page({
             method: 'DELETE',
             header: {},
             success: function (res) {
-              app.redirect('user/myorder', 'type=' + that.data.order_type);
+              app.gourl('user/myorder', 'type=' + that.data.order_type);
             }
           })
         }
       }
+    })
+  },
+
+  tixingHandle() {
+    var that = this;
+    that.setData({
+      gray:'已提醒',
     })
   },
 

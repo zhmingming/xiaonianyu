@@ -20,7 +20,12 @@ Page({
     loadingComplete: false,
     curType: 0,  //筛选类型
     order: 'sequence',
-    orderType: 'desc'
+    orderType: 'desc',
+    xianShi: { "countHH": "00", "countMM": "00", "countSS": "00" },
+    e_date: "",
+    is_cf: 0,
+    is_curType : true,
+    is_lod: false
   },
 
   /**
@@ -29,6 +34,10 @@ Page({
   onLoad: function (options) {
     //初始化
     var that = this;
+  
+    that.setData({
+      e_date: options.e_date
+    });
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -38,6 +47,7 @@ Page({
     });
     this.setGoodsListData(options.cat_id);
     this.setCategoryData(options.cat_id);
+    
   },
 
   //下拉刷新
@@ -106,6 +116,7 @@ Page({
         }
       })
     }
+    that.getXianShi();
   },
 
   //初始商品列表
@@ -121,7 +132,7 @@ Page({
       var sign = app.signature(paraArr);
       wx.request({
         url: rootDocment + '/api/com_get/getFlashGoods',
-        data: { cat_id: id, size: paraArr['size'], page: paraArr['page'], order: paraArr['order'], order_type: paraArr['order_type'], sign: sign },
+        data: { cat_id: id, size: paraArr['size'], page: paraArr['page'], order: paraArr['order'], order_type: paraArr['order_type'], sign: sign ,xianshi: "1"},
         method: 'GET',
         header: {},
         success: function (res) {
@@ -129,14 +140,25 @@ Page({
             currentItem: id,
             hiddenLoading: true
           });
-          if (res.data.data.length > 0) { //如果有数据
+          console.log(res)
+          if (res.data.data) { //如果有数据
             var list = that.data.goodsList;
-            for (var i = 0; i < res.data.data.length; i++) {
-              list.push(res.data.data[i]);
+            console.log(res.data.data)
+            console.log(res.data.data.length)
+            // for (var i = 0; i < res.data.data.length; i++) {
+            //   list.push(res.data.data[i]);
+            // }
+            var i = 0;
+            for (var arr in res.data.data) {
+              if (i < that.data.perPage) {
+                list.push(res.data.data[arr]);
+              }
+              i++;
             }
             that.setData({
               goodsList: list
             });
+            console.log(list)
             if (res.data.data.length == that.data.perPage) {
               that.setData({
                 curPage: that.data.curPage + 1,
@@ -148,6 +170,16 @@ Page({
                 loadingComplete: true
               });
             }
+            if (that.data.hiddenLoading == false) {
+              that.setData({
+                is_lod: false
+              })
+            }
+            if (res.data.data.length < 1) {
+              that.setData({
+                is_lod: true
+              })
+            }
           }
           else {
             that.setData({
@@ -158,12 +190,23 @@ Page({
         }
       })
     }
+    
   },
 
   //筛选
   screenGoods: function (e) {
+    
     var that = this;
     var m_type = e.currentTarget.dataset.type;
+    if (e.currentTarget.dataset.type == 2) {
+      that.setData({
+        is_curType: !that.data.is_curType
+      })
+    }
+    if (m_type == that.data.is_cf && that.data.is_cf !=2){
+      return;
+    }
+
     var m_order = 'id';
     var m_orderType = 'desc';
     if (m_type > 0) {
@@ -173,7 +216,7 @@ Page({
     }
     if (m_type == 1) m_order = 'price';
     if (m_type == 2) m_order = 'sales';
-    console.log(m_orderType);
+
     that.setData({
       curType: m_type,
       order: m_order,
@@ -183,7 +226,61 @@ Page({
       hiddenLoading: false,
       loadingComplete: false
     });
+    that.setData({
+      is_cf: e.currentTarget.dataset.cf
+    })
     that.setGoodsListData(that.data.currentItem);
+  },
+
+  getXianShi: function () {
+    var that = this;
+    var time = 1000;
+    var n_tamp = parseInt(new Date().getTime());    // 当前时间戳
+    var t_tamp = that.data.e_date;
+    var mss = 0;
+    var xianShi = that.data.xianShi;
+    t_tamp = t_tamp.substring(0, 19);
+    t_tamp = t_tamp.replace(/-/g, '/');
+    t_tamp = parseInt(new Date(t_tamp).getTime());   //结束时间戳
+    mss = t_tamp - n_tamp;
+
+    let formatTime = that.getFormat(mss);
+    xianShi['countDD'] = `${formatTime.dd}`;
+    xianShi['countHH'] = `${formatTime.hh}`;
+    xianShi['countMM'] = `${formatTime.mm}`;
+    xianShi['countSS'] = `${formatTime.ss}`;
+    that.setData({
+      xianShi: xianShi
+    });
+
+    setTimeout(that.getXianShi, time);
+  },
+  
+  getFormat: function (msec) {
+    let ss = parseInt(msec / 1000);
+    let ms = parseInt(msec % 1000);
+    let mm = 0;
+    let hh = 0;
+    let dd = 0;
+    if (ss > 60) {
+      mm = parseInt(ss / 60);
+      ss = parseInt(ss % 60);
+      if (mm > 60) {
+        // dd = parseInt(hh / 24);
+        // hh = parseInt(mm / 60);
+        // mm = parseInt(mm % 60);
+        hh = parseInt(mm / 60);
+        mm = parseInt(mm % 60);
+        if (hh > 24) {
+          dd = parseInt(hh / 24);
+          hh = parseInt(hh % 24);
+        }
+      }
+    }
+    ss = ss > 9 ? ss : `0${ss}`;
+    mm = mm > 9 ? mm : `0${mm}`;
+    hh = hh > 9 ? hh : `0${hh}`;
+    return { ms, ss, mm, hh, dd };
   }
 
 })

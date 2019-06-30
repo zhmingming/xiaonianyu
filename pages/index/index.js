@@ -22,8 +22,9 @@ Page({
     tabSelect: true,
     xianShi: { "countHH": "00", "countMM": "00", "countSS": "00"},
     e_date : "",
-    new_people: true,
-    is_xl: false
+    new_people: 1,
+    is_xl: false,
+    th_type: "index"
   },
   onLoad: function (opt) {
     var that = this;
@@ -39,7 +40,7 @@ Page({
     this.setCategoryData();
     that.setSlideData();
     that.setNewGoodsData();
-    that.setTopicData();
+    that.setTopicData(that.data.th_type);
     
 
     
@@ -58,7 +59,7 @@ Page({
     this.setCategoryData();
     this.setSlideData();
     this.setNewGoodsData();
-    this.setTopicData();
+    this.setTopicData(that.data.th_type);
     this.setHotGoodsData();
     wx.stopPullDownRefresh();
   },
@@ -106,28 +107,37 @@ Page({
   setNewGoodsData: function () {
     var that = this;
     var paraArr = new Array();
-    paraArr['size'] = "3";
+    paraArr['size'] = "6";
     paraArr['is_new'] = "1";
     var sign = app.signature(paraArr);
-    wx.request({
-      url: rootDocment + '/api/com_get/getFlashGoods',
-      data: { size: paraArr['size'], is_new: paraArr['is_new'], sign: sign},
-      method: 'GET',
-      header: {},
+    var openId = "";
+    wx.getStorage({
+      key: 'sessionID',
       success: function (res) {
-        that.setData({
-          newGoodsList: res.data.data
-        });
+        console.log(res);
+        openId = res.data;
+        wx.request({
+          url: rootDocment + '/api/com_get/getFlashGoods',
+          data: { size: paraArr['size'], is_new: paraArr['is_new'], sign: sign, "open_id": openId },
+          method: 'GET',
+          header: {},
+          success: function (res) {
+            that.setData({
+              newGoodsList: res.data.new_goods_list,
+              new_people: res.data.is_new
+            });
+          }
+        })
       }
     })
   },
 
   //初始化专题
-  setTopicData: function () {
+  setTopicData: function (type) {
     var that = this;
     var paraArr = new Array();
-    paraArr['size'] = "20";
-    paraArr['stype'] = "index";
+    paraArr['size'] = "40";
+    paraArr['stype'] = type;
     var sign = app.signature(paraArr);
     wx.request({
       url: rootDocment + '/api_topic',
@@ -135,26 +145,10 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
+        console.log(res);
         that.setData({
           topicList: res.data.data
         });
-        // var n_tamp = parseInt(new Date().getTime());    // 当前时间戳
-        // var t_tamp = 0;
-        // var mss = 0;
-        // var remaining_time = [];
-        // for (let i = 0; i < res.data.data.length; i++){
-        //   t_tamp = parseInt(new Date(res.data.data[i].e_date).getTime());   //结束时间戳
-        //   mss = t_tamp - n_tamp;
-        //   if (that.getFormat(mss).hh > 48) {
-        //     remaining_time.push(parseInt(that.getFormat(mss).hh / 24));
-        //     that.setData({
-        //       is_days: !that.data.is_days,
-        //       is_time: !that.data.is_time,
-        //       remaining_time: remaining_time
-        //     });
-        //   }
-        // }
-        
       }
     })
     // console.log(that.data.topicList);
@@ -174,7 +168,6 @@ Page({
       header: {},
       success: function (res) {
         let hotGoodsList = new Array();
-        console.log(res.data.data);
         var i = 0;
         for (var arr in res.data.data){
           if(i < 3){
@@ -238,10 +231,11 @@ Page({
 
   //点击导航
   goCategory: function (e) {
+    var that = this;
     var id = e.currentTarget.dataset.id;
     var index = e.currentTarget.dataset.index;
     console.log(e);
-    app.redirect('category/index?id=' + id +"&index="+ index);
+    app.redirect('category/index?id=' + id + "&index=" + index + "&e_date=" + that.data.e_date);
   },
   dropDownNav: function(){
     var that = this;
@@ -267,9 +261,13 @@ Page({
   // tab切换
   tabSwitch: function (e) {
     var that = this;
+    
     that.setData({
-      tabSelect: !that.data.tabSelect
+      tabSelect: !that.data.tabSelect,
+      th_type: e.currentTarget.dataset.type
     });
+    that.setTopicData(that.data.th_type);
+    console.log(e.currentTarget.dataset.type);
   },
 
   //回到顶部

@@ -2,20 +2,25 @@
 <view class="container">
   <view class='head_sect flex'>
     <view class='top_navctr flex'>
-      <view class="{{curType==0 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='0'>综合</view>
-      <view class="{{curType==1 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='1'>价格</view>
-      <view class="{{curType==2 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='2'>
+      <view class="{{curType==0 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='0' data-cf="0">综合</view>
+      <view class="{{curType==1 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='1' data-cf="1">价格</view>
+      <view class="{{curType==2 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='2' data-cf="2">
         销量
-        <i class="iconfont icon-xiajiantou icon_xiajiantou"></i>
+        <i class="iconfont icon-xiajiantou {{is_curType ? 'icon-xiajiantou-x' : ''}}"></i>
       </view>
     </view>
     <view class='time_cut_down'>
-      <view class='cut_down_txt'>
+      <view class='cut_down_txt'  wx:if="{{xianShi.countDD > 2 ? false : true}}">
         距结束
         <view style='width:20rpx;'></view>
         <text>{{xianShi.countHH}}</text> :
         <text>{{xianShi.countMM}}</text> :
         <text>{{xianShi.countSS}}</text>
+      </view>
+      <view class='cut_down_txt' wx:else>
+      距结束
+      <view style='width:20rpx;'></view>
+      <text>{{xianShi.countDD}}</text>天
       </view>
     </view>
   </view>
@@ -31,26 +36,26 @@
             <view class='goods_title'>{{item.title}}</view>
             <view class="limit_widget">
               限时价
-              <text class='goods_price'>¥{{item.price}}</text>
+              <text class='goods_price'>¥{{item.promotion_price}}</text>
               <text class="span">¥{{item.markey_price}}</text>
             </view>
             <view class='progress_widget'>
               <view class='progressBar'>
-                <view class='progressBar_shadow'></view>
+                <view class='progressBar_shadow' style="width:{{item.sale_rate}}%;"></view>
               </view>
               <view class='progressTxt'>
                 已售
-                <text>65%</text>
+                <text>{{item.sale_rate}}%</text>
               </view>
             </view>
             <view class='goods_discount'>
-              {{item.rebate}}折抢购
+              {{item.rebate % 1 == 0 ? item.rebate + ".0" : item.rebate}}折抢购
             </view>
           </view>
         </navigator>
       </view>
       <!-- 没有商品 -->
-      <block wx:if="{{goodsList.length<1}}">
+      <block wx:if="{{is_lod}}">
         <view class='none_ctr'>
           <i class="iconfont icon-none"></i>
         </view>
@@ -61,6 +66,7 @@
         <view class='last_txt'>这是我的底线</view>
         <view class='last_line'></view>
       </view>
+        <view wx:if="{{goodsList.length>0}}" class='loading_box' hidden="{{loadingComplete}}">拼命加载中…</view>
       <!--置顶-->
       <view class='to_top' hidden="{{hiddenTop}}" bindtap='goTop'>
         <image src='../../images/icon_fanhuitob.png' />
@@ -106,4 +112,5 @@
       </view>
     </scroll-view>
   </view> -->
+
 </view>

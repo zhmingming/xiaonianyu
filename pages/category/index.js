@@ -21,7 +21,9 @@ Page({
     swiper_length: 0,
     swiper_index: 0,
     current: 0,
-    heigth: 0
+    heigth: 0,
+    xianShi: { "countHH": "00", "countMM": "00", "countSS": "00" },
+    e_date:""
   },
  
   /**
@@ -35,9 +37,10 @@ Page({
     that.setCategoryData(id);
     that.setHotGoodsData(id);
     that.setTopicData(id);
-
+    console.log(options);
     that.setData({
-      current: index
+      current: index,
+      e_date: options.e_date
     })
 
   },
@@ -132,11 +135,13 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
+        console.log(res)
         that.setData({
           hotGoodsList: res.data.data
         });
       }
     })
+    that.getXianShi();
   },
 
   //初始化专题
@@ -177,6 +182,9 @@ Page({
     }
     that.setData({
       current: index
+    })
+    wx.pageScrollTo({
+      scrollTop: 0
     })
   },
 
@@ -237,6 +245,30 @@ Page({
     });
     setTimeout(that.setCountDown, time);
   },
+  getXianShi: function () {
+    var that = this;
+    var time = 1000;
+    var n_tamp = parseInt(new Date().getTime());    // 当前时间戳
+    var t_tamp = that.data.e_date;
+    var mss = 0;
+    var xianShi = that.data.xianShi;
+    t_tamp = t_tamp.substring(0, 19);
+    t_tamp = t_tamp.replace(/-/g, '/');
+   
+    t_tamp = parseInt(new Date(t_tamp).getTime());   //结束时间戳
+    mss = t_tamp - n_tamp;
+
+    let formatTime = that.getFormat(mss);
+    xianShi['countDD'] = `${formatTime.dd}`;
+    xianShi['countHH'] = `${formatTime.hh}`;
+    xianShi['countMM'] = `${formatTime.mm}`;
+    xianShi['countSS'] = `${formatTime.ss}`;
+    that.setData({
+      xianShi: xianShi
+    });
+
+    setTimeout(that.getXianShi, time);
+  },
 
   //格式化时间
   getFormat: function (msec) {
@@ -282,7 +314,9 @@ Page({
     that.setTopicData(id);
 
     that.setsWiperHight();
-
+    wx.pageScrollTo({
+      scrollTop: 0
+    })
   },
   setsWiperHight: function(){
     var query = wx.createSelectorQuery();

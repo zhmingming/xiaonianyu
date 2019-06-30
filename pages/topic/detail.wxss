@@ -1,5 +1,5 @@
 /* pages/goods/detail.wxss */
-@import "/style/goods.wxss";
+/* @import "/style/goods.wxss"; */
 .swiper {
   width: 100%;
   height: 328rpx;
@@ -44,8 +44,13 @@
 }
 
 
-/* ******************* */
+/* ********zmm*********** */
 .is-good-null{
   display: none;
 }
+
+
 @import "/style/style.wxss";
+
+/* zmm */
+@import "/style/xny-style.wxss";

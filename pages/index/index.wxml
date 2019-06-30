@@ -72,7 +72,7 @@
         <view class='pub_title_ctr2'>
             <view class='pub_main_title2'>新人专享</view>
             <view class='pub_sub_title2'>全网底价，只为遇见你</view>
-            <navigator url="/pages/topic/detail?id=8" class='pub_title_btn2'>更多 ></navigator>
+            <navigator url="/pages/topic/detail?id=8&is_new=1" class='pub_title_btn2'>更多 ></navigator>
         </view>
         <scroll-view class='pub_scroll' scroll-x style="width: 100%">
             <view wx:for="{{newGoodsList}}" wx:key="key" class="pub_goods_box">
@@ -99,7 +99,7 @@
         <view class='pub_title_ctr2'>
             <view class='pub_main_title2'>限时抢购</view>
             <view class='pub_sub_title2'>行业底价，我们是认真的</view>
-            <navigator url="/pages/promotion/flashsale?cat_id=" class='pub_title_btn2'>更多 ></navigator>
+            <navigator url="/pages/promotion/flashsale?cat_id=&e_date={{e_date}}" class='pub_title_btn2'>更多 ></navigator>
         </view>
         <view class='time_cut_down'>
             <view class='cut_down_txt' wx:if="{{xianShi.countDD > 2 ? false : true}}">
@@ -146,14 +146,14 @@
             <!-- <navigator url="#" class='pub_title_btn2'>更多 ></navigator> -->
         </view>
         <view class="tabs_box">
-            <view class="{{tabSelect ? 'tab active' : 'tab'}}" bindtap="tabSwitch">火爆开抢</view>
-            <view class="{{tabSelect ? 'tab' : 'tab active'}}" bindtap="tabSwitch">即将开售</view>
+            <view class="{{tabSelect ? 'tab active' : 'tab'}}" data-type="index" bindtap="tabSwitch">火爆开抢</view>
+            <view class="{{tabSelect ? 'tab' : 'tab active'}}" data-type="will" bindtap="tabSwitch">即将开售</view>
         </view>
         <view wx:if="{{tabSelect}}" wx:for="{{topicList}}" wx:key="key">
-            <navigator url="/pages/topic/detail?id={{item.id}}" class='topic_ctr'>
+            <navigator url="/pages/topic/detail?id={{item.id}}" class='topic_ctr' hover-class='none'>
                 <view class='topic_pic'>
                     <image src="{{item.pic}}" />
-                    <view class="discount_box">全场4.5折</view>
+                    <view class="discount_box"><text style='color:#DC030B;font-size:24rpx;font-weight:900;'>{{item.starting_price}} </text>折起</view>
                 </view>
                 <view class='topic_ctt'>
                     <view class='topic_txt_ctr'>
