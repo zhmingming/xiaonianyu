@@ -97,7 +97,7 @@
                             <view wx:else>不足 <text>{{item.countDD}}</text>天</view>
                         </view>
                   </view>
-                  <view class='topic_txt3'>全场<span>{{item.starting_price}}</span>折起</view>
+                  <view class='topic_txt3'><span>{{item.starting_price}}</span>折起</view>
               </view>
           </navigator>
       </view>
