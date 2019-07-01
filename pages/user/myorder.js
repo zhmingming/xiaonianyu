@@ -13,7 +13,7 @@ Page({
     gray:'提醒发货',
     pay_type: 1,      // 微信支付
     pay_total: 99999, //预防出错
-    order_type: 1     //
+    wx_order_type: 1     //
   },
 
   /**
@@ -96,7 +96,7 @@ Page({
     if (that.data.pay_type == 1) {//微信支付
       wx.request({
         url: rootDocment + '/api/miniapp_pay/wx_pay',
-        data: { order_no: order_sn, open_id: app.globalData.openID, total: total || that.data.pay_total, uid: app.globalData.userID, order_type: that.data.order_type },
+        data: { order_no: order_sn, open_id: app.globalData.openID, total: total || that.data.pay_total, uid: app.globalData.userID, order_type: that.data.wx_order_type },
         method: 'GET',
         header: {},
         success: function (res) {

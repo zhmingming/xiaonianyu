@@ -46,8 +46,17 @@ Page({
     that.setNewGoodsData();
     that.setTopicData(that.data.th_type, that.data.size, that.data.page);
     
-
-    
+    setTimeout(() => {
+      if (that.data.hiddenLoading) {
+        that.setData({
+          new_people: 1,
+        });
+      } else {
+        that.setData({
+          new_people: 0,
+        });
+      }
+    }, 300);
   },
   /**
    * 生命周期函数--监听页面显示
@@ -139,7 +148,6 @@ Page({
           method: 'GET',
           header: {},
           success: function (res) {
-            console.log(res)
             that.setData({
               newGoodsList: res.data.new_goods_list,
               new_people: res.data.is_new
@@ -164,8 +172,6 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
-        console.log(res);
-        console.log(that.data.page);
         if (that.data.page <= res.data.last_page){
           for (let i = 0; i < res.data.data.length; i++) {
             that.data.new_list.push(res.data.data[i]);
@@ -176,7 +182,6 @@ Page({
           last_page: res.data.last_page
         });
         let arr = that.data.topicList;
-        console.log(that.data.new_list);
         arr.forEach((item, index) => {
           item.b_date = item.b_date.slice(5, 16).replace(/-/, ".");
         });
@@ -217,6 +222,7 @@ Page({
           hiddenLoading: true,
           e_date: res.data.data.e_date
         });
+        
       }
     })
 

@@ -14,7 +14,7 @@
             </view>
         </view>
         <view>
-            <navigator url='/pages/user/myorder' class='user_order_ctr'>
+            <navigator url='/pages/user/myorder?type=-1' class='user_order_ctr'>
                 <view class='user_order_ctt'>
                 <image class='user_order_icon' mode='widthFix' src="../../images/icon_wode_quanbu.png"/>
                 </view>

@@ -11,7 +11,7 @@ Page({
     hiddenLoading: false,
     curCat: [],
     goodsList: [],
-    perPage: 20,
+    perPage: 50,
     curPage: 1,
     scrollHeight: 0,
     allowScroll: true,

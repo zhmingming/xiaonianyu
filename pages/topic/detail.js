@@ -77,6 +77,7 @@ Page({
         }else{
           that.setData({
             imgUrls: "",
+            currentID: id,
             goods_ids: res.data.goods_ids
           });
         }
