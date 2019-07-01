@@ -145,6 +145,7 @@ Page({
             currentBrand: brand_id,
             hiddenLoading: true
           });
+          console.log(res.data.data)
           if (res.data.data.length > 0){ //如果有数据
             var list = that.data.goodsList;
             for (var i = 0; i < res.data.data.length; i++) {

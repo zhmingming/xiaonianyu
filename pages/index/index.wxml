@@ -78,7 +78,7 @@
             <view class='pub_sub_title2'>全网底价，只为遇见你</view>
             <navigator url="/pages/topic/detail?id=8&is_new=1" class='pub_title_btn2'>更多 ></navigator>
         </view>
-        <scroll-view class='pub_scroll' scroll-x style="width: 100%">
+        <scroll-view class='pub_scroll' scroll-x="true" style="width: 100%">
             <view wx:for="{{newGoodsList}}" wx:key="key" class="pub_goods_box">
                 <navigator url="/pages/goods/detail?id={{item.id}}" class='pub_goods_ctr2'>
                     <view class='pub_goods_pic2'>

@@ -17,7 +17,7 @@
             <view class='goods_title'>{{item.title}}</view>
             <view class="limit_widget">
               限时价
-              <text class='goods_price'>¥{{item.promotion_price}}</text>
+              <text class='goods_price'>¥{{item.price}}</text>
               <text class="span">¥{{item.markey_price}}</text>
             </view>
             <view class='progress_widget'>
@@ -30,7 +30,7 @@
               </view>
             </view>
             <view class='goods_discount'>
-              {{item.rebate?1:0}}折抢购
+              {{item.rebate%1==0?item.rebate+'.0':item.rebate}}折抢购
             </view>
           </view>
         </navigator>

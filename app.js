@@ -32,8 +32,9 @@ App({
                   method: 'GET',
                   header: {},
                   success: function (res) {
+                    console.log(res)
                     if (res.data.success) {
-                      wx.setStorageSync('sessionID', res.data.session_id);
+                      wx.setStorageSync('session_id', res.data.session_id);
                       that.globalData.openID = res.data.session_id
                       that.globalData.userID = res.data.user_id
                       that.globalData.isFX = res.data.is_fx
