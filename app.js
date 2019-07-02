@@ -1,16 +1,16 @@
 //app.js
 var utilMd5 = require('utils/md5.js');
 App({
-  onLaunch: function () {
+  onLaunch: function() {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
   },
   //授权登录
-  login: function (cb) {
+  login: function(cb) {
     var that = this;
-    var fid = 0;  //分销人ID
+    var fid = 0; //分销人ID
     if (this.globalData.userInfo) {
       typeof cb == "function" && cb(this.globalData.userInfo)
     } else {
@@ -19,19 +19,24 @@ App({
       }
       //调用登录接口
       wx.login({
-        success: function (res) {
+        success: function(res) {
           var code = res.code;
           wx.getUserInfo({
-            success: function (res) {
+            success: function(res) {
               console.log(res);
               if (code) {
                 //发起网络请求
                 wx.request({
                   url: that.globalData.postUrl + '/api/Logic/WxLogin',
-                  data: { code: code, nickname: res.userInfo.nickName, avatar: res.userInfo.avatarUrl, fid: fid },
+                  data: {
+                    code: code,
+                    nickname: res.userInfo.nickName,
+                    avatar: res.userInfo.avatarUrl,
+                    fid: fid
+                  },
                   method: 'GET',
                   header: {},
-                  success: function (res) {
+                  success: function(res) {
                     console.log(res)
                     if (res.data.success) {
                       wx.setStorageSync('session_id', res.data.session_id);
@@ -47,7 +52,7 @@ App({
               that.globalData.userInfo = res.userInfo
               typeof cb == "function" && cb(that.globalData.userInfo)
             },
-            fail: function (res) {
+            fail: function(res) {
               //没有授权
               that.redirect('authorize/index');
             }
@@ -64,8 +69,11 @@ App({
    * @param data        提交的数据
    * @returns {string}
    */
-  signature: function (data) {
-    var n = null, d = {}, str = '', s = ''
+  signature: function(data) {
+    var n = null,
+      d = {},
+      str = '',
+      s = ''
     n = Object.keys(data).sort()
     for (var i in n) {
       d[n[i]] = data[n[i]]
@@ -81,29 +89,29 @@ App({
   },
 
   //跳转到不是底部菜单的页面(保存之前页面)
-  redirect: function (url, param) {
+  redirect: function(url, param) {
     wx.navigateTo({
       url: '/pages/' + url + '?' + param
     })
   },
   //跳转到不是底部菜单的页面(关闭之前页面),切换小类要用
-  gourl: function (url, param) {
+  gourl: function(url, param) {
     wx.redirectTo({
       url: '/pages/' + url + '?' + param
     })
   },
   //跳转到底部菜单的页面
-  gotaburl: function (url) {
+  gotaburl: function(url) {
     wx.switchTab({
       url: '/pages/' + url
     })
   },
-  globalData:{
-    userInfo:null,
-    openID:'',
-    userID:'',
-    isFX:'',
+  globalData: {
+    userInfo: null,
+    openID: '',
+    userID: '',
+    isFX: '',
     signKey: 'myjrc',
-    postUrl:"https://sapi.xiaonianyu.com"
+    postUrl: "https://sapi.xiaonianyu.com"
   }
 })
