@@ -51,6 +51,7 @@ Page({
     var that = this;
     var paraArr = new Array();
     paraArr['id'] = app.globalData.userID;
+    console.log(app.globalData.userID);
     var sign = app.signature(paraArr);
     wx.request({
       url: rootDocment + '/api_user/' + paraArr['id'],
@@ -58,6 +59,7 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
+        console.log(res);
         that.setData({
           integral: res.data.integral,
           balance: res.data.user_money,

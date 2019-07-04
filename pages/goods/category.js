@@ -45,6 +45,7 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
+        console.log(res)
         that.setData({
           catList1: res.data,
           currentItem: res.data[0].id

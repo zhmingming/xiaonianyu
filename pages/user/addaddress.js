@@ -7,23 +7,23 @@ Page({
    * 页面的初始数据
    */
   data: {
-    region: ['请选择', '请选择', '请选择'],
-    addr:'',
-    name:'',
-    tel:''
+    region: ['', '', ''],
+    addr: '',
+    name: '',
+    tel: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     //用户授权登录
     app.login();
   },
@@ -31,16 +31,16 @@ Page({
   /**
    * 选择地址
    */
-  bindRegionChange: function (e) {
+  bindRegionChange: function(e) {
     this.setData({
-      region: e.detail.value
+      region: e.detail.value,
     })
   },
 
   /**
    * 获取微信地址
    */
-  getAddress: function () {
+  getAddress: function() {
     var that = this;
     wx.getSetting({
       success(res) {
@@ -86,7 +86,7 @@ Page({
   /**
    * 添加地址
    */
-  formSubmit: function (e) {
+  formSubmit: function(e) {
     var that = this;
     var m_province = e.detail.value.m_city[0];
     var m_city = e.detail.value.m_city[1];
@@ -94,26 +94,36 @@ Page({
     var m_addr = e.detail.value.m_addr;
     var m_name = e.detail.value.m_name;
     var m_tel = e.detail.value.m_tel;
-    var m_default = e.detail.value.m_default;
-    if (m_default){
+    var m_default = true;
+    if (m_default) {
       m_default = 1;
-    }
-    else {
+    } else {
       m_default = 0;
     }
 
-    if(m_addr==''){
-      wx.showModal({
-        title: '提示',
-        content: '详细地址为空！'
-      })
-      return false;
-    }
 
     if (m_name == '') {
+      // wx.showModal({
+      //   title: '提示',
+      //   content: '姓名为空！'
+      // })
       wx.showModal({
         title: '提示',
-        content: '姓名为空！'
+        content: '姓名为空！',
+        showCancel: false, //是否显示取消按钮-----》false去掉取消按钮
+        cancelText: "否", //默认是“取消”
+        cancelColor: 'skyblue', //取消文字的颜色
+        confirmText: "确定", //默认是“确定”
+        confirmColor: '#333', //确定文字的颜色
+        success: function(res) {
+          if (res.cancel) {
+            //点击取消
+            console.log("您点击了取消")
+          } else if (res.confirm) {
+            //点击确定
+            console.log("您点击了确定")
+          }
+        }
       })
       return false;
     }
@@ -122,17 +132,94 @@ Page({
     if (!myreg.test(m_tel)) {
       wx.showModal({
         title: '提示',
-        content: '手机号码不正确！'
+        content: '手机号码输入有误！',
+        showCancel: false, //是否显示取消按钮-----》false去掉取消按钮
+        cancelText: "否", //默认是“取消”
+        cancelColor: 'skyblue', //取消文字的颜色
+        confirmText: "确定", //默认是“确定”
+        confirmColor: '#333', //确定文字的颜色
+        success: function(res) {
+          if (res.cancel) {
+            //点击取消
+            console.log("您点击了取消")
+          } else if (res.confirm) {
+            //点击确定
+            console.log("您点击了确定")
+          }
+        }
       })
       return false;
     }
 
+    let region = that.data.region.join('');
+    console.log(region)
+    if (region == '省市区') {
+      // wx.showModal({
+      //   title: '提示',
+      //   content: '请选择省市区！'
+      // })
+      wx.showModal({
+        title: '提示',
+        content: '请选择省市区！',
+        showCancel: false, //是否显示取消按钮-----》false去掉取消按钮
+        cancelText: "否", //默认是“取消”
+        cancelColor: 'skyblue', //取消文字的颜色
+        confirmText: "确定", //默认是“确定”
+        confirmColor: '#333', //确定文字的颜色
+        success: function(res) {
+          if (res.cancel) {
+            //点击取消
+            console.log("您点击了取消")
+          } else if (res.confirm) {
+            //点击确定
+            console.log("您点击了确定")
+          }
+        }
+      })
+      return false;
+    }
+
+    if (m_addr == '') {
+      // wx.showModal({
+      //   title: '提示',
+      //   content: '详细地址为空！'
+      // })
+      wx.showModal({
+        title: '提示',
+        content: '详细地址为空！',
+        showCancel: false, //是否显示取消按钮-----》false去掉取消按钮
+        cancelText: "否", //默认是“取消”
+        cancelColor: 'skyblue', //取消文字的颜色
+        confirmText: "确定", //默认是“确定”
+        confirmColor: '#333', //确定文字的颜色
+        success: function(res) {
+          if (res.cancel) {
+            //点击取消
+            console.log("您点击了取消")
+          } else if (res.confirm) {
+            //点击确定
+            console.log("您点击了确定")
+          }
+        }
+      })
+      return false;
+    }
+    
     wx.request({
       url: rootDocment + '/api_address',
-      data: { m_province: m_province, m_city: m_city, m_county: m_county, m_address: m_addr, m_name: m_name, m_tel: m_tel, m_default: m_default, user_id: app.globalData.userID},
+      data: {
+        m_province: m_province,
+        m_city: m_city,
+        m_county: m_county,
+        m_address: m_addr,
+        m_name: m_name,
+        m_tel: m_tel,
+        m_default: m_default,
+        user_id: app.globalData.userID
+      },
       method: 'POST',
       header: {},
-      success: function (res) {
+      success: function(res) {
         wx.navigateBack({
           delta: 1
         })
@@ -143,15 +230,15 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-  
+  onPullDownRefresh: function() {
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-  
+  onReachBottom: function() {
+
   },
 
 })

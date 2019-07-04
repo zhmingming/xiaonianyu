@@ -113,7 +113,7 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
-
+        console.log(res);
         that.setData({
           currentList: res.data[0]
         });

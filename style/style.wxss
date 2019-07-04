@@ -18,6 +18,7 @@
 }
 .cart_yuan,.goods_foot_buy,.sku_spec2,.sku_buy,.share_btn {
   background: #DC030B;
+  opacity: 0.8;
 }
 .sku_cart {
   background: #4ab14f;

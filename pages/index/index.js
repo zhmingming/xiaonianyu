@@ -6,6 +6,8 @@ Page({
   data: {
     openId: "",
     imgPath: rootDocment + '/upload/pic/',
+    banner: [],
+    currentID: 0,
     hiddenLoading: false,
     imgUrls: [],
     indicatorDots: true,
@@ -33,7 +35,11 @@ Page({
     size: "10",
     page: 1,
     last_page: 0,
-    new_list: []
+    new_list: [],
+    swiper_index: 0,
+    current: 0,
+    aheight: 0,
+    is_dj: true
   },
   onLoad: function(opt) {
     var that = this;
@@ -44,26 +50,14 @@ Page({
         fid: scene
       });
     }
+    console.log(opt.scene);
     //初始化
-    that.setHotGoodsData();
+    that.setHotGoodsData(that.data.currentID);
     this.setCategoryData();
-    that.setSlideData();
+    // that.setSlideData();
     that.setNewGoodsData();
-    that.setTopicData(that.data.th_type, that.data.size, that.data.page);
-
-    // setTimeout(function(){
-    //   that.setNewGoodsData();
-
-    //   if (that.data.hiddenLoading) {
-    //     that.setData({
-    //       new_people: 1,
-    //     });
-    //   } else {
-    //     that.setData({
-    //       new_people: 0,
-    //     });
-    //   }
-    // }, 1000)
+    that.setTopicData(that.data.currentID, that.data.th_type, that.data.size, that.data.page);
+    that.setsWiperHight();
   },
   /**
    * 生命周期函数--监听页面显示
@@ -77,12 +71,13 @@ Page({
   //下拉刷新
   onPullDownRefresh: function() {
     this.setCategoryData();
-    this.setSlideData();
-    this.setNewGoodsData();
-    this.setTopicData(this.data.th_type, this.data.size, this.data.page);
-    this.setHotGoodsData();
+    // this.setSlideData();
+    if (this.data.swiper_index == 0) {
+      this.setNewGoodsData();
+    }
+    this.setTopicData(this.data.currentID, this.data.th_type, this.data.size, this.data.page);
+    this.setHotGoodsData(this.data.currentID);
     wx.stopPullDownRefresh();
-
   },
   /**
    * 页面上拉触底事件的处理函数
@@ -93,11 +88,12 @@ Page({
       that.setData({
         page: that.data.page + 1
       })
-      this.setTopicData(this.data.th_type, that.data.size, that.data.page);
+      this.setTopicData(that.data.currentID, this.data.th_type, that.data.size, that.data.page);
     }
-    console.log(that.data.page);
-    console.log(that.data.last_page);
+
+    that.setsWiperHight();
   },
+
   //初始化分类
   setCategoryData: function() {
     var that = this;
@@ -105,7 +101,7 @@ Page({
     paraArr['pid'] = 0;
     var sign = app.signature(paraArr);
     wx.request({
-      url: rootDocment + '/api_goods_category',
+      url: rootDocment + '/api/goods_category/all',
       data: {
         pid: paraArr['pid'],
         sign: sign
@@ -114,34 +110,35 @@ Page({
       header: {},
       success: function(res) {
         that.setData({
-          catList: res.data
+          catList: res.data,
+          // banner: res.data.pic
         });
       }
     })
   },
 
-  //初始化幻灯片
+  // 初始化幻灯片
   setSlideData: function() {
-    var that = this;
-    var paraArr = new Array();
-    paraArr['size'] = "5";
-    paraArr['stype'] = "3";
-    var sign = app.signature(paraArr);
-    wx.request({
-      url: rootDocment + '/api_ads',
-      data: {
-        size: paraArr['size'],
-        stype: paraArr['stype'],
-        sign: sign
-      },
-      method: 'GET',
-      header: {},
-      success: function(res) {
-        that.setData({
-          imgUrls: res.data.data
-        });
-      }
-    })
+    // var that = this;
+    // var paraArr = new Array();
+    // paraArr['size'] = "5";
+    // paraArr['stype'] = "3";
+    // var sign = app.signature(paraArr);
+    // wx.request({
+    //   url: rootDocment + '/api_ads',
+    //   data: {
+    //     size: paraArr['size'],
+    //     stype: paraArr['stype'],
+    //     sign: sign
+    //   },
+    //   method: 'GET',
+    //   header: {},
+    //   success: function (res) {
+    //     that.setData({
+    //       imgUrls: res.data.data
+    //     });
+    //   }
+    // })
   },
 
   //初始化新人专享
@@ -156,11 +153,9 @@ Page({
       if (is_null != "") {
         clearInterval(get_id);
       }
-
       wx.getStorage({
-        key: 'session_id',
+        key: 'sessionID',
         success: function(res) {
-          console.log(res);
           that.data.openId = res.data;
           wx.request({
             url: rootDocment + '/api/com_get/getFlashGoods',
@@ -173,7 +168,7 @@ Page({
             method: 'GET',
             header: {},
             success: function(res) {
-              console.log(res);
+
               that.setData({
                 newGoodsList: res.data.new_goods_list,
                 new_people: res.data.is_new
@@ -189,81 +184,136 @@ Page({
   },
 
   //初始化专题
-  setTopicData: function(type, size, page) {
+  setTopicData: function(id, type, size, page) {
     var that = this;
-    var paraArr = new Array();
-    paraArr['size'] = size;
-    paraArr['stype'] = type;
-    paraArr['page'] = page;
-    var sign = app.signature(paraArr);
-    wx.request({
-      url: rootDocment + '/api_topic',
-      data: {
-        stype: paraArr['stype'],
-        size: paraArr['size'],
-        sign: sign,
-        page: paraArr['page']
-      },
-      method: 'GET',
-      header: {},
-      success: function(res) {
-        if (that.data.page <= res.data.last_page) {
-          for (let i = 0; i < res.data.data.length; i++) {
-            that.data.new_list.push(res.data.data[i]);
+    if (id == 0) {
+      var paraArr = new Array();
+      paraArr['size'] = size;
+      paraArr['stype'] = type;
+      paraArr['page'] = page;
+      paraArr['id'] = id;
+      var sign = app.signature(paraArr);
+      wx.request({
+        url: rootDocment + '/api_topic',
+        data: {
+          cid: paraArr['id'],
+          stype: paraArr['stype'],
+          size: paraArr['size'],
+          sign: sign,
+          page: paraArr['page']
+        },
+        method: 'GET',
+        header: {},
+        success: function(res) {
+          if (that.data.page <= res.data.last_page) {
+            for (let i = 0; i < res.data.data.length; i++) {
+              that.data.new_list.push(res.data.data[i]);
+            }
           }
+          let arr = that.data.new_list;
+          arr.forEach((item, index) => {
+            item.b_date = item.b_date.slice(5, 16).replace(/-/, ".");
+          });
+          that.setData({
+            topicList: arr,
+            last_page: res.data.last_page,
+            hiddenLoading: true
+          });
+          // that.setsWiperHight();
         }
-        that.setData({
-          topicList: that.data.new_list,
-          last_page: res.data.last_page
-        });
-        let arr = that.data.topicList;
-        arr.forEach((item, index) => {
-          item.b_date = item.b_date.slice(5, 16).replace(/-/, ".");
-        });
-        that.setData({
-          topicList: arr,
-          last_page: res.data.last_page
-        });
+      })
+    } else {
+      var cArr = new Array();
+      cArr['size'] = size;
+      cArr['stype'] = type;
+      cArr['page'] = page;
+      cArr['id'] = id;
+      var sign_c = app.signature(cArr);
+      wx.request({
+        url: rootDocment + '/api_topic',
+        data: {
+          cid: cArr['id'],
+          size: cArr['size'],
+          sign: sign_c,
+          stype: cArr['stype'],
+          page: cArr['page']
+        },
+        method: 'GET',
+        header: {},
+        success: function(res) {
+          if (that.data.page <= res.data.last_page) {
+            for (let i = 0; i < res.data.data.length; i++) {
+              that.data.new_list.push(res.data.data[i]);
+            }
+          }
+          let arr = that.data.new_list;
+          arr.forEach((item, index) => {
+            item.b_date = item.b_date.slice(5, 16).replace(/-/, ".");
+          });
+          that.setData({
+            topicList: arr,
+            last_page: res.data.last_page,
+            hiddenLoading: true
+          });
+        }
+      })
+    }
 
-      }
-    })
-    // console.log(that.data.topicList);
     that.setCountDown();
   },
 
   //初始化限时抢购
-  setHotGoodsData: function() {
+  setHotGoodsData: function(id) {
     var that = this;
     var paraArr = new Array();
     paraArr['size'] = 3;
+    paraArr['cat_id'] = id;
     var sign = app.signature(paraArr);
-    wx.request({
-      url: rootDocment + '/api/com_get/getFlashGoods',
-      data: {
-        size: paraArr['size'],
-        sign: sign,
-        xianshi: "1"
-      },
-      method: 'GET',
-      header: {},
-      success: function(res) {
-        let hotGoodsList = new Array();
-        var i = 0;
-        for (var arr in res.data.data) {
-          if (i < 3) {
-            hotGoodsList.push(res.data.data[arr]);
+    if (id == 0) {
+      wx.request({
+        url: rootDocment + '/api/com_get/getFlashGoods',
+        data: {
+          size: paraArr['size'],
+          sign: sign,
+          xianshi: "1"
+        },
+        method: 'GET',
+        header: {},
+        success: function(res) {
+          let hotGoodsList = new Array();
+          var i = 0;
+          for (var arr in res.data.data) {
+            if (i < 3) {
+              hotGoodsList.push(res.data.data[arr]);
+            }
+            i++;
           }
-          i++;
-        }
-        console.log(res.data.data);
-        that.setData({
-          hotGoodsList: hotGoodsList,
-          hiddenLoading: true,
-          e_date: res.data.data.e_date
-        });
 
-      }
-    })
+          that.setData({
+            hotGoodsList: hotGoodsList,
+            hiddenLoading: true,
+            e_date: res.data.data.e_date
+          });
+        }
+      })
+    } else {
+     
+      wx.request({
+        url: rootDocment + '/api/com_get/getFlashGoods',
+        data: {
+          cat_id: paraArr['cat_id'],
+          size: paraArr['size'],
+          sign: sign
+        },
+        method: 'GET',
+        header: {},
+        success: function(res) {
+          that.setData({
+            hotGoodsList: res.data.data
+          });
+        }
+      })
+    }
 
     var GetSessionid = setInterval(function() {
       // let that = this;
@@ -287,7 +337,7 @@ Page({
     var t_tamp = that.data.e_date;
     var mss = 0;
     var xianShi = that.data.xianShi;
-    console.log()
+
     t_tamp = t_tamp.substring(0, 19);
     t_tamp = t_tamp.replace(/-/g, '/');
     t_tamp = parseInt(new Date(t_tamp).getTime()); //结束时间戳
@@ -316,8 +366,29 @@ Page({
     var that = this;
     var id = e.currentTarget.dataset.id;
     var index = e.currentTarget.dataset.index;
-    console.log(e);
-    app.redirect('category/index?id=' + id + "&index=" + index + "&e_date=" + that.data.e_date);
+    if (that.data.is_dj) {
+      that.setData({
+        is_dj: false
+      })
+    } else {
+      that.setData({
+        is_dj: true
+      })
+    }
+    that.setData({
+      current: index,
+      currentID: id,
+      page: 1,
+      new_list: [],
+      swiper_index : index
+    })
+    wx.pageScrollTo({
+      scrollTop: 0
+    })
+    that.setHotGoodsData(id);
+    that.setTopicData(that.data.currentID, that.data.th_type, that.data.size, that.data.page);
+    that.data.setsWiperHight();
+    // app.redirect('category/index?id=' + id + "&index=" + index + "&e_date=" + that.data.e_date);
   },
   dropDownNav: function() {
     var that = this;
@@ -343,15 +414,17 @@ Page({
   // tab切换
   tabSwitch: function(e) {
     var that = this;
-
+    if (e.currentTarget.dataset.type == that.data.th_type ){
+      return;
+    }
     that.setData({
       tabSelect: !that.data.tabSelect,
       th_type: e.currentTarget.dataset.type,
       page: 1,
       new_list: []
     });
-    that.setTopicData(that.data.th_type, that.data.size, that.data.page);
-    console.log(e.currentTarget.dataset.type);
+    that.setTopicData(that.data.currentID, that.data.th_type, that.data.size, that.data.page);
+
   },
 
   //回到顶部
@@ -447,6 +520,58 @@ Page({
       title: '即将开售，敬请期待',
       icon: 'none',
       duration: 1000
+    })
+  },
+
+  // 设计页面高度
+  setsWiperHight: function() {
+    var query = wx.createSelectorQuery();
+    var that = this;
+    var sum_heigth = 0;
+    // var swiper_item = ".swiper-item" + that.data.swiper_index + " ";
+    // var select = swiper_item +  ".box-hight";
+    // that.setHight(swiper_item);
+
+    var time = setInterval(function() {
+      query.select("#scroll-view-h").boundingClientRect(function(qry) {
+        // var h = qry.height;//此处可以成功获取到数据
+
+        that.setData({
+          aheight: qry.height
+        })
+        if (qry.height != null){
+          clearInterval(time);
+        }
+
+      }).exec();
+    }, 100)
+  },
+
+  bindtransition: function(e) {
+  },
+
+  bindchange: function(e) {
+    var that = this; 
+    if (that.data.is_dj) {
+      var id = e.detail.currentItemId;
+     
+      that.setData({
+        swiper_index: e.detail.current,
+        currentID: id,
+        page: 1,
+        new_list: []
+      })
+
+      that.setTopicData(id, that.data.th_type, that.data.size, that.data.page);
+      that.setHotGoodsData(id);
+
+    }
+    that.setData({
+      is_dj: true
+    })
+    that.setsWiperHight();
+    wx.pageScrollTo({
+      scrollTop: 0
     })
   },
 

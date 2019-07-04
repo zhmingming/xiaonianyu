@@ -93,7 +93,7 @@
       </block>
       <block wx:if="{{item.order_state=='待发货'}}">
         <!-- <button open-type="contact" class='myorder_btn'>提醒发货</button> -->
-        <view class='myorder_btn {{gray=="已提醒"?"gray":""}}' bindtap='tixingHandle' data-id="{{item.id}}">{{gray}}</view>
+        <view class='myorder_btn {{item.gray=="已提醒"?"gray":""}}' bindtap='tixingHandle' data-index='{{index}}' data-id="{{item.id}}">{{item.gray == "已提醒"?item.gray:gray}}</view>
       </block>
       <block wx:if="{{item.order_state=='已发货'}}">
         <view class='myorder_btn_on' bindtap="shOrder" data-id="{{item.id}}">确认收货</view>

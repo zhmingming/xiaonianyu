@@ -23,7 +23,7 @@
         <view class="already_sales">{{detail.sales + detail.initial_sales}}件已售</view>
       </view>
       <view class="right_wrapper" wx:if="{{e_date}}">
-        <view class="saled_time"  wx:if="{{xianShi.countDD > 2 ? false : true}}">
+        <view class="saled_time" wx:if="{{xianShi.countDD > 2 ? false : true}}">
           距结束
           <span>{{xianShi.countHH}}</span>
           :
@@ -32,7 +32,7 @@
           <span>{{xianShi.countSS}}</span>
         </view>
         <view class='cut_down_txt' wx:else>距结束
-            <span>{{xianShi.countDD}}</span>天
+          <span>{{xianShi.countDD}}</span>天
         </view>
         <!-- <view class='time_cut_down'>
           <view class='cut_down_txt' wx:if="{{xianShi.countDD > 2 ? false : true}}">
@@ -99,7 +99,7 @@
       <view class='fw_t1'>买贵包赔</view>
       <!-- <view class='fw_t2'>品牌护航退换</view> -->
       <image class='vip_shadow' mode='widthFix' src='../../images/vip.png'></image>
-      </view>
+    </view>
     <view class='fw_ctt'>
       <i class="iconfont icon-you1 icon-you1-x"></i>
     </view>
@@ -304,14 +304,24 @@
         </view>
         <view class='share_txt12'>全网底价，优惠购买，超级省钱</view>
       </view>
-      <view class='share_cell1'>
-        <!-- <view class='share_txt11'><i class="iconfont icon-gou"></i> 品牌授权</view> -->
-        <view class='share_txt11'>
-          <image class="fw_img" src="../../images/icon_zheng.png" />
-          <view class=''>品牌授权</view>
+      <view class='empower'>
+        <view style="width:80%;">
+          <view class='share_cell1'>
+            <!-- <view class='share_txt11'><i class="iconfont icon-gou"></i> 品牌授权</view> -->
+            <view class='share_txt11'>
+              <image class="fw_img" src="../../images/icon_zheng.png" />
+              <view class=''>品牌授权</view>
+            </view>
+            <view class='share_txt12'>品牌授权，商家认证，绝对正品</view>
+          </view>
         </view>
-        <view class='share_txt12'>品牌授权，商家认证，绝对正品</view>
+        <navigator url='authorize?goods_id={{currentID}}' class='empower_detail'>
+          详情
+          <i class="iconfont icon-you1"></i>
+        </navigator>
       </view>
+
+
       <view class='share_cell1'>
         <!-- <view class='share_txt11'><i class="iconfont icon-gou"></i> 顺丰包邮</view> -->
         <view class='share_txt11'>
@@ -326,8 +336,8 @@
           <image class="fw_img" src="../../images/icon_bao.png" />
           <view class=''>买贵包赔</view>
           <image class='vip_shadow is' mode='widthFix' src='../../images/vip.png'></image>
-          </view>
-          <view class='share_txt12'>你买贵我包赔,即将开放</view>
+        </view>
+        <view class='share_txt12'>你买贵我包赔,即将开放</view>
       </view>
     </view>
   </view>

@@ -738,7 +738,6 @@ overflow:  auto;
 }
 
 .share_cell1 {
-  float: left;
   width: 100%;
   height: auto;
   /* border-bottom: 1px #eee solid; */
@@ -911,4 +910,25 @@ left: 174rpx;
 .sku_spec2 {
   opacity: 0.8;
 }
+
+/* y 添加品牌授权样式 */
+
+.empower {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.empower_detail {
+  font-size: 22rpx;
+  color: #777;
+  display: flex;
+  align-items: center;
+}
+
+.empower_detail .icon-you1 {
+  transform: rotate(0deg);
+  margin-left: 14rpx;
+}
+
 @import "/style/style.wxss";

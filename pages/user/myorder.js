@@ -270,10 +270,14 @@ Page({
     })
   },
 
-  tixingHandle() {
+  tixingHandle(e) {
     var that = this;
+    let orderList = that.data.orderList;
+    let index = e.currentTarget.dataset.index;
+    orderList[index].gray = "已提醒";
+    console.log(orderList);
     that.setData({
-      gray:'已提醒',
+      orderList: orderList,
     })
   },
 
