@@ -2,8 +2,10 @@
 <loading hidden="{{hiddenLoading}}">正在加载</loading>
 <view class="container">
     <view class='paylog_top'>
-        <view class='paylog_txt'>我的佣金</view>
+      <view>
+      <view class='paylog_txt'>我的佣金</view>
         <view class='paylog_txt'>¥ <span>{{commission}}</span> 元</view>
+      </view>   
         <view class='paylog_btn' bindtap='cash'>提现</view>
     </view>
     <view class='cells_ctr border0'>

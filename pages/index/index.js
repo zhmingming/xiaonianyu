@@ -58,6 +58,7 @@ Page({
     that.setNewGoodsData();
     that.setTopicData(that.data.currentID, that.data.th_type, that.data.size, that.data.page);
     that.setsWiperHight();
+
   },
   /**
    * 生命周期函数--监听页面显示
@@ -66,6 +67,7 @@ Page({
     //用户授权登录
     var that = this;
     app.login(that.data.fid);
+    that.setsWiperHight();
   },
 
   //下拉刷新
@@ -297,7 +299,7 @@ Page({
         }
       })
     } else {
-     
+
       wx.request({
         url: rootDocment + '/api/com_get/getFlashGoods',
         data: {
@@ -532,29 +534,42 @@ Page({
     // var select = swiper_item +  ".box-hight";
     // that.setHight(swiper_item);
 
-    var time = setInterval(function() {
+    var time = setTimeout(function() {
       query.select("#scroll-view-h").boundingClientRect(function(qry) {
         // var h = qry.height;//此处可以成功获取到数据
 
         that.setData({
           aheight: qry.height
         })
-        if (qry.height != null){
-          clearInterval(time);
-        }
+        // if (qry.height != null){
+        //   clearInterval(time);
+        // }
 
       }).exec();
-    }, 100)
+    }, 500)
+    // var time = setInterval(function () {
+    //   query.select("#scroll-view-h").boundingClientRect(function (qry) {
+    //     // var h = qry.height;//此处可以成功获取到数据
+
+    //     that.setData({
+    //       aheight: qry.height
+    //     })
+    //     if (qry.height != null) {
+    //       clearInterval(time);
+    //     }
+
+    //   }).exec();
+    // }, 500)
   },
 
   bindtransition: function(e) {
   },
 
   bindchange: function(e) {
-    var that = this; 
+    var that = this;
     if (that.data.is_dj) {
       var id = e.detail.currentItemId;
-     
+
       that.setData({
         swiper_index: e.detail.current,
         currentID: id,
@@ -569,7 +584,7 @@ Page({
     that.setData({
       is_dj: true
     })
-    that.setsWiperHight();
+    // that.setsWiperHight();
     wx.pageScrollTo({
       scrollTop: 0
     })

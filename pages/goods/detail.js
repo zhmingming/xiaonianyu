@@ -284,28 +284,24 @@ Page({
       console.log(typeof (e))
       if (typeof(e) == "undefined") { //初始化
         for (var item in spec_list) {
-          // console.log(item, spec_list, spec_list[item]);
           item_arr.push(spec_list[item][0]['item_id']); //push第一个
           current_arr[item] = spec_list[item][0]['item_id']; //复制第一个到对象
-          console.log(current_arr[item])
+          console.log(spec_list[item][0]['item_id'])
         }
         //获取默认选中规格key
         console.log(item_arr)
-        console.log(spec_list)
-        console.log(spec_price);
         var spec_key = item_arr.sort(function(a, b) {
           return a - b
         }).join('_'); //47_230
         for (var item in spec_price) {
           //console.log(item, spec_price, spec_price[item], that.data.detail.is_promotion) //key,Array,object,num
-          console.log(spec_price[item].stock)
           if (spec_price[item]['key'] == spec_key) { //47_230
             var m_price = spec_price[item]['price']; //47_230
             if (that.data.detail.is_promotion == 1) {//是否做活动
               console.log(spec_price[item]) //object
               m_price = spec_price[item]['promotion_price'];//价格
             }
-
+            
             that.setData({
               price: m_price, //价格
               stock: spec_price[item]['stock'], //库存
@@ -313,20 +309,14 @@ Page({
               spec_item: spec_price[item]['key_name'], //规格
               current_spec: current_arr //颜色：47 尺码：230
             });
-            console.log(current_arr)
             break;
-          }else{
-
           }
         }
       } else {
-        // if (spec_price[item]['stock'] == 0){
-        //   console.log("没有库存")
-        //   return;
-        // }
-        console.log(e)
+
         var current_spec = that.data.current_spec;
         for (var item in spec_list) {//尺码，颜色
+          console.log(item);
           if (item == e.currentTarget.dataset.spec) {
             item_arr.push(e.currentTarget.dataset.id);
             current_arr[item] = e.currentTarget.dataset.id;
@@ -344,6 +334,13 @@ Page({
             var m_price = spec_price[item]['price'];
             if (that.data.detail.is_promotion == 1) {//是否做活动
               m_price = spec_price[item]['promotion_price'];//做活动给活动价
+            }
+            if (spec_price[item]['stock'] == 0){
+              that.setData({
+                stock: spec_price[item]['stock']
+              });
+              console.log("没有库存")
+              return;
             }
             that.setData({
               price: m_price,
