@@ -42,6 +42,7 @@ Page({
       })
     });
     this.getUserInfo();
+   
   },
 
   /**

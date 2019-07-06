@@ -11,6 +11,7 @@ Page({
     hiddenLoading: false,
     userInfo: [],
     distribut_money: 0,
+    distribut_enbale_money: 0.00,
     team_size: 0,
     showShare: false,
     sharePic: ''
@@ -56,9 +57,11 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
+        console.log(res)
         that.setData({
           distribut_money: res.data.money,
           team_size: res.data.team_size,
+          distribut_enbale_money: res.data.distribut_enable_money,
           hiddenLoading: true
         });
       }
@@ -77,7 +80,7 @@ Page({
       that.setData({
         hiddenLoading: false
       });
-      var m_page = 'pages/index/index';
+      var m_page = 'pages/index/index?scene=' + app.globalData.userID;
       var m_scene = app.globalData.userID;
       var paraArr = new Array();
       paraArr['page'] = m_page;

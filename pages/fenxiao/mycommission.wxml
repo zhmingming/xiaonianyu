@@ -33,7 +33,7 @@
           <view class='right'>
             <view wx:if="{{item.pay_add_state == 0 || item.pay_add_state == 1}}">
               <view clss="amount">+{{item.fee}}</view>
-              <view class="yj-time">{{item.pay_add_state == 2 ? "可提现":'预计'+item.time+'天后可提现'}} </view>
+              <view class="yj-time">{{item.pay_add_state == 2 ? "可提现":'预计'+item.time+'后可提现'}} </view>
             </view>
             <view class="invalid" wx:else>用户退款，收益失效</view>
           </view>
@@ -68,5 +68,8 @@
         <view class='fr' wx:if="{{item.pay_state==1}}">成功</view>
       </view>
     </view> -->
+     <block wx:if="{{profitList.length<1}}">
+        <view class='none_txt'>暂无记录~</view>
+    </block>
   </view>
 </view>

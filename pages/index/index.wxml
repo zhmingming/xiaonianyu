@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <loading hidden="{{hiddenLoading}}">正在加载</loading>
 
-<view class="container">
+<view class="container" >
   <view class='top_ctr'>
     <!-- <view class='search_ctr' bindtap='toSearch'>
             <i class="iconfont icon-search search_icon"></i> 搜索商品
@@ -39,7 +39,7 @@
   <swiper class="swiper-catList" indicator-dots="{{false}}" autoplay="{{false}}" style="height:{{aheight}}px" bindchange="bindchange" current="{{current}}" duration="300">
     <block wx:for="{{catList}}" wx:key="key">
       <swiper-item item-id='{{item.id}}' class="swiper-item{{index}}">
-        <scroll-view id="scroll-view-h" scroll-y="true">
+        <scroll-view id="scroll-view-h" scroll-y="true" >
           <view class="section swiper">
             <swiper indicator-dots="{{catList[index].pic.length == 1 ? false : true }}" indicator-color="rgba(255,255,255,.5)" indicator-active-color="rgb(255,255,255)" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper_scroll">
               <block wx:for="{{catList[index].pic}}" wx:key="key">

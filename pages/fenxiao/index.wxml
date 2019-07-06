@@ -29,7 +29,7 @@
     </view>
     <view class='fenxiao_nav_item'>
       <view>可提现</view>
-      <view class='item_txt'>¥{{distribut_money}}</view>
+      <view class='item_txt'>¥{{distribut_enbale_money}}</view>
     </view>
     <view class='fenxiao_nav_item'>
       <view>我的团队</view>

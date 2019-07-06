@@ -72,7 +72,10 @@ Page({
 
   //下拉刷新
   onPullDownRefresh: function() {
-    this.setCategoryData();
+    that.setData({
+      hiddenLoading: false
+    });
+    // this.setCategoryData();
     // this.setSlideData();
     if (this.data.swiper_index == 0) {
       this.setNewGoodsData();
@@ -201,12 +204,13 @@ Page({
           cid: paraArr['id'],
           stype: paraArr['stype'],
           size: paraArr['size'],
-          sign: sign,
-          page: paraArr['page']
+          page: paraArr['page'],
+          sign: sign
         },
         method: 'GET',
         header: {},
         success: function(res) {
+          console.log(res);
           if (that.data.page <= res.data.last_page) {
             for (let i = 0; i < res.data.data.length; i++) {
               that.data.new_list.push(res.data.data[i]);
@@ -382,7 +386,8 @@ Page({
       currentID: id,
       page: 1,
       new_list: [],
-      swiper_index : index
+      swiper_index : index,
+      hiddenLoading :false
     })
     wx.pageScrollTo({
       scrollTop: 0
@@ -423,7 +428,8 @@ Page({
       tabSelect: !that.data.tabSelect,
       th_type: e.currentTarget.dataset.type,
       page: 1,
-      new_list: []
+      new_list: [],
+      hiddenLoading: false
     });
     that.setTopicData(that.data.currentID, that.data.th_type, that.data.size, that.data.page);
 
@@ -582,7 +588,8 @@ Page({
 
     }
     that.setData({
-      is_dj: true
+      is_dj: true,
+      hiddenLoading: false
     })
     that.setsWiperHight();
     wx.pageScrollTo({

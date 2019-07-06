@@ -8,7 +8,9 @@ page {
   background-color: #f5f5f5;
   font-size: 28rpx;
 }
-
+.none_txt{
+  margin-top: 310rpx;
+}
 .paylog_top {
   /* width: 100%;
   height: auto;
