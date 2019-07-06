@@ -56,12 +56,12 @@
                 <view class='cells_txt_right'><i class="iconfont icon-you1"></i></view>
             </navigator>
         </view>
-        <view class='cells_ctt'>
+        <!-- <view class='cells_ctt'>
             <navigator url='/pages/article/list' class='cells_txt'>
                 <view class='cells_txt_left'><i class="iconfont icon-ask"></i> 帮助中心</view>
                 <view class='cells_txt_right'><i class="iconfont icon-you1"></i></view>
             </navigator>
-        </view>
+        </view> -->
         <view class='cells_ctt border0'>
             <view style='position: relative;' class='cells_txt'>
                 <button open-type="contact" show-message-card="ture" class='xny_kefu'></button>

@@ -335,13 +335,13 @@ Page({
             if (that.data.detail.is_promotion == 1) {//是否做活动
               m_price = spec_price[item]['promotion_price'];//做活动给活动价
             }
-            if (spec_price[item]['stock'] == 0){
-              that.setData({
-                stock: spec_price[item]['stock']
-              });
-              console.log("没有库存")
-              return;
-            }
+            // if (spec_price[item]['stock'] == 0){
+            //   that.setData({
+            //     stock: spec_price[item]['stock']
+            //   });
+            //   console.log("没有库存")
+            //   return;
+            // }
             that.setData({
               price: m_price,
               stock: spec_price[item]['stock'],
@@ -408,6 +408,14 @@ Page({
   //加入购物车
   addCart: function() {
     var that = this;
+    if (that.data.stock == 0){
+      wx.showToast({
+        icon:"none",
+        title: '该规格没有库存',
+        duration: 1500
+      })
+      return;
+    }
     var paraArr = new Array();
     paraArr['goods_id'] = that.data.detail['id'];
     paraArr['spec_key'] = that.data.spec_key;

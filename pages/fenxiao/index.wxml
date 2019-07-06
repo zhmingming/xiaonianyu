@@ -24,11 +24,11 @@
   </view>
   <view class='fenxiao_nav_sect flex'>
     <view class='fenxiao_nav_item falseHide'>
-      <view>累积佣金</view>
+      <view>待结算</view>
       <view class='item_txt'>¥{{distribut_money}}</view>
     </view>
     <view class='fenxiao_nav_item'>
-      <view>累积佣金</view>
+      <view>可提现</view>
       <view class='item_txt'>¥{{distribut_money}}</view>
     </view>
     <view class='fenxiao_nav_item'>

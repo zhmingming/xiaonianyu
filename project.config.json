@@ -40,7 +40,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 13,
 			"list": [
 				{
 					"id": -1,
@@ -109,6 +109,34 @@
 					"id": -1,
 					"name": "我的",
 					"pathName": "pages/user/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品详情",
+					"pathName": "pages/fenxiao/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "我的佣金",
+					"pathName": "pages/goods/detail",
+					"query": "id=142",
+					"scene": null
+				},
+				{
+					"id": 12,
+					"name": "我的佣金",
+					"pathName": "pages/user/cashSuccess",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 13,
+					"name": "我的佣金",
+					"pathName": "pages/fenxiao/mycommission",
 					"query": "",
 					"scene": null
 				}

@@ -3,17 +3,14 @@
   <view class='head_sect flex'>
     <view class='top_navctr flex'>
       <view class="{{curType==0 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='0' data-cf="0">综合</view>
-      <view class="{{curType==2 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='2' data-cf="2">
-        销量
-         </view>
+      <view class="{{curType==2 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='2' data-cf="2">销量</view>
       <view class="{{curType==1 ? 'top_nav1' : 'top_nav'}}" bindtap='screenGoods' data-type='1' data-cf="1">
-      价格
-       <i class="iconfont icon-xiajiantou {{is_curType ? 'icon-xiajiantou-x' : ''}}"></i>
+        价格
+        <i class="iconfont icon-xiajiantou {{is_curType ? 'icon-xiajiantou-x' : ''}}"></i>
       </view>
-      
     </view>
     <view class='time_cut_down'>
-      <view class='cut_down_txt'  wx:if="{{xianShi.countDD > 2 ? false : true}}">
+      <view class='cut_down_txt' wx:if="{{xianShi.countDD > 2 ? false : true}}">
         距结束
         <view style='width:20rpx;'></view>
         <text>{{xianShi.countHH}}</text> :
@@ -21,9 +18,9 @@
         <text>{{xianShi.countSS}}</text>
       </view>
       <view class='cut_down_txt' wx:else>
-      距结束
-      <view style='width:20rpx;'></view>
-      <text>{{xianShi.countDD}}</text>天
+        距结束
+        <view style='width:20rpx;'></view>
+        <text>{{xianShi.countDD}}</text>天
       </view>
     </view>
   </view>
@@ -69,7 +66,7 @@
         <view class='last_txt'>这是我的底线</view>
         <view class='last_line'></view>
       </view>
-        <view wx:if="{{goodsList.length>0}}" class='loading_box' hidden="{{loadingComplete}}">拼命加载中…</view>
+      <view wx:if="{{goodsList.length>0}}" class='loading_box' hidden="{{loadingComplete}}">拼命加载中…</view>
       <!--置顶-->
       <view class='to_top' hidden="{{hiddenTop}}" bindtap='goTop'>
         <image src='../../images/icon_fanhuitob.png' />

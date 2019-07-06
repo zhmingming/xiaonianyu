@@ -24,6 +24,8 @@
     "pages/user/myintegral",
     "pages/user/returns",
     "pages/user/returnsApply",
+    "pages/user/cashWithdrawal",
+    "pages/user/cashSuccess",
     "pages/search/index",
     "pages/search/list",
     "pages/fenxiao/index",

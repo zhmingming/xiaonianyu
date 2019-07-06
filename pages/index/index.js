@@ -4,7 +4,7 @@ var app = getApp();
 var rootDocment = app.globalData.postUrl;
 Page({
   data: {
-    openId: "",
+    openId: app.globalData.openID,
     imgPath: rootDocment + '/upload/pic/',
     banner: [],
     currentID: 0,
@@ -149,6 +149,7 @@ Page({
     var paraArr = new Array();
     paraArr['size'] = "6";
     paraArr['is_new'] = "1";
+
     var sign = app.signature(paraArr);
     var get_id = setInterval(function() {
       var is_null = that.data.openId;
@@ -170,7 +171,6 @@ Page({
             method: 'GET',
             header: {},
             success: function(res) {
-
               that.setData({
                 newGoodsList: res.data.new_goods_list,
                 new_people: res.data.is_new
@@ -584,7 +584,7 @@ Page({
     that.setData({
       is_dj: true
     })
-    // that.setsWiperHight();
+    that.setsWiperHight();
     wx.pageScrollTo({
       scrollTop: 0
     })

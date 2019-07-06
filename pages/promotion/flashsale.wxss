@@ -22,7 +22,8 @@
 }
 
 .icon-xiajiantou{
-  margin-left: 15rpx;
+  font-size: 26rpx;
+  margin-left: 10rpx;
   margin-top: 0rpx;
   display: inline-block;
   -webkit-transform:rotate(0deg);
@@ -32,7 +33,6 @@
 }
 
 .icon-xiajiantou-x{
-  margin-left: 15rpx;
   margin-top: 0rpx;
   -webkit-transform:rotate(-180deg);
    transform:rotate(-180deg);

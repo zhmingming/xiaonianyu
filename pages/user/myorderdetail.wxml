@@ -13,7 +13,7 @@
             <view class='u_addr'>{{detail.address}}</view>
           </view>
         </view>
-        
+
       </view>
       <view class='u_addr_sect' wx:else>
         <view class='top_txt'>自提点：</view>
@@ -142,9 +142,14 @@
         </view>
       </block>
       <block wx:if="{{detail.order_state=='已发货'}}">
-        <view class='myorder_btn_on' bindtap="shOrder" data-id="{{currentID}}">确认收货</view>
-        <view class='myorder_btn' wx:if="{{detail.send_type=='自提'}}">自提订单</view>
-        <view class='myorder_btn' bindtap="showSend" data-id="{{currentID}}" wx:else>查看物流</view>
+        <view class='tips_widget flex'>
+          <view class='tips_ture'>7天自动确认收货</view>
+          <view>
+            <view class='myorder_btn_on' bindtap="shOrder" data-id="{{currentID}}">确认收货</view>
+            <view class='myorder_btn' wx:if="{{detail.send_type=='自提'}}">自提订单</view>
+            <view class='myorder_btn' bindtap="showSend" data-id="{{currentID}}" wx:else>查看物流</view>
+          </view>
+        </view>
       </block>
       <block wx:if="{{detail.order_state=='交易成功'}}">
         <view class='myorder_btn_on' bindtap="goComment" data-id="{{detail.id}}">{{ detail.is_comment=='0' ? '去评论' : '已评论' }}</view>

@@ -8,7 +8,7 @@
         <view wx:for="{{brandList}}" wx:key="key">
             <navigator url='/pages/goods/list?brand_id={{item.id}}&id={{currentItem}}' class='category_pctr'>
                 <view class="category_pic">
-                    <image mode='scaleToFill' src="{{item.pic}}"/>
+                    <image mode='widthFix' src="{{item.pic}}"/>
                 </view>
                 <view class="category_txt">{{item.title}}</view>
             </navigator>

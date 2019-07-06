@@ -338,4 +338,17 @@
   color: #fff;
 } */
 
+
+/* y 新增样式 */
+
+.tips_widget {
+  justify-content: space-between;
+  font-size: 26rpx;
+  align-items: center;
+}
+
+.tips_true {
+  color: #777;
+}
+
 @import "/style/style.wxss";

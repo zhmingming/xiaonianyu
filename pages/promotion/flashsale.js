@@ -198,15 +198,19 @@ Page({
 
   //筛选
   screenGoods: function (e) {
-    
+
     var that = this;
     var m_type = e.currentTarget.dataset.type;
-    if (e.currentTarget.dataset.type == 2) {
+    if (e.currentTarget.dataset.type == 1) {
       that.setData({
         is_curType: !that.data.is_curType
       })
+    } else {
+      that.setData({
+        is_curType: true
+      })
     }
-    if (m_type == that.data.is_cf && that.data.is_cf !=2){
+    if (m_type == that.data.is_cf && that.data.is_cf != 1) {
       return;
     }
 
@@ -255,7 +259,7 @@ Page({
     that.setData({
       xianShi: xianShi
     });
-    console.log(that.data.xianShi)
+    // console.log(that.data.xianShi)
     setTimeout(that.getXianShi, time);
   },
   

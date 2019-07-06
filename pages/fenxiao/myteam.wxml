@@ -3,8 +3,8 @@
 <view class='tab_ctr'>
     <view class='tab_ctt'>
         <view class="{{ dataType==1 ? 'tab_cell_on' : 'tab_cell' }}" bindtap="changeType" data-type="1">一级分销</view>
-        <view class="{{ dataType==2 ? 'tab_cell_on' : 'tab_cell' }}" bindtap="changeType" data-type="2">二级分销</view>
-        <view class="{{ dataType==3 ? 'tab_cell_on' : 'tab_cell' }}" bindtap="changeType" data-type="3">三级分销</view>
+        <!-- <view class="{{ dataType==2 ? 'tab_cell_on' : 'tab_cell' }}" bindtap="changeType" data-type="2">二级分销</view>
+        <view class="{{ dataType==3 ? 'tab_cell_on' : 'tab_cell' }}" bindtap="changeType" data-type="3">三级分销</view> -->
     </view>
 </view>
 <view class="container">
