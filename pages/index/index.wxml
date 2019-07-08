@@ -81,10 +81,10 @@
           <!-- 新版 - 新人专享 -->
           <view class='pub_ctr2' wx:if="{{new_people && swiper_index == 0 }}">
             <view class='pub_title_ctr2'>
-             <view>
-              <view class='pub_main_title2'>新人专享</view>
-              <view class='pub_sub_title2'>全网底价，只为遇见你</view>
-             </view>
+              <view class="zt-title">
+                <view class='pub_main_title2'>新人专享</view>
+                <view class='pub_sub_title2'>全网底价，只为遇见你</view>
+              </view>
               <navigator url="/pages/topic/detail?id=8&is_new=1" class='pub_title_btn2'>更多 ></navigator>
             </view>
             <scroll-view class='pub_scroll' scroll-x style="width: 100%">
@@ -110,10 +110,10 @@
           <!--限时抢购-->
           <view class='pub_ctr2'>
             <view class='pub_title_ctr2'>
-             <view>
-              <view class='pub_main_title2'>限时抢购</view>
-              <view class='pub_sub_title2'>行业底价，我们是认真的</view>
-             </view>
+              <view class="zt-title">
+                <view class='pub_main_title2'>限时抢购</view>
+                <view class='pub_sub_title2'>行业底价，我们是认真的</view>
+              </view>
               <navigator url="/pages/promotion/flashsale?cat_id=&e_date={{e_date}}" class='pub_title_btn2'>更多 ></navigator>
             </view>
             <view class='time_cut_down'>

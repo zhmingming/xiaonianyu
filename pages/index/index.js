@@ -72,7 +72,7 @@ Page({
 
   //下拉刷新
   onPullDownRefresh: function() {
-    that.setData({
+    this.setData({
       hiddenLoading: false
     });
     // this.setCategoryData();
@@ -296,7 +296,7 @@ Page({
           }
 
           that.setData({
-            hotGoodsList: hotGoodsList,
+            hotGoodsList: hotGoodsList ? hotGoodsList : [],
             hiddenLoading: true,
             e_date: res.data.data.e_date
           });

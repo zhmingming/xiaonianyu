@@ -121,7 +121,7 @@ swiper {
 /*二级导航*/
 
 .fw_ctr {
-  float: left;
+  /* float: left; */
   width: 100%;
   height: 414rpx;
   padding: 20rpx 0 10rpx;
@@ -148,7 +148,7 @@ swiper {
 }
 
 .fw_t1 {
-  float: left;
+  /* float: left; */
   width: 100%;
   line-height: 60rpx;
   text-align: center;
@@ -164,6 +164,7 @@ swiper {
   justify-content: space-around;
   align-items: center;
   padding: 12rpx 0 16rpx 0;
+  overflow: hidden;
 }
 
 .fw_ctt {
@@ -241,9 +242,13 @@ swiper {
   align-items: center;
   justify-content: space-between;
 }
-
+.zt-title{
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
 .pub_main_title2 {
-  float: left;
+  /* float: left; */
   width: 170rpx;
   line-height: 44rpx;
   font-size: 32rpx;

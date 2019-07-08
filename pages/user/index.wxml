@@ -73,7 +73,7 @@
     <view class='cells_ctr' wx:if="{{isFX}}">
         <view class='cells_ctt'>
             <navigator url='/pages/fenxiao/index' class='cells_txt'>
-                <view class='cells_txt_left'><i class="iconfont icon-fenxiao"></i> 分销中心</view>
+                <view class='cells_txt_left'><i class="iconfont icon-fenxiao"></i> 推广中心</view>
                 <view class='cells_txt_right'><i class="iconfont icon-you1"></i></view>
             </navigator>
         </view>
