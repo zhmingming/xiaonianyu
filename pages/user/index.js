@@ -64,6 +64,7 @@ Page({
         that.setData({
           integral: res.data.integral,
           balance: res.data.user_money,
+          isFX: res.data.is_fx,
           hiddenLoading: true
         });
       }

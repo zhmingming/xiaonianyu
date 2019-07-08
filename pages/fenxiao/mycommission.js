@@ -51,8 +51,13 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    this.getData();
+    
     wx.stopPullDownRefresh();
+    if (this.data.th_type == "record"){
+      this.getRecord();
+    }else{
+      this.getData();
+    }
   },
 
   /**
@@ -87,6 +92,7 @@ Page({
     var that = this;
     var paraArr = new Array();
     paraArr['user_id'] = app.globalData.userID;
+    
     var sign = app.signature(paraArr);
     wx.request({
       url: rootDocment + '/api/user_pay_log/index',
@@ -96,7 +102,7 @@ Page({
       success: function (res) {
         console.log(res);
         that.setData({
-          profitList: res.data.list,
+          profitList: res.data.list ? res.data.list : [],
           hiddenLoading: true
         });
       }
@@ -110,7 +116,7 @@ Page({
     // parseFloat(that.data.mini_cash)
     var that = this;
     if (parseFloat(that.data.commission)>0) {
-        if (parseFloat(that.data.commission) < 10){
+      if (parseFloat(that.data.commission) < parseFloat(that.data.mini_cash)){
           wx.showToast({
             title: '最低提现额为 ' + that.data.mini_cash + ' 元',
             icon: 'none'
@@ -137,6 +143,7 @@ Page({
     }
     that.setData({
       th_type: e.currentTarget.dataset.type,
+      profitList : []
     })
 
     if (type == "record") {

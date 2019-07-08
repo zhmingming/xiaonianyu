@@ -210,7 +210,6 @@ Page({
         method: 'GET',
         header: {},
         success: function(res) {
-          console.log(res);
           if (that.data.page <= res.data.last_page) {
             for (let i = 0; i < res.data.data.length; i++) {
               that.data.new_list.push(res.data.data[i]);
@@ -286,6 +285,7 @@ Page({
         method: 'GET',
         header: {},
         success: function(res) {
+          console.log(res);
           let hotGoodsList = new Array();
           var i = 0;
           for (var arr in res.data.data) {

@@ -20,7 +20,7 @@
 
     <view class='yj-list'>
       <block wx:for="{{profitList}}" wx:key="key">
-        <view class="yj-itme" wx:if="{{th_type != 'record'}}">
+        <view class="yj-itme"  style='display: {{th_type != "record" ? "flex" : "none"}}'>
           <view class='left'>
             <view class='tou-xiang'>
               <image class="tou-xiang-img" src="{{item.avatar}}"></image>
@@ -39,7 +39,7 @@
           </view>
         </view>
 
-        <view class="yj-itme" wx:else>
+        <view class="yj-itme" style='display: {{th_type == "record" ? "flex" : "none"}}'>
           <view class='left'>
             <view class=''>
               <image class="qian-icon" src="../../images/qian-icon.png"></image>
