@@ -129,6 +129,8 @@
 /* y 新增样式 */
 .flex {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .user_top {
@@ -176,8 +178,10 @@
 }
 
 .fenxiao_nav_item {
-  width: 33.33%;
+  /* width: 33.33%; */
   position: relative;
+  flex: 1;
+  padding: 0 4rpx;
 }
 
 .fenxiao_nav_item::before {

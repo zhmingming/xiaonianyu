@@ -102,7 +102,7 @@ Page({
       success: function (res) {
         console.log(res);
         that.setData({
-          profitList: res.data.list ? res.data.list : [],
+          profitList: res.data.list,
           hiddenLoading: true
         });
       }

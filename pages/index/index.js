@@ -296,7 +296,7 @@ Page({
           }
 
           that.setData({
-            hotGoodsList: hotGoodsList ? hotGoodsList : [],
+            hotGoodsList: hotGoodsList,
             hiddenLoading: true,
             e_date: res.data.data.e_date
           });
@@ -309,13 +309,23 @@ Page({
         data: {
           cat_id: paraArr['cat_id'],
           size: paraArr['size'],
-          sign: sign
+          sign: sign,
+          xianshi: "1"
         },
         method: 'GET',
         header: {},
         success: function(res) {
+          let hotGoodsList = new Array();
+          var i = 0;
+          for (var arr in res.data.data) {
+            if (i < 3) {
+              hotGoodsList.push(res.data.data[arr]);
+            }
+            i++;
+          }
+          console.log(res);
           that.setData({
-            hotGoodsList: res.data.data
+            hotGoodsList: hotGoodsList
           });
         }
       })

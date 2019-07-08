@@ -97,7 +97,7 @@ Page({
       header: {},
       success: function (res) {
         console.log(res);
-        if(res.code == "1001"){
+        if (res.data.code == "1001"){
           wx.redirectTo({
             url: '/pages/user/cashSuccess'
           })
