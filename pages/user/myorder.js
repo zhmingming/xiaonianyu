@@ -67,6 +67,7 @@ Page({
       method: 'GET',
       header: {},
       success: function (res) {
+        console.log(res.data)
         // 修饰数据
         res.data.forEach(function(item,index) {
           let num = 0;

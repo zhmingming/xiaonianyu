@@ -25,23 +25,25 @@
       </view>
     </view>
     <!-- 订单中间 -->
-    <navigator url='/pages/user/myorderdetail?id={{item.id}}' class='order_middle'>
+    <navigator url='/pages/user/myorderdetail?id={{item.id}}&order_sn={{item.order_sn}}' class='order_middle'>
       <!-- 仅一个商品订单情况 -->
-      <view class="good_widget flex">
-        <view class='goods_pic'>
-          <image mode='widthFix' src="{{item.goods[0]['pic']}}" />
-        </view>
-        <view class='goods_right'>
-          <view class='goods_title'>{{item.goods[0]['title']}}</view>
-          <view class='right_down'>
-            <view class='goods_spec'>{{item.goods[0]['spec_item']}}</view>
-            <view class='goods_price_widget'>
-              <view class='goods_price'>¥{{item.goods[0]['price']}}</view>
-              <view class='goods_num'>×{{item.goods[0]['amount']}}</view>
+      <block wx:for="{{item.goods}}" wx:key="key">
+        <view class="good_widget flex">
+          <view class='goods_pic'>
+            <image mode='widthFix' src="{{item['pic']}}" />
+          </view>
+          <view class='goods_right'>
+            <view class='goods_title'>{{item['title']}}</view>
+            <view class='right_down'>
+              <view class='goods_spec'>{{item['spec_item']}}</view>
+              <view class='goods_price_widget'>
+                <view class='goods_price'>¥{{item['price']}}</view>
+                <view class='goods_num'>×{{item['amount']}}</view>
+              </view>
             </view>
           </view>
         </view>
-      </view>
+      </block>
       <!-- 统计 -->
       <view class='flex g_statistic'>
         <text>合计：￥{{item.price}}</text>
@@ -80,8 +82,8 @@
     <view class='orderBtn_wrap'>
       <block>
         <view class='myorder_btn' data-id="{{item.id}}">
-        <button open-type="contact" show-message-card="ture" class='xny_kefu'></button>
-        联系客服
+          <button open-type="contact" show-message-card="ture" class='xny_kefu'></button>
+          联系客服
         </view>
       </block>
       <block wx:if="{{item.order_state=='已取消'}}">
@@ -115,7 +117,7 @@
     <view class='none_txt'>暂无订单~</view>
     <view class='none_txt-2'>请您先去选购心仪的商品吧~</view>
     <view class='go-shopping'>
-      <navigator url="/pages/index/index" open-type="switchTab">去购物</navigator> 
+      <navigator url="/pages/index/index" open-type="switchTab">去购物</navigator>
     </view>
   </block>
 </view>

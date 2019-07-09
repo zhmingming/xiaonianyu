@@ -9,6 +9,7 @@ Page({
   data: {
     detail: [],
     currentID: '',
+    currentOrder_sn:'',
     pay_type: 1,      // 微信支付
     pay_total: 99999, //预防出错
     order_type: 1     //
@@ -19,13 +20,13 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    that.setDetailData(options.id);
+    that.setDetailData(options.id,options.order_sn);
   },
 
   //下拉刷新
   onPullDownRefresh: function () {
     var that = this;
-    this.setDetailData(that.data.currentID);
+    this.setDetailData(that.data.currentID, that.data.currentOrder_sn);
     wx.stopPullDownRefresh();
   },
 
@@ -38,22 +39,24 @@ Page({
   },
 
   //初始化详情
-  setDetailData: function (id) {
+  setDetailData: function (id,order_sn) {
     var that = this;
     var paraArr = new Array();
     paraArr['id'] = id;
+    paraArr['order_sn'] = order_sn;
     paraArr['user_id'] = app.globalData.userID;
     var sign = app.signature(paraArr);
     wx.request({
       url: rootDocment + '/api_order/' + id,
-      data: { user_id: paraArr['user_id'], sign: sign},
+      data: { user_id: paraArr['user_id'],order_sn:paraArr['order_sn'], sign: sign},
       method: 'GET',
       header: {},
       success: function (res) {
         console.log(res.data)
         that.setData({
           detail: res.data,
-          currentID: id
+          currentID: id,
+          currentOrder_sn: order_sn,
         });
       }
     })

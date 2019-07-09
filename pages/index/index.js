@@ -114,6 +114,7 @@ Page({
       method: 'GET',
       header: {},
       success: function(res) {
+        console.log(res);
         that.setData({
           catList: res.data,
           // banner: res.data.pic
