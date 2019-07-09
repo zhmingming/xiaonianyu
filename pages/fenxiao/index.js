@@ -80,7 +80,7 @@ Page({
       that.setData({
         hiddenLoading: false
       });
-      var m_page = 'pages/index/index?scene=' + app.globalData.userID;
+      var m_page = 'pages/index/index';
       var m_scene = app.globalData.userID;
       var paraArr = new Array();
       paraArr['page'] = m_page;

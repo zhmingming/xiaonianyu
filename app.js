@@ -112,7 +112,7 @@ App({
     userID: '',
     isFX: '',
     signKey: 'myjrc',
-    // postUrl: "https://sapi.xiaonianyu.com"
-    postUrl: "https://saptest.xiaonianyu.com"
+    postUrl: "https://sapi.xiaonianyu.com"
+    // postUrl: "https://saptest.xiaonianyu.com"
   }
 })

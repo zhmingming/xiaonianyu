@@ -57,7 +57,7 @@
       </navigator>
     </view>
   </view>
-  <!-- <view class='cells_ctr'>
+  <view class='cells_ctr'>
     <view class='cells_ctt border0'>
       <view class='cells_txt' bindtap='getPic'>
         <view class='cells_txt_left'>
@@ -67,7 +67,7 @@
         </view>
       </view>
     </view>
-  </view> -->
+  </view>
 </view>
 <!--分享图-->
 <view class="dialog {{ showShare ? 'share_pic_ctr' : '' }}">
