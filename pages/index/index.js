@@ -57,8 +57,9 @@ Page({
     // that.setSlideData();
     that.setNewGoodsData();
     that.setTopicData(that.data.currentID, that.data.th_type, that.data.size, that.data.page);
-    that.setsWiperHight();
-
+    if (this.data.hiddenLoading){
+      that.setsWiperHight();
+    }
   },
   /**
    * 生命周期函数--监听页面显示
@@ -405,7 +406,7 @@ Page({
     })
     that.setHotGoodsData(id);
     that.setTopicData(that.data.currentID, that.data.th_type, that.data.size, that.data.page);
-    that.data.setsWiperHight();
+    that.setsWiperHight();
     // app.redirect('category/index?id=' + id + "&index=" + index + "&e_date=" + that.data.e_date);
   },
   dropDownNav: function() {
@@ -558,25 +559,10 @@ Page({
         that.setData({
           aheight: qry.height
         })
-        // if (qry.height != null){
-        //   clearInterval(time);
-        // }
 
       }).exec();
     }, 500)
-    // var time = setInterval(function () {
-    //   query.select("#scroll-view-h").boundingClientRect(function (qry) {
-    //     // var h = qry.height;//此处可以成功获取到数据
-
-    //     that.setData({
-    //       aheight: qry.height
-    //     })
-    //     if (qry.height != null) {
-    //       clearInterval(time);
-    //     }
-
-    //   }).exec();
-    // }, 500)
+   
   },
 
   bindtransition: function(e) {

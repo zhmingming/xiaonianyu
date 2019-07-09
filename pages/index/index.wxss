@@ -75,7 +75,7 @@ view{
 
 /*幻灯*/
 
-swiper {
+.swiper_scroll {
   margin-top: 42rpx;
   height: 380rpx;
 }
@@ -854,3 +854,17 @@ swiper {
   width: 30rpx;
   /* transform: rotate(45deg); */
 }
+/* .swiper-catList{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: fixed;
+}
+scroll-view{
+  width: 100%;
+  height: 95%;
+}
+.kk{
+  overflow: hidden;
+  height: 100%;
+} */

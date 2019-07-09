@@ -36,9 +36,12 @@
       </block>
     </swiper>
   </view> -->
-  <swiper class="swiper-catList" indicator-dots="{{false}}" autoplay="{{false}}" style="height:{{aheight}}px" bindchange="bindchange" current="{{current}}" duration="300">
+  <!--  -->
+   <view class='kk'>
+  <swiper class="swiper-catList" indicator-dots="{{false}}" autoplay="{{false}}" style="height:{{aheight}}px" bindchange="bindchange" current="{{current}}" duration="300" >
     <block wx:for="{{catList}}" wx:key="key">
-      <swiper-item item-id='{{item.id}}' class="swiper-item{{index}}">
+      <swiper-item item-id='{{item.id}}' class="swiper-item{{index}}" 
+      style="overflow-y: scroll; -webkit-overflow-scrolling:touch">
         <scroll-view id="scroll-view-h" scroll-y="true">
           <view class="section swiper">
             <swiper indicator-dots="{{catList[index].pic.length == 1 ? false : true }}" indicator-color="rgba(255,255,255,.5)" indicator-active-color="rgb(255,255,255)" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper_scroll">
@@ -232,6 +235,7 @@
       </swiper-item>
     </block>
   </swiper>
+   </view>
   <!--底线-->
   <view class='last_line_ctr' wx:if="{{hiddenLoading}}">
     <view class='last_txt'>这是我的底线</view>
