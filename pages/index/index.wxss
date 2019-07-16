@@ -76,7 +76,7 @@ view{
 /*幻灯*/
 
 .swiper_scroll {
-  margin-top: 42rpx;
+  margin-top: 84rpx;
   height: 380rpx;
 }
 
@@ -867,4 +867,5 @@ scroll-view{
 .kk{
   overflow: hidden;
   height: 100%;
+  padding-top: 40upx;
 }
