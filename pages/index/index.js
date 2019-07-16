@@ -39,27 +39,35 @@ Page({
     swiper_index: 0,
     current: 0,
     aheight: 0,
-    is_dj: true
+    is_dj: true,
+    detailID: 0,
+    detailFlag: true,
+    scroll_top : 0
   },
-  onLoad: function(opt) {
+  onLoad: function(options) {
     var that = this;
+    console.log(options)
     //获取分销ID
-    if (opt.scene) {
-      var scene = decodeURIComponent(opt.scene);
+    if (options.scene) {
+      var scene = decodeURIComponent(options.scene);
+      let arr = options.scene;
+      let detailID = arr.split('_')[1];
+
       that.setData({
-        fid: scene
+        fid: scene,
+        detailID: detailID,
       });
     }
-    console.log(opt.scene);
+
     //初始化
     that.setHotGoodsData(that.data.currentID);
     this.setCategoryData();
     // that.setSlideData();
     that.setNewGoodsData();
     that.setTopicData(that.data.currentID, that.data.th_type, that.data.size, that.data.page);
-    if (this.data.hiddenLoading){
-      that.setsWiperHight();
-    }
+    // if (this.data.hiddenLoading) {
+    //   that.setsWiperHight();
+    // }
   },
   /**
    * 生命周期函数--监听页面显示
@@ -67,8 +75,19 @@ Page({
   onShow: function() {
     //用户授权登录
     var that = this;
-    app.login(that.data.fid);
-    that.setsWiperHight();
+    console.log(that.data.fid);
+    console.log(that.data.detailID);
+    if (that.data.detailID == 0 || that.data.detailID == undefined) {
+      app.login(that.data.fid);
+    }else {
+      if (that.data.detailFlag) {
+        that.setData({
+          detailFlag: false,
+        });
+        app.redirect('goods/detail', 'id=' + that.data.detailID + '&scene=' + that.data.fid + '_' + that.data.detailID);
+      };
+    };
+    // that.setsWiperHight();
   },
 
   //下拉刷新
@@ -97,9 +116,21 @@ Page({
       this.setTopicData(that.data.currentID, this.data.th_type, that.data.size, that.data.page);
     }
 
-    that.setsWiperHight();
+    // that.setsWiperHight();
+    console.log("底部");
   },
+  lower : function(){
+    var that = this;
+    if (that.data.page <= that.data.last_page) {
+      that.setData({
+        page: that.data.page + 1
+      })
+      this.setTopicData(that.data.currentID, this.data.th_type, that.data.size, that.data.page);
+    }
 
+    // that.setsWiperHight();
+    console.log("底部");
+  },
   //初始化分类
   setCategoryData: function() {
     var that = this;
@@ -164,6 +195,7 @@ Page({
       wx.getStorage({
         key: 'sessionID',
         success: function(res) {
+          console.log(res.data)
           that.data.openId = res.data;
           wx.request({
             url: rootDocment + '/api/com_get/getFlashGoods',
@@ -398,15 +430,15 @@ Page({
       currentID: id,
       page: 1,
       new_list: [],
-      swiper_index : index,
-      hiddenLoading :false
+      swiper_index: index,
+      hiddenLoading: false
     })
     wx.pageScrollTo({
       scrollTop: 0
     })
     that.setHotGoodsData(id);
     that.setTopicData(that.data.currentID, that.data.th_type, that.data.size, that.data.page);
-    that.setsWiperHight();
+    // that.setsWiperHight();
     // app.redirect('category/index?id=' + id + "&index=" + index + "&e_date=" + that.data.e_date);
   },
   dropDownNav: function() {
@@ -429,11 +461,22 @@ Page({
       });
     }
   },
-
+  getScroll:function(e){
+    var that = this;
+    if (e.detail.scrollTop > 100) {
+      that.setData({
+        hiddenTop: false
+      });
+    } else {
+      that.setData({
+        hiddenTop: true
+      });
+    }
+  },
   // tab切换
   tabSwitch: function(e) {
     var that = this;
-    if (e.currentTarget.dataset.type == that.data.th_type ){
+    if (e.currentTarget.dataset.type == that.data.th_type) {
       return;
     }
     that.setData({
@@ -449,6 +492,10 @@ Page({
 
   //回到顶部
   goTop: function(e) { // 一键回到顶部
+    var that = this;
+    that.setData({
+      scroll_top: 0
+    })
     if (wx.pageScrollTo) {
       wx.pageScrollTo({
         scrollTop: 0
@@ -529,12 +576,6 @@ Page({
     app.redirect('search/index');
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  },
   kaishouTips() {
     wx.showToast({
       title: '即将开售，敬请期待',
@@ -562,11 +603,10 @@ Page({
 
       }).exec();
     }, 500)
-   
+
   },
 
-  bindtransition: function(e) {
-  },
+  bindtransition: function(e) {},
 
   bindchange: function(e) {
     var that = this;
@@ -588,10 +628,21 @@ Page({
       is_dj: true,
       hiddenLoading: false
     })
-    that.setsWiperHight();
+    // that.setsWiperHight();
     wx.pageScrollTo({
       scrollTop: 0
     })
+  },
+
+  // 自定义分享事件
+  onShareAppMessage: function (res) {
+    let that = this;
+    console.log(app.globalData.userID)
+    console.log('转发成功')
+    return {
+      title: '小年鱼品牌折扣商城',
+      path: '/pages/index/index?scene=' + app.globalData.userID + '_' + that.data.currentID,
+    }
   },
 
 })

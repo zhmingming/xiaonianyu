@@ -56,7 +56,8 @@ Page({
     //初始化
     if (options.id) {
       this.setDetailData(options.id);
-    } else {
+    }
+    if (options.scene)  {
       var scene = decodeURIComponent(options.scene).split("_");
       this.setDetailData(scene[1]);
       that.setData({
@@ -610,17 +611,6 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function(res) {
-    var that = this;
-    return {
-      title: that.data.detail['title'],
-      path: '/pages/goods/detail?scene=' + app.globalData.userID + '_' + that.data.currentID
-    }
-  },
-
   //格式化时间
   getFormat: function(msec) {
     let ss = parseInt(msec / 1000);
@@ -653,5 +643,24 @@ Page({
       hh,
       dd
     };
-  }
+  },
+  // 自定义分享事件
+  onShareAppMessage: function (res) {
+    let that = this;
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+    }
+    return {
+      title: that.data.detail.title,
+      // path: '/pages/index/index?pageId=' + that.data.currentID,
+      path: '/pages/index/index?scene=' + app.globalData.userID + '_' + that.data.currentID,
+      success: function (res) {
+        // 转发成功
+        
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
+  },
 })

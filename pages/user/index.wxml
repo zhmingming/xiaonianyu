@@ -25,21 +25,21 @@
                 <image class='user_order_icon' mode='widthFix' src="../../images/icon_wode_daifukuan.png"/>
                 </view>
                 <view class='user_order_ctt'><span>待付款</span></view>
-                <view class='yuan' wx:if="{{orderNum[0]>0}}">{{orderNum[0]}}</view>
+                <view class='yuan' wx:if="{{orderNum['waitpay']>0}}">{{orderNum['waitpay']}}</view>
             </navigator>
             <navigator url='/pages/user/myorder?type=1' class='user_order_ctr'>
                 <view class='user_order_ctt'>
                 <image class='user_order_icon' mode='widthFix' src="../../images/icon_wode_daifahuo.png"/>
                 </view>
                 <view class='user_order_ctt'><span>待发货</span></view>
-                <view class='yuan' wx:if="{{orderNum[1]>0}}">{{orderNum[1]}}</view>
+                <view class='yuan' wx:if="{{orderNum['waitsend']>0}}">{{orderNum['waitsend']}}</view>
             </navigator>
             <navigator url='/pages/user/myorder?type=2' class='user_order_ctr'>
                 <view class='user_order_ctt'>
                 <image class='user_order_icon' mode='widthFix' src="../../images/icon_wode_daishouhuo.png"/>
                 </view>
                 <view class='user_order_ctt'><span>待收货</span></view>
-                <view class='yuan' wx:if="{{orderNum[2]>0}}">{{orderNum[2]}}</view>
+                <view class='yuan' wx:if="{{orderNum['waitreceive']>0}}">{{orderNum['waitreceive']}}</view>
             </navigator>
             <!-- <navigator url='/pages/user/myorder?type=3' class='user_order_ctr'>
                 <view class='user_order_ctt'>

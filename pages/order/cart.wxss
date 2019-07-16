@@ -162,12 +162,61 @@
 }
 
 .goods_widget {
-  padding: 40rpx 20rpx;
-  background-color: #fff;
-  border-radius: 20rpx;
+  position: relative;
+}
+/* 滑动视图容器样式 */
+.delete_widget {
+  width: calc(100vw - 190rpx);
+  height: 260rpx;
   margin-bottom: 20rpx;
   position: relative;
 }
+
+.delete_item {
+  height: 100%;
+  width: calc(100vw - 60rpx);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0; 
+  z-index: 999;
+  padding: 40rpx 20rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-sizing: border-box;
+}
+
+.delete-btn {
+  height: 100%;
+  width: 130rpx;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0; 
+  font-size: 24rpx;
+  color: #FFFFFF;
+  z-index: 1;
+  text-align: center;
+}
+
+.icon_editWidget {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 62rpx;
+  height: 62rpx;
+  border-radius: 50%;
+  background-color: #DC030B;
+  transform: translate(-50%,-50%);
+  opacity: 0.8;
+}
+
+.icon_editWidget i {
+  line-height: 62rpx;
+  font-size: 36rpx;
+}
+
+// // //
 
 .radio_widget {
   position: absolute;

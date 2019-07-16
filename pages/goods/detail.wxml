@@ -54,7 +54,6 @@
         <button open-type="share" class='shareBtn'>
           <image bindtap="" class="share_new_img" src="../../images/share_new.png"></image>
         </button>
-
       </view>
     </view>
   </view>

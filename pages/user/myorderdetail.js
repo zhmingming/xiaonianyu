@@ -205,21 +205,7 @@ Page({
     var that = this;
     var m_id = e.currentTarget.dataset.id
     if (!m_id) return;
-    wx.request({
-      url: rootDocment + '/api/com_get/getSend',
-      data: { order_id: m_id },
-      method: 'GET',
-      header: {},
-      success: function (res) {
-        wx.showModal({
-          title: res.data.sendType,
-          content: res.data.sendNo,
-          showCancel: false,
-          success: function (res) {
-          }
-        })
-      }
-    })
+    app.redirect('user/logistics', 'id=' + m_id);
   },
 
   //删除订单

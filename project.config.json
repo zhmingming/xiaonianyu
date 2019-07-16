@@ -40,7 +40,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 13,
+			"current": 17,
 			"list": [
 				{
 					"id": -1,
@@ -138,6 +138,34 @@
 					"name": "我的佣金",
 					"pathName": "pages/fenxiao/mycommission",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的佣金",
+					"pathName": "pages/fenxiao/index",
+					"query": "scence=1778",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的佣金",
+					"pathName": "pages/index/index",
+					"query": "scence=1778",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的佣金",
+					"pathName": "pages/index/index",
+					"query": "scence=1778",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "查看物流",
+					"pathName": "pages/user/logistics",
+					"query": "id=313",
 					"scene": null
 				}
 			]

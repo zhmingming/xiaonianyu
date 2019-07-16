@@ -34,7 +34,9 @@
     "pages/authorize/index",
     "pages/category/index",
     "pages/promotion/flashsale",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/user/logistics",
+    "pages/topic/active"
   ],
   "window": {
     "backgroundTextStyle": "light",

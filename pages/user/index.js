@@ -52,11 +52,10 @@ Page({
     var that = this;
     var paraArr = new Array();
     paraArr['id'] = app.globalData.userID;
-    console.log(app.globalData.userID);
     var sign = app.signature(paraArr);
     wx.request({
       url: rootDocment + '/api_user/' + paraArr['id'],
-      data: { sign: sign},
+      data: { sign: sign },
       method: 'GET',
       header: {},
       success: function (res) {
@@ -70,33 +69,23 @@ Page({
       }
     })
     var myArr = new Array();
-    var numArr = [0,0,0];
+    var numArr = [0, 0, 0];
     myArr['user_id'] = app.globalData.userID;
     var sign = app.signature(myArr);
     wx.request({
-      url: rootDocment + '/api_order/',
-      data: { user_id: myArr['user_id'],sign: sign },
+      url: rootDocment + '/api/order/orderConut/',
+      data: { user_id: myArr['user_id'], sign: sign },
       method: 'GET',
       header: {},
       success: function (res) {
-        for (var i = 0; i < res.data.length; i++) {
-          if (res.data[i]['order_state'] == '待付款') {
-            numArr[0] = numArr[0]+1;
-          }
-          if (res.data[i]['order_state']=='待发货'){
-            numArr[1] = numArr[1] + 1;
-          }
-          if (res.data[i]['order_state'] == '已发货') {
-            numArr[2] = numArr[2] + 1;
-          }
-        }
+        console.log(res.data)
         that.setData({
-          orderNum: numArr
+          orderNum: res.data
         });
       }
     })
   },
-
+  
   //清除缓存
   clearCache: function () {
     wx.showModal({

@@ -36,13 +36,13 @@
       </block>
     </swiper>
   </view> -->
-  <!--  -->
+  <!-- style="height:{{aheight}}px" -->
    <view class='kk'>
-  <swiper class="swiper-catList" indicator-dots="{{false}}" autoplay="{{false}}" style="height:{{aheight}}px" bindchange="bindchange" current="{{current}}" duration="300" >
+  <swiper class="swiper-catList" indicator-dots="{{false}}" autoplay="{{false}}"  bindchange="bindchange" current="{{current}}" duration="300" >
     <block wx:for="{{catList}}" wx:key="key">
       <swiper-item item-id='{{item.id}}' class="swiper-item{{index}}" 
       style="overflow-y: scroll; -webkit-overflow-scrolling:touch">
-        <scroll-view id="scroll-view-h" scroll-y="true">
+        <scroll-view id="scroll-view-h" scroll-y="true" bindscrolltolower="lower" bindscroll="getScroll" scroll-top="{{scroll_top}}" scroll-with-animation="true">
           <view class="section swiper">
             <swiper indicator-dots="{{catList[index].pic.length == 1 ? false : true }}" indicator-color="rgba(255,255,255,.5)" indicator-active-color="rgb(255,255,255)" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper_scroll">
               <block wx:for="{{catList[index].pic}}" wx:key="key">
@@ -231,16 +231,17 @@
         <view class='topic_title_cell_on' style='width: 100%;'>今日特卖<view class='line' style='left: 226rpx;'></view></view>
         <view class='topic_title_cell' hidden='true'>即将开售<view class='line'></view></view>
     </view> -->
+         <!--底线-->
+  <view class='last_line_ctr' wx:if="{{hiddenLoading}}">
+    <view class='last_txt'>这是我的底线</view>
+    <view class='last_line'></view>
+  </view>
         </scroll-view>
       </swiper-item>
     </block>
   </swiper>
    </view>
-  <!--底线-->
-  <view class='last_line_ctr' wx:if="{{hiddenLoading}}">
-    <view class='last_txt'>这是我的底线</view>
-    <view class='last_line'></view>
-  </view>
+ 
   <!--置顶-->
   <view class='to_top' hidden="{{hiddenTop}}" bindtap='goTop'>
     <image src='../../images/icon_fanhuitob.png' />

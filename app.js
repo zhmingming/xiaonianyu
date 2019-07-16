@@ -8,7 +8,7 @@ App({
     wx.setStorageSync('logs', logs)
   },
   //授权登录
-  login: function(cb) {
+  login: function(cb, detailID) {
     var that = this;
     var fid = 0; //分销人ID
     if (this.globalData.userInfo) {
@@ -42,7 +42,7 @@ App({
                       wx.setStorageSync('sessionID', res.data.session_id);
                       that.globalData.openID = res.data.session_id
                       that.globalData.userID = res.data.user_id
-                      that.globalData.isFX = res.data.is_fx
+                      that.globalData.isFX = res.data.is_fx;
                     }
                   }
                 })
