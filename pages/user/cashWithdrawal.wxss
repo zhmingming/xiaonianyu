@@ -64,3 +64,16 @@ view {
   background:#dc030b;
  
 }
+
+/* y 新增 提示 */
+.topTip {
+  text-align: center;
+  padding: 34rpx 0;
+  font-size: 28rpx;
+  line-height: 40rpx;
+  color: #777;
+}
+
+.topTip span {
+  color: #DC030B;
+}

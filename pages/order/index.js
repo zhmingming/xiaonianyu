@@ -309,13 +309,13 @@ Page({
     }
   },
   //立即支付
-  payNow: function (Order_sn) {
+  payNow: function (order_sn) {
     var that = this;
     console.log(that.data.order_sn)
     if (that.data.pay_type == 1) {//微信支付
       wx.request({
         url: rootDocment + '/api/miniapp_pay/wx_pay',
-        data: { order_no:Order_sn, open_id: app.globalData.openID, total: that.data.pay_price||that.data.pay_total, uid: app.globalData.userID, order_type: that.data.order_type },
+        data: { order_no:order_sn, open_id: app.globalData.openID, total: that.data.pay_price||that.data.pay_total, uid: app.globalData.userID, order_type: that.data.order_type },
         method: 'GET',
         header: {},
         success: function (res) {
@@ -329,7 +329,7 @@ Page({
             var form_id = res.data.package.replace('prepay_id=', '');
             wx.request({
               url: rootDocment + '/api/com_get/updateFormID',
-              data: { sn: that.data.order_sn, prepay_id: form_id },
+              data: { sn: order_sn, prepay_id: form_id },
               method: 'GET',
               header: {},
               success: function (res) {
@@ -345,13 +345,14 @@ Page({
             'paySign': res.data.paySign,
             'success': function (res) {
               if (that.data.order_type == 1) {
-                app.redirect('user/myorder', 'type=');
+                app.gourl('user/myorderdetail', 'order_sn=' + order_sn + '0001' + '&id=' + app.globalData.userID);
               }
               else {
                 app.gotaburl('user/index');
               }
             },
             'fail': function (res) {
+              app.redirect('user/myorderdetail', 'order_sn=' + order_sn + '&id=' + app.globalData.userID);
               console.log(res);
             }
           })
@@ -362,7 +363,7 @@ Page({
     else {//余额支付
       wx.request({
         url: rootDocment + '/api/miniapp_pay/balance_pay',
-        data: { sn: that.data.order_sn, user_id: app.globalData.userID },
+        data: { sn: order_sn, user_id: app.globalData.userID },
         method: 'POST',
         header: {},
         success: function (res) {

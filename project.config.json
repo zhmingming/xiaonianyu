@@ -14,7 +14,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.2",
-	"appid": "wx9f9be71165fe140a",
+	"appid": "wxbeeab951f2e8a66f",
 	"projectname": "xiaonianyu",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -40,7 +40,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 17,
+			"current": 13,
 			"list": [
 				{
 					"id": -1,
@@ -120,13 +120,6 @@
 					"scene": null
 				},
 				{
-					"id": 11,
-					"name": "我的佣金",
-					"pathName": "pages/goods/detail",
-					"query": "id=142",
-					"scene": null
-				},
-				{
 					"id": 12,
 					"name": "我的佣金",
 					"pathName": "pages/user/cashSuccess",
@@ -134,38 +127,17 @@
 					"scene": null
 				},
 				{
-					"id": 13,
-					"name": "我的佣金",
-					"pathName": "pages/fenxiao/mycommission",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "我的佣金",
-					"pathName": "pages/fenxiao/index",
-					"query": "scence=1778",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "我的佣金",
-					"pathName": "pages/index/index",
-					"query": "scence=1778",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "我的佣金",
-					"pathName": "pages/index/index",
-					"query": "scence=1778",
-					"scene": null
-				},
-				{
 					"id": -1,
 					"name": "查看物流",
 					"pathName": "pages/user/logistics",
 					"query": "id=313",
+					"scene": null
+				},
+				{
+					"id": 13,
+					"name": "活动页",
+					"pathName": "pages/topic/active",
+					"query": "user_id:16",
 					"scene": null
 				}
 			]

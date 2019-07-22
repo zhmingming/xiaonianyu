@@ -18,13 +18,17 @@ Page({
     topNum: 0,
     hiddenTop: true,
     loadingComplete: false,
-    curType: 0,  //筛选类型
+    curType: 0, //筛选类型
     order: 'sequence',
     orderType: 'desc',
-    xianShi: { "countHH": "00", "countMM": "00", "countSS": "00" },
+    xianShi: {
+      "countHH": "00",
+      "countMM": "00",
+      "countSS": "00"
+    },
     e_date: "",
     is_cf: 0,
-    is_curType : true,
+    is_curType: true,
     is_lod: false,
     stype: ""
   },
@@ -32,7 +36,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     //初始化
     var that = this;
     console.log(options)
@@ -41,7 +45,7 @@ Page({
       // stype: options.stype
     });
     wx.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         that.setData({
           scrollHeight: res.windowHeight - 45
         });
@@ -49,11 +53,11 @@ Page({
     });
     this.setGoodsListData(options.cat_id);
     this.setCategoryData(options.cat_id);
-    
+
   },
 
   //下拉刷新
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     var that = this;
     this.setGoodsListData(that.data.currentItem);
     this.setCategoryData(that.data.currentItem);
@@ -61,7 +65,7 @@ Page({
   },
 
   //滚动到底部触发事件  
-  showScrollLower: function () {
+  showScrollLower: function() {
     var that = this;
     if (that.data.allowScroll) {
       that.setData({
@@ -72,7 +76,7 @@ Page({
   },
 
   // 获取滚动条当前位置
-  scrolltoupper: function (e) {
+  scrolltoupper: function(e) {
     if (e.detail.scrollTop > 100) {
       this.setData({
         hiddenTop: false
@@ -85,30 +89,32 @@ Page({
   },
 
   //回到顶部
-  goTop: function () {  // 一键回到顶部
+  goTop: function() { // 一键回到顶部
     this.setData({
       topNum: 0
     });
   },
 
   //初始化当前分类
-  setCategoryData: function (id) {
+  setCategoryData: function(id) {
     var that = this;
-    if(id==''){
+    if (id == '') {
       wx.setNavigationBarTitle({
         title: '限时抢购 - 全部',
       })
-    }
-    else {
+    } else {
       var paraArr = new Array();
       paraArr['id'] = id;
       var sign = app.signature(paraArr);
       wx.request({
         url: rootDocment + '/api_goods_category',
-        data: { id: paraArr['id'], sign: sign },
+        data: {
+          id: paraArr['id'],
+          sign: sign
+        },
         method: 'GET',
         header: {},
-        success: function (res) {
+        success: function(res) {
           console.log(res)
           that.setData({
             curCat: res.data
@@ -123,7 +129,7 @@ Page({
   },
 
   //初始商品列表
-  setGoodsListData: function (id) {
+  setGoodsListData: function(id) {
     var that = this;
     if (!that.data.loadingComplete) {
       var paraArr = new Array();
@@ -134,41 +140,48 @@ Page({
       paraArr['order_type'] = that.data.orderType;
       var sign = app.signature(paraArr);
       wx.request({
-        url: rootDocment + '/api/com_get/getFlashGoods',
-        data: { cat_id: id, size: paraArr['size'], page: paraArr['page'], order: paraArr['order'], order_type: paraArr['order_type'], sign: sign, xianshi:1},
+        // url: rootDocment + '/api/com_get/getFlashGoods',
+        url: rootDocment + '/api/com_get/getLimitedGoodsList',
+        data: {
+          cat_id: id,
+          size: paraArr['size'],
+          page: paraArr['page'],
+          order: paraArr['order'],
+          order_type: paraArr['order_type'],
+          sign: sign,
+          xianshi: 1
+        },
         method: 'GET',
         header: {},
-        success: function (res) {
+        success: function(res) {
           that.setData({
             currentItem: id,
             hiddenLoading: true
           });
-          console.log(res)
-          if (res.data.data) { //如果有数据
+
+          if (res.data.flash_goods_list.data) { //如果有数据
             var list = that.data.goodsList;
-            console.log(res.data.data)
-            console.log(res.data.data.length)
+
             // for (var i = 0; i < res.data.data.length; i++) {
             //   list.push(res.data.data[i]);
             // }
             var i = 0;
-            for (var arr in res.data.data) {
+            for (var arr in res.data.flash_goods_list.data) {
               if (i < that.data.perPage) {
-                list.push(res.data.data[arr]);
+                list.push(res.data.flash_goods_list.data[arr]);
               }
               i++;
             }
             that.setData({
               goodsList: list
             });
-            console.log(list)
-            if (res.data.data.length == that.data.perPage) {
+
+            if (res.data.flash_goods_list.data.length == that.data.perPage) {
               that.setData({
                 curPage: that.data.curPage + 1,
                 allowScroll: true
               });
-            }
-            else {
+            } else {
               that.setData({
                 loadingComplete: true
               });
@@ -178,13 +191,12 @@ Page({
                 is_lod: false
               })
             }
-            if (res.data.data.length < 1) {
+            if (res.data.flash_goods_list.data.length < 1) {
               that.setData({
                 is_lod: true
               })
             }
-          }
-          else {
+          } else {
             that.setData({
               loadingComplete: true
             });
@@ -193,11 +205,11 @@ Page({
         }
       })
     }
-    
+
   },
 
   //筛选
-  screenGoods: function (e) {
+  screenGoods: function(e) {
 
     var that = this;
     var m_type = e.currentTarget.dataset.type;
@@ -239,16 +251,16 @@ Page({
     that.setGoodsListData(that.data.currentItem);
   },
 
-  getXianShi: function () {
+  getXianShi: function() {
     var that = this;
     var time = 1000;
-    var n_tamp = parseInt(new Date().getTime());    // 当前时间戳
+    var n_tamp = parseInt(new Date().getTime()); // 当前时间戳
     var t_tamp = that.data.e_date;
     var mss = 0;
     var xianShi = that.data.xianShi;
     t_tamp = t_tamp.substring(0, 19);
     t_tamp = t_tamp.replace(/-/g, '/');
-    t_tamp = parseInt(new Date(t_tamp).getTime());   //结束时间戳
+    t_tamp = parseInt(new Date(t_tamp).getTime()); //结束时间戳
     mss = t_tamp - n_tamp;
 
     let formatTime = that.getFormat(mss);
@@ -262,8 +274,8 @@ Page({
     // console.log(that.data.xianShi)
     setTimeout(that.getXianShi, time);
   },
-  
-  getFormat: function (msec) {
+
+  getFormat: function(msec) {
     let ss = parseInt(msec / 1000);
     let ms = parseInt(msec % 1000);
     let mm = 0;
@@ -287,7 +299,13 @@ Page({
     ss = ss > 9 ? ss : `0${ss}`;
     mm = mm > 9 ? mm : `0${mm}`;
     hh = hh > 9 ? hh : `0${hh}`;
-    return { ms, ss, mm, hh, dd };
+    return {
+      ms,
+      ss,
+      mm,
+      hh,
+      dd
+    };
   }
- 
+
 })

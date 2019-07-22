@@ -7,14 +7,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    total : 0,
-    tx_money : ""
+    total: 0,
+    tx_money: ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     console.log(options);
     // commission
     this.setData({
@@ -25,65 +25,74 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
-  getMoney:function(e){
+  getMoney: function(e) {
     var that = this;
     var value = e.detail.value;
-    
+
     that.setData({
-      tx_money : value
+      tx_money: value
     })
 
     console.log(e);
 
   },
-  cashWithdrawal:function(){
+  cashWithdrawal: function() {
     var that = this;
-    if(that.data.tx_money < 50){
+    if (that.data.tx_money < 50) {
+      return;
+    }
+    if (that.data.tx_money > 500) {
+      wx.showToast({
+        title: '金额超500 !',
+        icon: 'none',
+        duration: 1000,
+        mask: true
+      });
       return;
     }
     var paraArr = new Array();
@@ -92,33 +101,37 @@ Page({
     var sign = app.signature(paraArr);
     wx.request({
       url: rootDocment + '/api/user_pay_log/save',
-      data: { user_id: paraArr['user_id'], m_fee: paraArr['m_fee'], sign: sign },
+      data: {
+        user_id: paraArr['user_id'],
+        m_fee: paraArr['m_fee'],
+        sign: sign
+      },
       method: 'GET',
       header: {},
-      success: function (res) {
+      success: function(res) {
         console.log(res);
-        if (res.data.code == "1001"){
+        if (res.data.code == "1001") {
           wx.redirectTo({
             url: '/pages/user/cashSuccess'
           })
-        }else{
+        } else {
           wx.showToast({
-            title: "提现失败！",
+            title: res.data.msg + ' !',
             icon: 'none'
           })
         }
-       
+
       }
     })
 
   },
 
-  fullCashWithdrawal:function(){
+  fullCashWithdrawal: function() {
     var that = this;
 
     that.setData({
-      tx_money : that.data.total
+      tx_money: that.data.total
     })
-    
+
   }
 })

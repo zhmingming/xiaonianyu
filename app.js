@@ -3,9 +3,20 @@ var utilMd5 = require('utils/md5.js');
 App({
   onLaunch: function() {
     // 展示本地存储能力
+////////////////////////////////////////////////////////////////////////
     var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    console.log = (function (oriLogFunc) {
+      return function (str) {
+        if (true) {// 需要打印 此处改为 true
+          oriLogFunc.call(console, str);
+          logs.unshift(Date.now()+":::"+JSON.stringify(str))
+          wx.setStorageSync('logs', logs);
+        }
+      }
+    })(console.log);
+//////////////////////////////////////////////////////////////////////////
+    
+
   },
   //授权登录
   login: function(cb, detailID) {
@@ -40,6 +51,7 @@ App({
                     console.log(res)
                     if (res.data.success) {
                       wx.setStorageSync('sessionID', res.data.session_id);
+                      wx.setStorageSync('user_id', res.data.user_id);
                       that.globalData.openID = res.data.session_id
                       that.globalData.userID = res.data.user_id
                       that.globalData.isFX = res.data.is_fx;
@@ -112,7 +124,7 @@ App({
     userID: '',
     isFX: '',
     signKey: 'myjrc',
-    postUrl: "https://sapi.xiaonianyu.com"
-    // postUrl: "https://saptest.xiaonianyu.com"
-  }
+    // postUrl: "https://sapi.xiaonianyu.com"
+    postUrl: "https://saptest.xiaonianyu.com"
+  },
 })

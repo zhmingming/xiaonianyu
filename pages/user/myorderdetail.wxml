@@ -61,9 +61,15 @@
         <image class='shop_logo' mode='widthFix' src='../../images/logo.png'></image>
         <text>小年鱼自营商城</text>
       </view>
-      <view class='service_widget'>
-        <button open-type="contact" show-message-card="ture" class='serviceBtn' style='line-height:98rpx;'></button>
-        <i class="iconfont icon-kefu"></i>
+      <view hidden='{{index != 0}}' class='service_widget'>
+        <block wx:if="{{detail.order_state=='待付款'}}">
+          <text>下单领红包</text>
+        </block>
+        <block wx:else>
+          <text>点我领红包</text>
+        </block>
+        <image bindtap='showShadow' data-isshow='true' mode='widthFix' src='../../images/hongbao.png'></image>
+        <!-- <image wx:else bindtap='showShadow' data-isshow='true' data-replace='replace' mode='widthFix' src='../../images/hongbao.gif'></image> -->
       </view>
     </view>
     <navigator url='/pages/goods/detail?id={{item.goods_id}}' class='order_middle'>
@@ -92,7 +98,7 @@
         <view class='info_item'>订单编号：{{detail.order_sn}}</view>
         <view class='info_item'>下单时间：{{detail.add_date}}</view>
         <view class='info_item'>支付金额：{{detail.pay_price}}</view>
-        <view class='info_item'>备注信息：{{}}无</view>
+        <view class='info_item'>备注信息：{{detail.info?detail.info:'无'}}</view>
       </view>
     </view>
   </view>
@@ -156,6 +162,33 @@
         <view class='myorder_btn' wx:if="{{detail.send_type=='自提'}}">自提订单</view>
         <view class='myorder_btn' bindtap="showSend" data-id="{{currentID}}" wx:else>查看物流</view>
       </block>
+    </view>
+  </view>
+  <!-- 遮罩 -->
+  <view wx:if='{{shadow}}' data-isshow='true' bindtap='showShadow' class='shadow_wrap'>
+    <view catchtap='showShadow' class='service_box'>
+      <image data-isshow='true' bindtap='showShadow' class='shadowClose' src='../../images/shadowClose.png'></image>
+      <image class='xueji_icon' src='https://img.xiaonianyu.com/1563271530tw.jpg'></image>
+      <view>你好，{{userInfo.nickName}}，我是雪姬</view>
+      <view class='service_context'>
+        <view class='flex context_item'>
+          <view class='dot'></view>
+          <view>下单领首单红包</view>
+        </view>
+        <view class='flex context_item'>
+          <view class='dot'></view>
+          <view>退换货专属宝藏女孩</view>
+        </view>
+        <view class='flex context_item'>
+          <view class='dot'></view>
+          <view>定制个人穿衣搭配</view>
+        </view>
+      </view>
+
+      <view class='service_btn'>
+        <button open-type="contact" bindcontact="showShadow" data-isshow='true' show-message-card="ture" class='serviceBtn' style='line-height:98rpx;'></button>
+        点我回复“<text>红包</text>”即刻拥有
+      </view>
     </view>
   </view>
 </view>

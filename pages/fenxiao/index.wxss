@@ -108,8 +108,8 @@
   margin: 0 auto;
   width: 500rpx;
   height: 750rpx;
-  background: #fff;
-  border-radius: 10rpx;
+  overflow: hidden;
+  border-radius: 20rpx;
 }
 .share_pic image {
   width: 100%;

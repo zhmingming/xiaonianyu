@@ -1,5 +1,6 @@
 /* pages/user/myorderdetail.wxss */
 @import "/style/cells.wxss";
+
 .flex {
   display: flex;
 }
@@ -9,23 +10,27 @@
   background: #fff;
   font-size: 32rpx;
 }
+
 .top_ctt {
   float: left;
   width: 100%;
   padding: 24rpx;
-  padding-right:0;
+  padding-right: 0;
 }
+
 .top_txt {
   width: 100%;
 }
-.top_txt span { 
+
+.top_txt span {
   color: #888;
   font-size: 28rpx;
 }
+
 .addr_line {
-  float:left;
+  float: left;
   width: 100%;
-  height:8rpx;
+  height: 8rpx;
 }
 
 /* 用户地址部分 */
@@ -188,17 +193,24 @@
 }
 
 .myorder_btn::after {
-  border-color: #DC030B;
+  border-color: #dc030b;
 }
 
 .myorder_btn_on {
-  color: #DC030B;
+  color: #dc030b;
 }
 
 .service_widget {
-  width: 40rpx;
-  height: 40rpx;
-  position: relative;
+  align-items: center;
+  display: flex;
+  font-size: 22rpx;
+  line-height: 32rpx;
+  color: #777;
+}
+
+.service_widget image {
+  width: 50rpx;
+  margin-left: 12rpx;
 }
 
 .shareBtn_widget {
@@ -209,8 +221,7 @@
   border-radius: 4rpx;
 }
 
-.serviceBtn,
-.shareBtn {
+.serviceBtn, .shareBtn {
   position: absolute;
   top: 0;
   left: 0;
@@ -220,6 +231,7 @@
 }
 
 /* 订单信息部分 */
+
 .order_info_sect {
   padding: 30rpx;
   background-color: white;
@@ -258,17 +270,15 @@
 }
 
 /* 脚部 */
+
 .go_down {
   position: fixed;
   bottom: 0;
   margin: 0;
 }
 
-
-
-
-
 /*商品*/
+
 /* .c_red {
   color: #b4282d;
 }
@@ -338,7 +348,6 @@
   color: #fff;
 } */
 
-
 /* y 新增样式 */
 
 .tips_widget {
@@ -349,6 +358,76 @@
 
 .tips_true {
   color: #777;
+}
+
+/* 遮罩 */
+
+.shadow_wrap {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.service_box {
+  background-color: #fff;
+  padding: 40rpx 60rpx;
+  border-radius: 20rpx;
+  width: 490rpx;
+  margin: 200rpx auto;
+  text-align: center;
+  font-size: 24rpx;
+  color: #777;
+  position: relative;
+}
+
+.xueji_icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+
+.service_context {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 48rpx;
+  padding: 40rpx 0 74rpx 110rpx;
+}
+
+.context_item {
+  align-items: center;
+}
+
+.service_context .dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background-color: #dc030b;
+  margin-right: 20rpx;
+}
+
+.service_btn {
+  background-color: #62bc48;
+  border-radius: 6rpx;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  line-height: 40rpx;
+  color: #fff;
+  position: relative;
+}
+
+.service_btn text {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.shadowClose {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 80rpx);
+  transform: translateX(-50%);
+  width: 80rpx;
+  height: 80rpx;
 }
 
 @import "/style/style.wxss";

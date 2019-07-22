@@ -38,7 +38,7 @@
   </view> -->
   <!-- style="height:{{aheight}}px" -->
    <view class='kk'>
-  <swiper class="swiper-catList" indicator-dots="{{false}}" autoplay="{{false}}"  bindchange="bindchange" current="{{current}}" duration="300" >
+  <swiper class="swiper-catList" indicator-dots="{{false}}" autoplay="{{false}}"  bindchange="bindchange" current="{{current}}" duration="300" style="height:{{aheight}}px">
     <block wx:for="{{catList}}" wx:key="key">
       <swiper-item item-id='{{item.id}}' class="swiper-item{{index}}" 
       style="overflow-y: scroll; -webkit-overflow-scrolling:touch">
@@ -88,7 +88,7 @@
                 <view class='pub_main_title2'>新人专享</view>
                 <view class='pub_sub_title2'>全网底价，只为遇见你</view>
               </view>
-              <navigator url="/pages/topic/detail?id=8&is_new=1" class='pub_title_btn2'>更多 ></navigator>
+              <navigator url="/pages/topic/active" class='pub_title_btn2'>更多 ></navigator>
             </view>
             <scroll-view class='pub_scroll' scroll-x style="width: 100%">
               <view wx:for="{{newGoodsList}}" wx:key="key" class="pub_goods_box">

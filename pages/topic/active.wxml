@@ -1,32 +1,34 @@
-<view class="banner_widget" >
-  <image mode='widthFix' src='https://img.xiaonianyu.com/1563182439xx.png'></image>
-</view>
-<view class='newGoods_wrap'>
-  <view wx:for="{{goodsList}}" wx:key="key">
-        <navigator class='goods_widget' url="/pages/goods/detail?id={{item.id}}">
-          <view class='goods_imgWidget'>
-            <image mode='widthFix' src="{{item.pic}}" />
+<scroll-view scroll-y="true" style="height:{{scrollHeight}}px;" bindscrolltolower="showScrollLower" scroll-top='{{topNum}}' bindscroll="scrolltoupper">
+  <view class='newGoods_wrap'>
+    <view class="banner_widget">
+      <image mode='widthFix' src='https://img.xiaonianyu.com/1563182439xx.png'></image>
+    </view>
+    <block wx:for="{{goodsList}}" wx:key="key">
+      <navigator class='goods_widget' url="/pages/goods/detail?id={{item.id}}">
+        <view class='goods_imgWidget'>
+          <image mode='widthFix' src="{{item.pic}}" />
+        </view>
+        <view class='goods_detail_widget'>
+          <view class='goods_title'>{{item.title}}</view>
+          <view class="limit_widget">
+            新人价
+            <text class='goods_price'>¥{{item.promotion_price}}</text>
+            <text class="span">¥{{item.markey_price}}</text>
           </view>
-          <view class='goods_detail_widget'>
-            <view class='goods_title'>{{item.title}}</view>
-            <view class="limit_widget">
-              新人价
-              <text class='goods_price'>¥{{item.promotion_price}}</text>
-              <text class="span">¥{{item.markey_price}}</text>
+          <view class='progress_widget'>
+            <view class='progressBar'>
+              <view class='progressBar_shadow' style="width:{{item.sale_rate}}%;"></view>
             </view>
-            <view class='progress_widget'>
-              <view class='progressBar'>
-                <view class='progressBar_shadow' style="width:{{item.sale_rate}}%;"></view>
-              </view>
-              <view class='progressTxt'>
-                已售
-                <text>{{item.sale_rate}}%</text>
-              </view>
-            </view>
-            <view class='goods_discount'>
-              {{item.rebate % 1 == 0 ? item.rebate + ".0" : item.rebate}}折抢购
+            <view class='progressTxt'>
+              已售
+              <text>{{item.sale_rate}}%</text>
             </view>
           </view>
-        </navigator>
-      </view>
-</view>
+          <view class='goods_discount'>
+            {{item.rebate % 1 == 0 ? item.rebate + ".0" : item.rebate}}折抢购
+          </view>
+        </view>
+      </navigator>
+    </block>
+  </view>
+</scroll-view>

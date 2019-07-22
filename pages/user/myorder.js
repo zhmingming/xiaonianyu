@@ -134,9 +134,13 @@ Page({
             'paySign': res.data.paySign,
             'success': function(res) {
               if (that.data.order_type == 1) {
-                app.redirect('user/myorder', 'type=');
+                console.log(1)
+                // app.redirect('user/myorder', 'type=');
+                app.gourl('user/myorderdetail', 'order_sn=' + order_sn + '0001' + '&id=' + app.globalData.userID);
               } else {
-                app.gotaburl('user/index');
+                console.log(2)
+                // app.gotaburl('user/index');
+                app.redirect('user/myorderdetail', 'order_sn=' + order_sn + '0001' + '&id=' + app.globalData.userID);
               }
             },
             'fail': function(res) {

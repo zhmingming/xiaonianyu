@@ -1,3 +1,20 @@
+page{background-color:#E2343C;}
+
+.banner_widget {
+  width: 100vw;
+  height: 380rpx;
+  background-clip: #333;
+}
+
+.banner_widget image {
+  width: 100%;
+}
+
+.newGoods_wrap {
+  padding: 0rpx 30rpx 20rpx;
+}
+
+
 /* 商品 */
 
 .goods_widget {
@@ -6,6 +23,7 @@
   margin-top: 20rpx;
   display: flex;
   justify-content: space-between;
+  border-radius: 6rpx;
 }
 
 .goods_imgWidget {
@@ -22,7 +40,7 @@
 .goods_detail_widget {
   font-size: 28rpx;
   line-height: 40rpx;
-  width: 400rpx;
+  width: 380rpx;
   position: relative;
   padding: 14rpx 0 20rpx;
 }

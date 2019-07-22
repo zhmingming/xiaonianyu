@@ -42,11 +42,15 @@ Page({
     is_dj: true,
     detailID: 0,
     detailFlag: true,
-    scroll_top : 0
+    scroll_top : 0,
+    user_id:""
   },
   onLoad: function(options) {
     var that = this;
     console.log(options)
+    if (options.isActive) {
+      app.redirect('topic/active');
+    }
     //获取分销ID
     if (options.scene) {
       var scene = decodeURIComponent(options.scene);
@@ -88,6 +92,10 @@ Page({
       };
     };
     // that.setsWiperHight();
+    const res = wx.getSystemInfoSync();
+    that.setData({
+      aheight: res.windowHeight
+    })
   },
 
   //下拉刷新
@@ -184,32 +192,33 @@ Page({
     var that = this;
     var paraArr = new Array();
     paraArr['size'] = "6";
-    paraArr['is_new'] = "1";
-
+    paraArr['index'] = "1";
+    
     var sign = app.signature(paraArr);
     var get_id = setInterval(function() {
-      var is_null = that.data.openId;
+      var is_null = that.data.user_id;
       if (is_null != "") {
         clearInterval(get_id);
       }
       wx.getStorage({
-        key: 'sessionID',
+        key: 'user_id',
         success: function(res) {
           console.log(res.data)
-          that.data.openId = res.data;
+          that.data.user_id = res.data;
           wx.request({
-            url: rootDocment + '/api/com_get/getFlashGoods',
+            // url: rootDocment + '/api/com_get/getFlashGoods',
+            url: rootDocment + '/api/com_get/getNewGoodsList',
             data: {
               size: paraArr['size'],
-              is_new: paraArr['is_new'],
+              index: paraArr['index'],
               sign: sign,
-              "open_id": that.data.openId
+              user_id: that.data.user_id,
             },
             method: 'GET',
             header: {},
             success: function(res) {
               that.setData({
-                newGoodsList: res.data.new_goods_list,
+                newGoodsList: res.data.new_goods_list.data,
                 new_people: res.data.is_new
               });
             }
@@ -310,7 +319,8 @@ Page({
     var sign = app.signature(paraArr);
     if (id == 0) {
       wx.request({
-        url: rootDocment + '/api/com_get/getFlashGoods',
+        // url: rootDocment + '/api/com_get/getFlashGoods',
+        url: rootDocment + '/api/com_get/getLimitedGoodsList',
         data: {
           size: paraArr['size'],
           sign: sign,
@@ -322,9 +332,9 @@ Page({
           console.log(res);
           let hotGoodsList = new Array();
           var i = 0;
-          for (var arr in res.data.data) {
+          for (var arr in res.data.flash_goods_list.data) {
             if (i < 3) {
-              hotGoodsList.push(res.data.data[arr]);
+              hotGoodsList.push(res.data.flash_goods_list.data[arr]);
             }
             i++;
           }
@@ -332,14 +342,15 @@ Page({
           that.setData({
             hotGoodsList: hotGoodsList,
             hiddenLoading: true,
-            e_date: res.data.data.e_date
+            e_date: res.data.e_date
           });
         }
       })
     } else {
 
       wx.request({
-        url: rootDocment + '/api/com_get/getFlashGoods',
+        // url: rootDocment + '/api/com_get/getFlashGoods',
+        url: rootDocment + '/api/com_get/getLimitedGoodsList',
         data: {
           cat_id: paraArr['cat_id'],
           size: paraArr['size'],
@@ -351,9 +362,9 @@ Page({
         success: function(res) {
           let hotGoodsList = new Array();
           var i = 0;
-          for (var arr in res.data.data) {
+          for (var arr in res.data.flash_goods_list.data) {
             if (i < 3) {
-              hotGoodsList.push(res.data.data[arr]);
+              hotGoodsList.push(res.data.flash_goods_list.data[arr]);
             }
             i++;
           }

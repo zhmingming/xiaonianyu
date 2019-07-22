@@ -14,7 +14,7 @@
     </view>
     <view bindtap='cashWithdrawal' class="tx-btn-no {{tx_money >= 50 ? 'tx-btn-yes' : ''}}">{{tx_money >= 50 ? '提现':'满50元可提现'}}</view>
   </view>
-  <view>每日提现上限 <span>500</span>元 </view>
+  <view class='topTip'>每日提现上限 <span>500</span>元 </view>
 
 
 </view>
